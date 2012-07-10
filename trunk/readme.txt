@@ -35,7 +35,7 @@ The “widgets” admin page is found in the administrator part (wp-admin) of yo
 
 = How do I find the YouTube user name? =
 
-First go to your Posts > Categories in the administrator part (wp-admin) of your WordPress site. Click the category you desire to find its ID. Its ID number should then be displayed in the URL section of your browser. (It should say $tag_ID= followed by your category ID number.
+The username who uploaded a video to Youtube is located below each video, where says something like in this example, "Published on June 25, 2012 by DisneyShorts", where DisneyShorts is the username.
 
 == Screenshots ==
 
