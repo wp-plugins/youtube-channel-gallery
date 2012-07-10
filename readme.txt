@@ -20,7 +20,6 @@ Show a youtube video and a gallery of thumbnails for a youtube user channel.
 * This plugin uses the YouTube IFrame player API that allows YouTube to serve an HTML5 player rather than a Flash player for mobile devices that do not support Flash.
 
 = Widget fields: =
-These are the fields of the widget configuration:
 * Title: Widget Title.
 * YouTube user name: the username of the user's Youtube videos you want to show.
 * Show link to channel: option to display a link to the youtube user channel.
@@ -31,6 +30,7 @@ These are the fields of the widget configuration:
 
 = Demo: =
 You can see a demo of the plugin at the following URL:
+
 [Youtube Channel Gallery Demo](http://poselab.com/youtube-channel-gallery)
 
 = Languages: =
