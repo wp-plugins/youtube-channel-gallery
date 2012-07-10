@@ -19,10 +19,13 @@ Show a youtube video and a gallery of thumbnails for a youtube user channel.
 * When you click on one of the thumbnails the video plays at the top.
 * This plugin uses the YouTube IFrame player API that allows YouTube to serve an HTML5 player rather than a Flash player for mobile devices that do not support Flash.
 
-= Details: =
+= Widget fields: =
+These are the fields of the widget configuration:
+* Title: Widget Title.
 * YouTube user name: the username of the user's Youtube videos you want to show.
 * Show link to channel: option to display a link to the youtube user channel.
 * Number of videos to show: It must be a number indicating the number of thumbnails to be displayed.
+* Video width: indicates the width of the video player.
 * Thumbnail size: indicates the width of the thumbnails. The height is automatically generated.
 * Thumbnail columns: assign a numeric class to each thumbnail based on the number of columns to apply styles to each column.
 
