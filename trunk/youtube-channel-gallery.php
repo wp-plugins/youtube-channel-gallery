@@ -28,7 +28,6 @@ License: GPL2
 
 /*
 class
-http://wp.tutsplus.com/tutorials/widgets/writing-maintainable-wordpress-widgets-part-1-of-2/
 
 */
 class YoutubeChannelGallery_Widget extends WP_Widget {
