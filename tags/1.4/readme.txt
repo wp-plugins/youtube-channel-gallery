@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.0
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,6 +18,8 @@ Show a youtube video and a gallery of thumbnails for a youtube user channel.
 * Display latest thumbnail videos from YouTube user channel.
 * When you click on one of the thumbnails the video plays at the top.
 * This plugin uses the YouTube IFrame player API that allows YouTube to serve an HTML5 player rather than a Flash player for mobile devices that do not support Flash.
+* You can choose to use this plugin as a widget or as a shortcode.
+* You can use multiple instances of the plugin on the same page.
 
 = Widget fields: =
 * Title: Widget Title.
@@ -27,6 +29,22 @@ Show a youtube video and a gallery of thumbnails for a youtube user channel.
 * Video width: indicates the width of the video player.
 * Thumbnail size: indicates the width of the thumbnails. The height is automatically generated.
 * Thumbnail columns: assign a numeric class to each thumbnail based on the number of columns to apply styles to each column.
+* Theme: select the youtube player theme (dark or light).
+
+= Shortcode syntax: =
+ If you want to use it as Shortcode:
+  `[Youtube_Channel_Gallery user="MaxonC4D" maxitems="3" theme="dark"]`
+
+**Fields:**
+The attributes used in the shortcode are the same as the fields available in the widget, except the title field.
+* user: YouTube user name (required).
+* link: Show link to channel. Values: 0 or 1. (optional).
+* maxitems: Number of videos to show (optional).
+* videowidth: Video width (optional).
+* thumbwidth: Thumbnail size (optional).
+* thumbcolumns: Thumbnail columns (optional).
+* theme: Theme. Values: dark or light (optional).
+
 
 = Demo: =
 You can see a demo of the plugin at the following URL:
@@ -42,14 +60,14 @@ If you have created your own language pack, or have an update of an existing one
 == Installation ==
 
 1. Upload the *.zip copy of this plugin into your WordPress through your 'Plugin' admin page.
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Place the widget in your desired sidebar through the "widgets" admin page
+2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Place the widget in your desired sidebar through the "widgets" admin page.
 
 == Frequently Asked Questions ==
 
 = Where is the “widgets” admin page? =
 
-The “widgets” admin page is found in the administrator part (wp-admin) of your WordPress site. Go to Appearance > Widgets
+The “widgets” admin page is found in the administrator part (wp-admin) of your WordPress site. Go to Appearance > Widgets.
 
 = How do I find the YouTube user name? =
 
@@ -62,5 +80,12 @@ The username who uploaded a video to Youtube is located below each video, where 
 
 == Changelog ==
 
+= 1.4 =
+* Added shortcode feature.
+* Multiple instances of the plugin on the same page.
+* Added theme selector.
+* Improved use of Iframe YouTube Player API (now synchronous).
+* Added effect: hover on thumbnails to display a play button. 
+
 = 1.0 =
-* Initial Release
+* Initial Release.
