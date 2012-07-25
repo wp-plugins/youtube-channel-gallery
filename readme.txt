@@ -33,10 +33,11 @@ Show a youtube video and a gallery of thumbnails for a youtube user channel.
 
 = Shortcode syntax: =
 If you want to use it as Shortcode:
+
 `[Youtube_Channel_Gallery user="MaxonC4D" maxitems="3" theme="dark"]`
 
-**Fields:**
 The attributes used in the shortcode are the same as the fields available in the widget, except the title field.
+
 * user: YouTube user name (required).
 * link: Show link to channel. Values: 0 or 1. (optional).
 * maxitems: Number of videos to show (optional).
