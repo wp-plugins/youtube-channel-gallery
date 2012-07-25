@@ -38,12 +38,12 @@ Show a youtube video and a gallery of thumbnails for a youtube user channel.
 **Fields:**
 The attributes used in the shortcode are the same as the fields available in the widget, except the title field.
 * user: YouTube user name (required).
-* link: Show link to channel. Values: 0 or 1. (optional)
-* maxitems: Number of videos to show (optional)
-* videowidth: Video width (optional)
-* thumbwidth: Thumbnail size (optional)
-* thumbcolumns: Thumbnail columns (optional)
-* theme: Theme. Values: dark or light (optional)
+* link: Show link to channel. Values: 0 or 1. (optional).
+* maxitems: Number of videos to show (optional).
+* videowidth: Video width (optional).
+* thumbwidth: Thumbnail size (optional).
+* thumbcolumns: Thumbnail columns (optional).
+* theme: Theme. Values: dark or light (optional).
 
 
 = Demo: =
@@ -60,14 +60,14 @@ If you have created your own language pack, or have an update of an existing one
 == Installation ==
 
 1. Upload the *.zip copy of this plugin into your WordPress through your 'Plugin' admin page.
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Place the widget in your desired sidebar through the "widgets" admin page
+2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Place the widget in your desired sidebar through the "widgets" admin page.
 
 == Frequently Asked Questions ==
 
 = Where is the “widgets” admin page? =
 
-The “widgets” admin page is found in the administrator part (wp-admin) of your WordPress site. Go to Appearance > Widgets
+The “widgets” admin page is found in the administrator part (wp-admin) of your WordPress site. Go to Appearance > Widgets.
 
 = How do I find the YouTube user name? =
 
@@ -81,11 +81,11 @@ The username who uploaded a video to Youtube is located below each video, where 
 == Changelog ==
 
 = 1.4 =
-* Added shortcode feature
+* Added shortcode feature.
 * Multiple instances of the plugin on the same page.
 * Added theme selector.
 * Improved use of Iframe YouTube Player API (now synchronous).
 * Added effect: hover on thumbnails to display a play button. 
 
 = 1.0 =
-* Initial Release
+* Initial Release.
