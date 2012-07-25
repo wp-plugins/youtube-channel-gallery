@@ -33,6 +33,7 @@ Show a youtube video and a gallery of thumbnails for a youtube user channel.
 
 = Shortcode syntax: =
 If you want to use it as Shortcode:
+
 `[Youtube_Channel_Gallery user="MaxonC4D" maxitems="3" theme="dark"]`
 
 **Fields:**
