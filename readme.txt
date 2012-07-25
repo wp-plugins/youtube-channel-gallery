@@ -32,8 +32,8 @@ Show a youtube video and a gallery of thumbnails for a youtube user channel.
 * Theme: select the youtube player theme (dark or light).
 
 = Shortcode syntax: =
- If you want to use it as Shortcode:
-  `[Youtube_Channel_Gallery user="MaxonC4D" maxitems="3" theme="dark"]`
+If you want to use it as Shortcode:
+`[Youtube_Channel_Gallery user="MaxonC4D" maxitems="3" theme="dark"]`
 
 **Fields:**
 The attributes used in the shortcode are the same as the fields available in the widget, except the title field.
