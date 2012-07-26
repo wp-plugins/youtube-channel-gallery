@@ -81,6 +81,9 @@ The username who uploaded a video to Youtube is located below each video, where 
 
 == Changelog ==
 
+= 1.4.2 =
+* Fixed issue with CSS.
+
 = 1.4.1 =
 * Added width and height to player.
 * Reverted name variable prefixes.
