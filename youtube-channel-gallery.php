@@ -5,7 +5,7 @@ Plugin URI: http://www.poselab.com/
 Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 Author: Javier Gómez Pose
 Author URI: http://www.poselab.com/
-Version: 1.4.1
+Version: 1.4.2
 License: GPL2
 	
 	Copyright 2010 Javier Gómez Pose  (email : javierpose@gmail.com)
