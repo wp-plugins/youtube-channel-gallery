@@ -1,8 +1,22 @@
-.ytcplayer{margin-bottom: 10px}
+.ytcplayer{
+	display: block;
+	margin-bottom: 10px;
+	padding: 0
+}
+
 ul.ytchagallery{
 	margin: 0; padding: 0;
-	list-style: none; overflow:hidden
+	list-style: none;
+	*zoom: 1;
 }
+ul.ytchagallery:before,ul.ytchagallery:after {
+    content: " ";
+    display: table;
+}
+ul.ytchagallery:after {
+    clear: both;
+}
+
 ul.ytchagallery li{
 	float:left;  
 	margin: 0 10px 10px 0;padding: 0
@@ -22,3 +36,5 @@ ul.ytchagallery li a:hover{
 ul.ytchagallery li a:hover .ytcplay{
 	background-position: center center;
 }
+
+
