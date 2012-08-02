@@ -5,7 +5,7 @@ Plugin URI: http://www.poselab.com/
 Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 Author: Javier Gómez Pose
 Author URI: http://www.poselab.com/
-Version: 1.4.2
+Version: 1.4.5
 License: GPL2
 	
 	Copyright 2010 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -37,22 +37,24 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 	public function __construct() {
 
 		//localization
-		load_plugin_textdomain('youtube-channel-gallery', false, dirname(plugin_basename( __FILE__ ) ) . '/languages/' );  
+		load_plugin_textdomain('youtube-channel-gallery', false, dirname(plugin_basename( __FILE__ ) ) . '/languages/' ); 
+		add_shortcode('Youtube_Channel_Gallery', array($this, 'YoutubeChannelGallery_Shortcode'));  
 		
 		parent::__construct(
 			'youtubechannelgallery_widget', // Base ID
 			 __( 'Youtube Channel Gallery', 'youtube-channel-gallery' ), // Name
 			array( 'description' => __( 'Show a youtube video and a gallery of thumbnails for a youtube channel', 'youtube-channel-gallery' ), ) // Args
 		);
-
-		// Load JavaScript and stylesheets  
-		$this->register_scripts_and_styles();
 	}
 
 	/**
 	 * Front-end display of widget.
 	 */
 	public function widget( $args, $instance ) {
+
+		// Load JavaScript and stylesheets  
+		$this->register_scripts_and_styles();
+
 		extract( $args );
 		$title = apply_filters( 'widget_title', $instance['title'] );
 
@@ -60,7 +62,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			if ( ! empty( $title ) )
 				echo $before_title . $title . $after_title;
 
-			ytchag_rss_markup($instance);
+			$this->ytchag_rss_markup($instance);
 
 		echo $after_widget;
 	}
@@ -146,6 +148,123 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 	/*--------------------------------------------------*/ 
 	/* Private Functions 
 	/*--------------------------------------------------*/
+	private function ytchag_rss_markup($instance){
+
+		//$instance variables
+		$ytchag_user = apply_filters('ytchag_user', $instance['ytchag_user']);
+		$ytchag_link = apply_filters('ytchag_link', $instance['ytchag_link']);
+		$ytchag_maxitems = apply_filters('ytchag_maxitems', $instance['ytchag_maxitems']);
+		$ytchag_video_width = apply_filters('ytchag_video_width', $instance['ytchag_video_width']);
+		$ytchag_thumb_width = apply_filters('ytchag_thumb_width', $instance['ytchag_thumb_width']);
+		$ytchag_thumb_columns = apply_filters('ytchag_thumb_columns', $instance['ytchag_thumb_columns']);
+		$ytchag_theme = apply_filters('ytchag_theme', $instance['ytchag_theme']);
+
+		//defaults
+		$ytchag_video_width = ( $ytchag_video_width ) ? $ytchag_video_width : 250;
+		$ytchag_thumb_width = ( $ytchag_thumb_width ) ? $ytchag_thumb_width : 85;
+		$ytchag_thumb_columns = ( $ytchag_thumb_columns ) ? $ytchag_thumb_columns : 0;
+		$ytchag_theme = ( $ytchag_theme ) ? $ytchag_theme : 'dark';
+
+		//heights of video and thumbnail
+		$ytchag_video_heigh = round($ytchag_video_width/(16/9) + 32);
+		$ytchag_thumb_height = $ytchag_thumb_width*75/100; // 75% 'cos sizes of thumbnail in xml file are 480x360 and 120x90
+
+		if( $ytchag_user ) { // only if user name inserted 
+			
+			// links
+			$ytchag_rss_url 		= "http://gdata.youtube.com/feeds/api/users/" . $ytchag_user . "/uploads";
+			$ytchag_link_url 	= "http://www.youtube.com/user/" . $ytchag_user;
+			
+
+			//RSS Feed
+			
+			include_once(ABSPATH . WPINC . '/feed.php');
+			
+			$rss = fetch_feed($ytchag_rss_url);
+			$maxitems = ( $ytchag_maxitems ) ? $ytchag_maxitems : 9;
+			$items = $rss->get_items(0, $maxitems);
+			
+
+			if (!empty($items)) {
+				$i = 0;
+				$column = 0;
+				foreach ( $items as $item ) {
+
+					$url = $item->get_permalink();
+					$youtubeid = $this->youtubeid($url);
+					$title = $item->get_title();
+
+					if ($enclosure = $item->get_enclosure()){
+
+						//extract thumbnail
+						//-----------------
+
+						//thumbnail index in xml
+						$big = 0;
+						$small = 1;
+						$size = $small;
+						if($ytchag_thumb_width > '120'){
+							$size = $big;
+						}
+
+						$allThumbs = $enclosure->get_thumbnails();
+						foreach ($allThumbs as $index => $allThumb) {
+							if ($index == $size) {
+								$thumb = $allThumbs[$index];
+							}
+						}
+					}
+
+					//Show me the player: iframe player
+					if($i == 0) {
+						//count the plugin occurrences on page
+						STATIC $plugincount = 0;
+						$plugincount++;
+					?>	
+					<iframe id="ytcplayer<?php echo $plugincount; ?>" class="ytcplayer" type="text/html" width="<?php echo $ytchag_video_width; ?>" height="<?php echo $ytchag_video_heigh; ?>" src="http://www.youtube.com/embed/<?php echo $youtubeid; ?>?&autoplay=0&theme=<?php echo $ytchag_theme; ?>&enablejsapi=1&origin=<?php echo site_url(); ?>" frameborder="0"></iframe>
+						<ul class="ytchagallery">
+
+					<?php	
+					} // if player end
+					$i++;
+
+					$column++;
+					// list of thumbnail videos						
+					?>
+					<li class="ytccell-<?php echo $column; ?>">
+						<a class="ytcthumb" href="javascript: ytcplayVideo('ytcplayer<?php echo $plugincount; ?>', '<?php echo $youtubeid; ?>');" alt="<?php echo $title; ?>" title="<?php echo $title; ?>" style="background-image: url(<?php echo $thumb; ?>);">
+							<div class="ytcplay" style="width: <?php echo $ytchag_thumb_width; ?>px; height: <?php echo $ytchag_thumb_height; ?>px"></div>
+						</a>
+					</li>
+
+				<?php 
+					if($ytchag_thumb_columns !=0 && $column%$ytchag_thumb_columns === 0){
+						$column = 0;
+					}
+				} //foreach end
+				?>
+				</ul>
+				<?php
+					//link to youtube.com gallery
+				if( $ytchag_link) {
+				?>
+					<a href="<?php echo $ytchag_link_url ?>" class="more"><?php _e('Show more videos»', 'youtube-channel-gallery') ?></a>
+				<?php 
+					}
+			}
+		} else {
+			?>
+				<p class="empty"><?php _e('There is no video to show.', 'youtube-channel-gallery') ?></p>
+			<?php
+		}
+	}//ytchag_rss_markup
+
+	//parse youtube url to extract id
+	private function youtubeid($url) {
+		$url_string = parse_url($url, PHP_URL_QUERY);
+		parse_str($url_string, $args);
+		return isset($args['v']) ? $args['v'] : false;
+	}//youtubeid
 
 
 	// load css or js
@@ -153,144 +272,16 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			wp_enqueue_script('youtube_player_api', 'http://www.youtube.com/player_api', false, false, true);
 			wp_enqueue_script('youtube-channel-gallery', plugins_url('/scripts.js', __FILE__), false, false, true);
 			wp_enqueue_style('youtube-channel-gallery', plugins_url('/styles.css', __FILE__), false, false, 'all');
-	}
+	}//register_scripts_and_styles
 
-} // class YoutubeChannelGallery_Widget
+	/*--------------------------------------------------*/ 
+	/* Shortcode 
+	/*--------------------------------------------------*/
 
-// register YoutubeChannelGallery_Widget widget
-add_action( 'widgets_init', create_function( '', 'register_widget( "YoutubeChannelGallery_Widget" );' ) );
+	public function YoutubeChannelGallery_Shortcode($atts) {
 
-
-
-/*--------------------------------------------------*/ 
-/* Functions 
-/*--------------------------------------------------*/
-
-function ytchag_rss_markup($instance){
-
-	//$instance variables
-	$ytchag_user = apply_filters('ytchag_user', $instance['ytchag_user']);
-	$ytchag_link = apply_filters('ytchag_link', $instance['ytchag_link']);
-	$ytchag_maxitems = apply_filters('ytchag_maxitems', $instance['ytchag_maxitems']);
-	$ytchag_video_width = apply_filters('ytchag_video_width', $instance['ytchag_video_width']);
-	$ytchag_thumb_width = apply_filters('ytchag_thumb_width', $instance['ytchag_thumb_width']);
-	$ytchag_thumb_columns = apply_filters('ytchag_thumb_columns', $instance['ytchag_thumb_columns']);
-	$ytchag_theme = apply_filters('ytchag_theme', $instance['ytchag_theme']);
-
-	//defaults
-	$ytchag_video_width = ( $ytchag_video_width ) ? $ytchag_video_width : 250;
-	$ytchag_thumb_width = ( $ytchag_thumb_width ) ? $ytchag_thumb_width : 85;
-	$ytchag_thumb_columns = ( $ytchag_thumb_columns ) ? $ytchag_thumb_columns : 0;
-	$ytchag_theme = ( $ytchag_theme ) ? $ytchag_theme : 'dark';
-
-	//heights of video and thumbnail
-	$ytchag_video_heigh = round($ytchag_video_width/(16/9) + 32);
-	$ytchag_thumb_height = $ytchag_thumb_width*75/100; // 75% 'cos sizes of thumbnail in xml file are 480x360 and 120x90
-
-	if( $ytchag_user ) { // only if user name inserted 
-		
-		// links
-		$ytchag_rss_url 		= "http://gdata.youtube.com/feeds/api/users/" . $ytchag_user . "/uploads";
-		$ytchag_link_url 	= "http://www.youtube.com/user/" . $ytchag_user;
-		
-
-		//RSS Feed
-		
-		include_once(ABSPATH . WPINC . '/feed.php');
-		
-		$rss = fetch_feed($ytchag_rss_url);
-		$maxitems = ( $ytchag_maxitems ) ? $ytchag_maxitems : 9;
-		$items = $rss->get_items(0, $maxitems);
-		
-
-		if (!empty($items)) {
-			$i = 0;
-			$column = 0;
-			foreach ( $items as $item ) {
-
-				$url = $item->get_permalink();
-				$youtubeid = youtubeid($url);
-				$title = $item->get_title();
-
-				if ($enclosure = $item->get_enclosure()){
-
-					//extract thumbnail
-					//-----------------
-
-					//thumbnail index in xml
-					$big = 0;
-					$small = 1;
-					$size = $small;
-					if($ytchag_thumb_width > '120'){
-						$size = $big;
-					}
-
-					$allThumbs = $enclosure->get_thumbnails();
-					foreach ($allThumbs as $index => $allThumb) {
-						if ($index == $size) {
-							$thumb = $allThumbs[$index];
-						}
-					}
-				}
-
-				//Show me the player: iframe player
-				if($i == 0) {
-					//count the plugin occurrences on page
-					STATIC $plugincount = 0;
-					$plugincount++;
-				?>	
-				<iframe id="ytcplayer<?php echo $plugincount; ?>" type="text/html" width="<?php echo $ytchag_video_width; ?>" height="<?php echo $ytchag_video_heigh; ?>" src="http://www.youtube.com/embed/<?php echo $youtubeid; ?>?&autoplay=0&theme=<?php echo $ytchag_theme; ?>&enablejsapi=1&origin=<?php echo site_url(); ?>" frameborder="0"></iframe>
-					<ul class="ytchagallery">
-
-				<?php	
-				} // if player end
-				$i++;
-
-				$column++;
-				// list of thumbnail videos						
-				?>
-				<li class="ytccell-<?php echo $column; ?>">
-					<a class="ytcthumb" href="javascript: ytcplayVideo('ytcplayer<?php echo $plugincount; ?>', '<?php echo $youtubeid; ?>');" alt="<?php echo $title; ?>" title="<?php echo $title; ?>" style="background-image: url(<?php echo $thumb; ?>);">
-						<div class="ytcplay" style="width: <?php echo $ytchag_thumb_width; ?>px; height: <?php echo $ytchag_thumb_height; ?>px"></div>
-					</a>
-				</li>
-
-			<?php 
-				if($ytchag_thumb_columns !=0 && $column%$ytchag_thumb_columns === 0){
-					$column = 0;
-				}
-			} //foreach end
-			?>
-			</ul>
-			<?php
-				//link to youtube.com gallery
-			if( $ytchag_link) {
-			?>
-				<a href="<?php echo $ytchag_link_url ?>" class="more"><?php _e('Show more videos»', 'youtube-channel-gallery') ?></a>
-			<?php 
-				}
-		}
-	} else {
-		?>
-			<p class="empty"><?php _e('There is no video to show.', 'youtube-channel-gallery') ?></p>
-		<?php
-	}
-}
-
-//parse youtube url to extract id
- function youtubeid($url) {
-	$url_string = parse_url($url, PHP_URL_QUERY);
-	parse_str($url_string, $args);
-	return isset($args['v']) ? $args['v'] : false;
-}
-
-
-
-/*--------------------------------------------------*/ 
-/* Shortcode 
-/*--------------------------------------------------*/
-
-	function YoutubeChannelGallery_Shortcode($atts) {
+		// Load JavaScript and stylesheets  
+		$this->register_scripts_and_styles();
 
 		extract( shortcode_atts( array(
 			'user' => '',
@@ -312,7 +303,21 @@ function ytchag_rss_markup($instance){
 		$instance['ytchag_theme'] = $theme;
 
 
-		ytchag_rss_markup($instance);
-	}
-	add_shortcode('Youtube_Channel_Gallery', 'YoutubeChannelGallery_Shortcode'); 
+		$this->ytchag_rss_markup($instance);
+
+	} // YoutubeChannelGallery_Shortcode
+
+
+} // class YoutubeChannelGallery_Widget
+
+// register YoutubeChannelGallery_Widget widget
+add_action( 'widgets_init', create_function( '', 'register_widget( "YoutubeChannelGallery_Widget" );' ) );
+
+
+
+/*--------------------------------------------------*/ 
+/* Functions 
+/*--------------------------------------------------*/
+
+
 ?>

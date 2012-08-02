@@ -1,15 +1,17 @@
+var ytcplayer = {};
+
 function ytcplayVideo (iframeid, youtubeid) {
-	if(window[iframeid].loadVideoById) { 
-		window[iframeid].loadVideoById(youtubeid); 
+
+	if(iframeid in ytcplayer) { 
+		ytcplayer[iframeid].loadVideoById(youtubeid); 
 	}else{
-		window[iframeid] = new YT.Player(iframeid, {
+		ytcplayer[iframeid] = new YT.Player(iframeid, {
 			events: { 
 				'onReady': function(){
-					window[iframeid].loadVideoById(youtubeid);
+					ytcplayer[iframeid].loadVideoById(youtubeid);
 				}
 			}
 		});
 	}
-
 
 }
