@@ -5,7 +5,7 @@ Plugin URI: http://www.poselab.com/
 Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 Author: Javier Gómez Pose
 Author URI: http://www.poselab.com/
-Version: 1.4.6
+Version: 1.4.7
 License: GPL2
 	
 	Copyright 2010 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -172,7 +172,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		if( $ytchag_user ) { // only if user name inserted 
 			
 			// links
-			$ytchag_rss_url 		= "http://gdata.youtube.com/feeds/api/users/" . $ytchag_user . "/uploads";
+			$ytchag_rss_url 	= "http://gdata.youtube.com/feeds/api/users/" . $ytchag_user . "/uploads";
 			$ytchag_link_url 	= "http://www.youtube.com/user/" . $ytchag_user;
 			
 
@@ -221,7 +221,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 						STATIC $plugincount = 0;
 						$plugincount++;
 					?>	
-					<iframe id="ytcplayer<?php echo $plugincount; ?>" class="ytcplayer" type="text/html" width="<?php echo $ytchag_video_width; ?>" height="<?php echo $ytchag_video_heigh; ?>" src="http://www.youtube.com/embed/<?php echo $youtubeid; ?>?&autoplay=0&theme=<?php echo $ytchag_theme; ?>&enablejsapi=1&origin=<?php echo home_url(); ?>" frameborder="0"></iframe>
+					<iframe id="ytcplayer<?php echo $plugincount; ?>" class="ytcplayer" type="text/html" width="<?php echo $ytchag_video_width; ?>" height="<?php echo $ytchag_video_heigh; ?>" src="http://www.youtube.com/embed/<?php echo $youtubeid; ?>?&autoplay=0&theme=<?php echo $ytchag_theme; ?>&enablejsapi=1" frameborder="0"></iframe>
 						<ul class="ytchagallery">
 
 					<?php	
