@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.4.5
+Stable tag: 1.4.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,10 @@ The username who uploaded a video to Youtube is located below each video, where 
 2. Youtube Channel Gallery.
 
 == Changelog ==
+
+= 1.4.6 =
+* Tweak on CSS.
+* Trying to to correct issue that some users have with the player origin parameter.
 
 = 1.4.5 =
 * Tweaks on CSS.

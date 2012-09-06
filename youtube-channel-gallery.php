@@ -5,7 +5,7 @@ Plugin URI: http://www.poselab.com/
 Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 Author: Javier Gómez Pose
 Author URI: http://www.poselab.com/
-Version: 1.4.5
+Version: 1.4.6
 License: GPL2
 	
 	Copyright 2010 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -221,7 +221,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 						STATIC $plugincount = 0;
 						$plugincount++;
 					?>	
-					<iframe id="ytcplayer<?php echo $plugincount; ?>" class="ytcplayer" type="text/html" width="<?php echo $ytchag_video_width; ?>" height="<?php echo $ytchag_video_heigh; ?>" src="http://www.youtube.com/embed/<?php echo $youtubeid; ?>?&autoplay=0&theme=<?php echo $ytchag_theme; ?>&enablejsapi=1&origin=<?php echo site_url(); ?>" frameborder="0"></iframe>
+					<iframe id="ytcplayer<?php echo $plugincount; ?>" class="ytcplayer" type="text/html" width="<?php echo $ytchag_video_width; ?>" height="<?php echo $ytchag_video_heigh; ?>" src="http://www.youtube.com/embed/<?php echo $youtubeid; ?>?&autoplay=0&theme=<?php echo $ytchag_theme; ?>&enablejsapi=1&origin=<?php echo home_url(); ?>" frameborder="0"></iframe>
 						<ul class="ytchagallery">
 
 					<?php	
@@ -312,12 +312,6 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 // register YoutubeChannelGallery_Widget widget
 add_action( 'widgets_init', create_function( '', 'register_widget( "YoutubeChannelGallery_Widget" );' ) );
-
-
-
-/*--------------------------------------------------*/ 
-/* Functions 
-/*--------------------------------------------------*/
 
 
 ?>
