@@ -54,6 +54,7 @@ You can see a demo of the plugin at the following URL:
 
 = Languages: =
 * Spanish (es_ES) - [PoseLab](http://poselab.com/)
+* Brazilian Portuguese (pt_BR). Thanks to Rodny.
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:javierpose@gmail.com) your gettext PO and MO so that I can bundle it into the Youtube Channel Gallery.
 
