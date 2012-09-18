@@ -26,6 +26,7 @@ ul.ytchagallery li a{
 	border:1px solid #999;
 	background-position: center center;
 	background-repeat: no-repeat;
+	background-size: 110%;
 }
 ul.ytchagallery li a .ytcplay{
 	background: url(img/play.png) -9999px -9999px no-repeat;

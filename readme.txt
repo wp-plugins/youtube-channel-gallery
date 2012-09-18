@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.4.7
+Stable tag: 1.4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,12 +81,18 @@ The username who uploaded a video to Youtube is located below each video, where 
 
 == Changelog ==
 
+= 1.4.8 =
+* Fixed bug with shortcode position.
+* Deleted decimals to thumbnail heights.
+* Added background-size to CSS of thumbnails to control image size.
+* Added Brazilian Portuguese (pt_BR). Thanks to Rodny.
+
 = 1.4.7 =
-* Removed parameter 'origin' from Youtube Player iframe to solve the issue that some users have to click the thumbnails.
+* Removed parameter 'origin' from Youtube iframe Player to solve the issue that some users have on clicking the thumbnails.
 
 = 1.4.6 =
 * Tweak on CSS.
-* Trying to to correct issue that some users have with the player origin parameter.
+* Trying to correct issue that some users have with the player origin parameter.
 
 = 1.4.5 =
 * Tweaks on CSS.
