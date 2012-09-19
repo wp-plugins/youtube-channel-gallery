@@ -82,6 +82,9 @@ The username who uploaded a video to Youtube is located below each video, where 
 
 == Changelog ==
 
+= 1.4.8.1 =
+* Fixed warning: Cannot modify header information...
+
 = 1.4.8 =
 * Fixed bug with shortcode position.
 * Deleted decimals to thumbnail heights.
