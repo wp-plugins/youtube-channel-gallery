@@ -1,11 +1,11 @@
-	<?php
+<?php
 	/*
 	Plugin Name: Youtube Channel Gallery
 	Plugin URI: http://www.poselab.com/
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.4.8
+	Version: 1.4.8.1
 	License: GPL2
 		
 		Copyright 2010 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -314,4 +314,4 @@
 	add_action( 'widgets_init', create_function( '', 'register_widget( "YoutubeChannelGallery_Widget" );' ) );
 
 
-	?>
+?>
