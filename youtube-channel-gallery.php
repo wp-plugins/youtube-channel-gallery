@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.5.3
+	Version: 1.5.4
 	License: GPL2
 		
 		Copyright 2010 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -86,7 +86,7 @@
 			$instance['ytchag_color'] = strip_tags( $new_instance['ytchag_color'] );
 			$instance['ytchag_autoplay'] = strip_tags( $new_instance['ytchag_autoplay'] );
 			$instance['ytchag_rel'] = strip_tags( $new_instance['ytchag_rel'] );
-			$instance['ytchag_showinfo'] = ( isset( $new_instance['ytchag_showinfo'] ) ? 0 : 1 );  	
+			$instance['ytchag_showinfo'] = strip_tags( $new_instance['ytchag_showinfo'] );	
 			
 			// Thumbnail options
 			$instance['ytchag_maxitems'] = strip_tags( $new_instance['ytchag_maxitems'] );
@@ -351,19 +351,15 @@
 				$ytchag_rss_url 	= "http://gdata.youtube.com/feeds/api/users/" . $ytchag_user . "/uploads";
 				$ytchag_link_url 	= "http://www.youtube.com/user/" . $ytchag_user;
 				
+				//RSS Feed				
+				include_once(ABSPATH . WPINC . '/feed.php');
+				
+				$rss = fetch_feed($ytchag_rss_url);
+
 
 				// check if no correct user name
-				if (  file_get_contents($ytchag_rss_url) == '' ) { 
+				if (!is_wp_error( $rss ) ) {
 
-					$content= '<p class="empty">' .  __('You must insert a valid YouTube user name.', 'youtube-channel-gallery') . '</p>';
-
-				// correct user name
-				} else{
-
-					//RSS Feed				
-					include_once(ABSPATH . WPINC . '/feed.php');
-					
-					$rss = fetch_feed($ytchag_rss_url);
 					$maxitems = ( $ytchag_maxitems ) ? $ytchag_maxitems : 9;
 					$items = $rss->get_items(0, $maxitems);
 					
@@ -412,7 +408,7 @@
 
 							//columns control
 							$column++;
-
+							$columnnumber = '';
 							if($ytchag_thumb_columns !=0 && $column%$ytchag_thumb_columns === 0){
 								$columnnumber = ' ytccell-last';
 							} else if($ytchag_thumb_columns !=0 && $column === 1){
@@ -422,8 +418,6 @@
 
 							if($ytchag_thumb_columns !=0 && $column%$ytchag_thumb_columns === 0 ){
 								$column = 0;								
-							}else if($ytchag_thumb_columns !=0 && $column === 1){
-								$columnnumber = '';
 							}
 
 							$content.= '<a class="ytcthumb" href="javascript: ytcplayVideo(\'ytcplayer' . $plugincount . '\', \'' . $youtubeid . '\');" alt="' . $title . '" title="' . $title . '" style="background-image: url(' . $thumb . ');">';
@@ -440,7 +434,9 @@
 							$content.= '<a href="' . $ytchag_link_url . '" class="ytcmore">' . $ytchag_link_tx . '</a>';						
 						}
 					}
-				}// end check user name
+				} else {
+					$content= '<p class="empty">' .  __('You must insert a valid YouTube user name.', 'youtube-channel-gallery') . '</p>';
+				} // end check user name
 
 			// user name not inserted 
 			} else {
