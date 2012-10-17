@@ -182,3 +182,10 @@ The username who uploaded a video to Youtube is located below each video, where 
 
 = 1.0 =
 * Initial Release.
+
+
+
+== Upgrade Notice ==
+
+= 1.5.3 =
+* New fields to control the player
