@@ -8,7 +8,7 @@ Stable tag: 1.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Show a youtube video and a gallery of thumbnails for a youtube channel.
+Show a YouTube video and a gallery of thumbnails for a youtube channel.
 
 == Description ==
 
