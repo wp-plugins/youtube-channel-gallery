@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: youtube-channel-gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-24 14:14+0100\n"
-"PO-Revision-Date: 2012-07-24 14:15+0100\n"
+"POT-Creation-Date: 2012-10-17 10:30+0100\n"
+"PO-Revision-Date: 2012-10-17 10:34+0100\n"
 "Last-Translator: Javier <javierpose@gmail.com>\n"
 "Language-Team: PoseLab <javierpose@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -23,91 +23,111 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: youtube-channel-gallery.php:44
-#: pruebas/youtube-channel-gallery_bueno.php:46
-#: pruebas/youtube-channel-gallery_bueno2.php:46
+#: youtube-channel-gallery.php:48
 msgid "Youtube Channel Gallery"
 msgstr "Galería de Canal de Youtube"
 
-#: youtube-channel-gallery.php:45
-#: pruebas/youtube-channel-gallery_bueno.php:47
-#: pruebas/youtube-channel-gallery_bueno2.php:47
+#: youtube-channel-gallery.php:49
 msgid "Show a youtube video and a gallery of thumbnails for a youtube channel"
 msgstr "Muestra un vídeo y una galería de miniaturas de una canal de Youtube "
 
-#: youtube-channel-gallery.php:100
-#: pruebas/youtube-channel-gallery_bueno.php:109
-#: pruebas/youtube-channel-gallery_bueno2.php:107
+#: youtube-channel-gallery.php:134
 msgid "Title:"
 msgstr "Título:"
 
-#: youtube-channel-gallery.php:105
-#: pruebas/youtube-channel-gallery_bueno.php:114
-#: pruebas/youtube-channel-gallery_bueno2.php:112
+#: youtube-channel-gallery.php:139
 msgid "YouTube user name:"
 msgstr "Nombre de usuario de Youtube:"
 
-#: youtube-channel-gallery.php:111
-#: pruebas/youtube-channel-gallery_bueno.php:120
-#: pruebas/youtube-channel-gallery_bueno2.php:118
-msgid "Show link to channel:"
-msgstr "Mostrar enlace al canal:"
-
-#: youtube-channel-gallery.php:115
-#: pruebas/youtube-channel-gallery_bueno.php:124
-#: pruebas/youtube-channel-gallery_bueno2.php:122
-msgid "Number of videos to show:"
-msgstr "Número de vídeos a mostrar:"
-
-#: youtube-channel-gallery.php:120
-#: pruebas/youtube-channel-gallery_bueno.php:129
-#: pruebas/youtube-channel-gallery_bueno2.php:127
+#: youtube-channel-gallery.php:181
 msgid "Video width:"
 msgstr "Ancho del vídeo:"
 
-#: youtube-channel-gallery.php:125
-#: pruebas/youtube-channel-gallery_bueno.php:134
-#: pruebas/youtube-channel-gallery_bueno2.php:132
-msgid "Thumbnail width:"
-msgstr "Ancho de miniaturas:"
+#: youtube-channel-gallery.php:187
+#: youtube-channel-gallery.php:241
+msgid "Aspect ratio:"
+msgstr "Relación de aspecto:"
 
-#: youtube-channel-gallery.php:130
-#: pruebas/youtube-channel-gallery_bueno.php:139
-#: pruebas/youtube-channel-gallery_bueno.php:144
-#: pruebas/youtube-channel-gallery_bueno2.php:137
-msgid "Thumbnail columns:"
-msgstr "Columnas de las miniaturas:"
+#: youtube-channel-gallery.php:189
+#: youtube-channel-gallery.php:243
+msgid "Standard (4x3)"
+msgstr "Estándar (4x3)"
 
-#: youtube-channel-gallery.php:135
-#: pruebas/youtube-channel-gallery_bueno.php:149
+#: youtube-channel-gallery.php:190
+#: youtube-channel-gallery.php:244
+msgid "Widescreen (16x9)"
+msgstr "Panorámico (16x9)"
+
+#: youtube-channel-gallery.php:196
 msgid "Theme:"
 msgstr "Tema:"
 
-#: youtube-channel-gallery.php:137
-#: pruebas/youtube-channel-gallery_bueno.php:151
+#: youtube-channel-gallery.php:198
 msgid "Dark"
 msgstr "Oscuro"
 
-#: youtube-channel-gallery.php:138
+#: youtube-channel-gallery.php:199
 msgid "Light"
 msgstr "Claro"
 
-#: youtube-channel-gallery.php:270
-#: pruebas/youtube-channel-gallery_bueno.php:345
-#: pruebas/youtube-channel-gallery_bueno2.php:315
+#: youtube-channel-gallery.php:205
+msgid "Progress bar color:"
+msgstr "Color de barra de progreso:"
+
+#: youtube-channel-gallery.php:207
+msgid "Red"
+msgstr "Rojo"
+
+#: youtube-channel-gallery.php:208
+msgid "White"
+msgstr "Blanco"
+
+#: youtube-channel-gallery.php:213
+msgid "Autoplay"
+msgstr "Autoplay"
+
+#: youtube-channel-gallery.php:218
+msgid "Show related videos"
+msgstr "Mostrar los vídeos relacionados"
+
+#: youtube-channel-gallery.php:223
+msgid "Show info (title, uploader)"
+msgstr "Mostrar información (título, cargador)"
+
+#: youtube-channel-gallery.php:230
+msgid "Number of videos to show:"
+msgstr "Número de vídeos a mostrar:"
+
+#: youtube-channel-gallery.php:235
+msgid "Thumbnail width:"
+msgstr "Ancho de miniaturas:"
+
+#: youtube-channel-gallery.php:249
+msgid "Thumbnail columns:"
+msgstr "Columnas de las miniaturas:"
+
+#: youtube-channel-gallery.php:258
+msgid "Link text:"
+msgstr "Texto del enlace"
+
+#: youtube-channel-gallery.php:264
+msgid "Show link to channel:"
+msgstr "Mostrar enlace al canal:"
+
+#: youtube-channel-gallery.php:325
 msgid "Show more videos»"
 msgstr "Ver más vídeos»"
 
-#: youtube-channel-gallery.php:276
-#: pruebas/youtube-channel-gallery_bueno.php:351
-#: pruebas/youtube-channel-gallery_bueno2.php:321
+#: youtube-channel-gallery.php:358
+msgid "You must insert a valid YouTube user name."
+msgstr "Debe introducir un nombre válido de usuario de YouTube."
+
+#: youtube-channel-gallery.php:447
 msgid "There is no video to show."
 msgstr "No hay ningún vídeo para mostrar."
 
-#: pruebas/youtube-channel-gallery_bueno.php:152
-msgid "Light:"
-msgstr "Claro"
-
+#~ msgid "Light:"
+#~ msgstr "Claro"
 #~ msgid "No post to duplicate has been supplied!"
 #~ msgstr "No se facilitó ninguna entrada a copiar"
 #~ msgid "Post creation failed, could not find original post:"

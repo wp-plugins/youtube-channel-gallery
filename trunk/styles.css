@@ -1,25 +1,49 @@
-.ytcplayer{
-	display: block;
-	margin-bottom: 10px;
-	padding: 0
-}
+/*------------------------------*/	
+/*Youtube Channel Gallery plugin*/
+/*------------------------------*/	
 
-ul.ytchagallery{
-	margin: 0; padding: 0;
-	list-style: none;
-	*zoom: 1;
-}
-ul.ytchagallery:before,ul.ytchagallery:after {
+/*clearfix*/
+.ytccf:before,
+.ytccf:after {
     content: " ";
     display: table;
 }
-ul.ytchagallery:after {
+.ytccf:after {
     clear: both;
+}
+.ytccf {
+    *zoom: 1;
+}
+
+
+/*shortcode wrapper*/
+.ytcshort{
+	margin: 10px 0
+}
+
+/*Player*/
+iframe.ytcplayer{
+	display: block;
+	margin-bottom: 10px;
+	padding: 0;
+
+}
+
+/*Thumbnails*/
+ul.ytchagallery{
+	margin: 0; padding: 0;
+	list-style: none;
 }
 
 ul.ytchagallery li{
 	float:left;  
 	margin: 0 10px 10px 0;padding: 0
+}
+ul.ytchagallery li.ytccell-first{
+	clear: left;
+}
+ul.ytchagallery li.ytccell-last{
+	margin-right: 0;
 }
 ul.ytchagallery li a{
 	display: block;
@@ -36,6 +60,11 @@ ul.ytchagallery li a:hover{
 }
 ul.ytchagallery li a:hover .ytcplay{
 	background-position: center center;
+}
+
+/*link*/
+.ytcmore{
+	display: block
 }
 
 
