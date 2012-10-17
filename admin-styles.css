@@ -1,0 +1,46 @@
+
+/*clearfix*/
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
+
+
+/*tabs ul*/
+.ytchgtabs ul{
+	margin: 0;
+	padding: 0;
+}
+
+/*tabs li*/
+.ytchgtabs li { 
+	display: inline-block; margin: 1px .2em 0 0; 
+	padding: 0;
+	list-style: none; white-space: nowrap; 
+	position: relative;
+	background: #F3F3F3;
+	border: 1px solid #DFDFDF;
+	border-bottom: none;
+	border-radius: 5px 5px 0 0;
+}
+.ytchgtabs li.active{
+	margin-bottom: -1px;
+	padding-bottom: 1px;
+	background: #FAFAFA;
+}
+
+
+
+/*tabs a*/
+.ytchgtabs a{
+	padding: 5px;
+	display: inline-block;
+}
+
+/*content*/
+.ytchgtabs div {
+
+	border: 1px solid #DFDFDF;
+	padding: 1em 1.4em;
+	background: none;
+	background: #FAFAFA;
+}

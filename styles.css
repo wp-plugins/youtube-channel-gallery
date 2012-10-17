@@ -1,0 +1,70 @@
+/*------------------------------*/	
+/*Youtube Channel Gallery plugin*/
+/*------------------------------*/	
+
+/*clearfix*/
+.ytccf:before,
+.ytccf:after {
+    content: " ";
+    display: table;
+}
+.ytccf:after {
+    clear: both;
+}
+.ytccf {
+    *zoom: 1;
+}
+
+
+/*shortcode wrapper*/
+.ytcshort{
+	margin: 10px 0
+}
+
+/*Player*/
+iframe.ytcplayer{
+	display: block;
+	margin-bottom: 10px;
+	padding: 0;
+
+}
+
+/*Thumbnails*/
+ul.ytchagallery{
+	margin: 0; padding: 0;
+	list-style: none;
+}
+
+ul.ytchagallery li{
+	float:left;  
+	margin: 0 10px 10px 0;padding: 0
+}
+ul.ytchagallery li.ytccell-first{
+	clear: left;
+}
+ul.ytchagallery li.ytccell-last{
+	margin-right: 0;
+}
+ul.ytchagallery li a{
+	display: block;
+	border:1px solid #999;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 110%;
+}
+ul.ytchagallery li a .ytcplay{
+	background: url(img/play.png) -9999px -9999px no-repeat;
+}
+ul.ytchagallery li a:hover{
+	opacity: 0.75;
+}
+ul.ytchagallery li a:hover .ytcplay{
+	background-position: center center;
+}
+
+/*link*/
+.ytcmore{
+	display: block
+}
+
+
