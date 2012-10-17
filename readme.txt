@@ -114,6 +114,7 @@ If you have created your own language pack, or have an update of an existing one
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Place the widget in your desired sidebar through the "widgets" admin page.
 
+
 == Frequently Asked Questions ==
 
 = Where is the “widgets” admin page? =
@@ -124,10 +125,12 @@ The “widgets” admin page is found in the administrator part (wp-admin) of yo
 
 The username who uploaded a video to Youtube is located below each video, where says something like in this example, "Published on June 25, 2012 by DisneyShorts", where DisneyShorts is the username.
 
+
 == Screenshots ==
 
 1. Youtube Channel Gallery admin area.
 2. Youtube Channel Gallery.
+
 
 == Changelog ==
 
