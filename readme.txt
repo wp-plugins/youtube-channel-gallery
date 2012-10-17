@@ -35,6 +35,7 @@ Description of the different fields of the widget.
 * YouTube user name: the username of the user's Youtube videos you want to show.
 
 Player:
+
 * Video width: indicates the width of the video player. Value: Number.
 * Aspect ratio: indicates the proportions of the player, widescreen (16:9) or standard (4:3) format.
 * Theme: display player controls (like a 'play' button or volume control) within a dark or light control bar.
@@ -44,12 +45,14 @@ Player:
 * Show info (title, uploader): Display information like the video title and rating before the video starts playing.
 
 Thumbnails:
+
 * Number of videos to show: It must be a number indicating the number of thumbnails to be displayed.
 * Thumbnail size: indicates the width of the thumbnails. The height is automatically generated.
 * Aspect ratio: indicates the proportions of the thumbnails, widescreen (16:9) or standard (4:3) format.
 * Thumbnail columns: assign a numeric class to each thumbnail based on the number of columns to apply styles to each column.
 
-Link
+Link:
+
 * Link text: field to customize the text of the link to the gallery on YouTube.
 * Show link to channel: option to display a link to the youtube user channel.
 
@@ -77,6 +80,7 @@ The attributes used in the shortcode are the same as the fields available in the
 * user: YouTube user name (required).
 
 Player:
+
 * videowidth: Video width. Values: Number. (optional).
 * ratio: Aspect ratio. Values:  4/3 (default) / 16/9. (optional).
 * theme: Theme. Values: dark (default) / light. (optional).
@@ -86,12 +90,14 @@ Player:
 * showinfo: Show info (title, uploader). Values: 0 (default) / 1. (optional).
 
 Thumbnails:
+
 * maxitems: Number of videos to show. Values: Number. (optional).
 * thumbwidth: Thumbnail size. Values: Number. (optional).
 * thumbratio: Aspect ratio. Values: 4/3 (default) / 16/9. (optional).
 * thumbcolumns: Thumbnail columns. Values: Number. (optional).
 
 Link:
+
 * link_tx: Link text. Values: String. (optional).
 * link: Show link to channel. Values: 0 (default) / 1. (optional).
 
