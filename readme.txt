@@ -63,7 +63,7 @@ If you want to use it as Shortcode:
 `[Youtube_Channel_Gallery 
 user="MaxonC4D" 
 videowidth="500" 
-ratio="16/9" 
+ratio="16x9" 
 theme="light" 
 color="white" 
 autoplay="1" 
@@ -71,7 +71,7 @@ rel="1"
 showinfo="1" 
 maxitems="9" 
 thumbwidth="90" 
-thumbratio="16/9" 
+thumbratio="16x9" 
 thumbcolumns="3"
 ]`
 
@@ -82,7 +82,7 @@ The attributes used in the shortcode are the same as the fields available in the
 Player:
 
 * videowidth: Video width. Values: Number. (optional).
-* ratio: Aspect ratio. Values:  4/3 (default) / 16/9. (optional).
+* ratio: Aspect ratio. Values:  4/3 (default) / 16x9. (optional).
 * theme: Theme. Values: dark (default) / light. (optional).
 * color: Progress bar color. Values: red (default) / white. (optional).
 * autoplay: Autoplay. Values: 0 (default) / 1. (optional).
@@ -93,7 +93,7 @@ Thumbnails:
 
 * maxitems: Number of videos to show. Values: Number. (optional).
 * thumbwidth: Thumbnail size. Values: Number. (optional).
-* thumbratio: Aspect ratio. Values: 4/3 (default) / 16/9. (optional).
+* thumbratio: Aspect ratio. Values: 4/3 (default) / 16x9. (optional).
 * thumbcolumns: Thumbnail columns. Values: Number. (optional).
 
 Link:
