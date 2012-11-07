@@ -1,7 +1,7 @@
 === Youtube Channel Gallery ===
 Contributors: javitxu123
 Donate link: http://poselab.com/
-Tags: widget, gallery, youtube, channel, user
+Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos
 Requires at least: 2.8
 Tested up to: 3.4.1
 Stable tag: 1.6.1
