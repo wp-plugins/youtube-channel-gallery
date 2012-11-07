@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.5.4
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,81 +29,46 @@ You can see a demo of the plugin at the following URL:
 
 
 = Widget fields: =
-Description of the different fields of the widget.
+Description of the different fields of the plugin:
 
 * Title: Widget Title.
-* YouTube user name: the username of the user's Youtube videos you want to show.
+* YouTube user name: the username of the user's Youtube videos you want to show. Shortcode attribute: user; value: String. (Required).
 
 Player:
 
-* Video width: indicates the width of the video player. Value: Number.
-* Aspect ratio: indicates the proportions of the player, widescreen (16:9) or standard (4:3) format.
-* Theme: display player controls (like a 'play' button or volume control) within a dark or light control bar.
-* Progress bar color: specifies the color that will be used in the player's video progress bar to highlight the amount of the video that the viewer has already seen.
-* Autoplay: Automatically play the initial video when the player loads.
-* Show related videos: Load related videos once playback of initial video starts and display in "genie menu" when menu button is pressed.
-* Show info (title, uploader): Display information like the video title and rating before the video starts playing.
+* Video width: indicates the width of the video player. Shortcode attribute: videowidth; value: Number. (Optional).
+* Aspect ratio: indicates the proportions of the player, standard (4:3) or widescreen (16:9) format. Shortcode attribute: ratio; values: 4x3 (default) or 16x9. (Optional).
+* Theme: display player controls (like a 'play' button or volume control) within a dark or light control bar. Shortcode attribute: theme; values: dark (default) or light. (Optional).
+* Progress bar color: specifies the color that will be used in the player's video progress bar to highlight the amount of the video that the viewer has already seen. Shortcode attribute: color; values: red (default) or white. (Optional).
+* Autoplay: automatically play the initial video when the player loads. Shortcode attribute: autoplay; values: 0 (default) or 1. (Optional).
+* Show related videos: this parameter indicates whether the player should show related videos when playback of the initial video ends. Shortcode attribute: rel; values: 0 (default) or 1. (Optional).
+* Show info (title, uploader): display information like the video title and rating before the video starts playing. Shortcode attribute: showinfo; values: 0 (default) or 1. (Optional).
 
 Thumbnails:
 
-* Number of videos to show: It must be a number indicating the number of thumbnails to be displayed.
-* Thumbnail size: indicates the width of the thumbnails. The height is automatically generated.
-* Aspect ratio: indicates the proportions of the thumbnails, widescreen (16:9) or standard (4:3) format.
-* Thumbnail columns: assign a numeric class to each thumbnail based on the number of columns to apply styles to each column.
+* Number of videos to show: it must be a number indicating the number of thumbnails to be displayed. Shortcode attribute: maxitems; value: Number. (Optional).
+* Thumbnail width: indicates the width of the thumbnails. The height is automatically generated based on the aspect ratio selected. Shortcode attribute: thumbwidth; value: Number. (Optional).
+* Aspect ratio: indicates the proportions of the thumbnails, standard (4:3) or widescreen (16:9) format. Shortcode attribute: thumbratio; values: 4x3 (default) or 16x9. (Optional).
+* Thumbnail columns: it allows to control the number of columns in which the thumbnails are distributed. Shortcode attribute: thumbcolumns; value: Number. (Optional).
+* Show title: it displays the title of the thumbnail with a link to play the video in the player. Shortcode attribute: title; values: 0 (default) or 1. (Optional).
+* Show description: it shows the description of the thumbnail with the number of specified words. Shortcode attribute: description; values: 0 (default) or 1. (Optional).
+* Thumbnail alignment: it defines the alignment of the thumbnail respect to its description and title. Shortcode attribute: thumbnail_alignment; values: left (default), right, top or bottom. (Optional).
+* Description words number: the maximum number of words displayed in the description. Shortcode attribute: descriptionwordsnumber; value: Number. (Optional).
 
 Link:
 
-* Link text: field to customize the text of the link to the gallery on YouTube.
-* Show link to channel: option to display a link to the youtube user channel.
+* Link text: field to customize the text of the link to the gallery on YouTube. Shortcode attribute: link_tx; value: String. (Optional).
+* Show link to channel: option to display a link to the youtube user channel. Shortcode attribute: link; values: 0 (default) or 1. (Optional).
 
 
 = Shortcode syntax: =
-If you want to use it as Shortcode:
+In the following example are all attributes that can be used with the shortcode and explained above:
 
-`[Youtube_Channel_Gallery 
-user="MaxonC4D" 
-videowidth="500" 
-ratio="16x9" 
-theme="light" 
-color="white" 
-autoplay="1" 
-rel="1" 
-showinfo="1" 
-maxitems="9" 
-thumbwidth="90" 
-thumbratio="16x9" 
-thumbcolumns="3"
-]`
+`[Youtube_Channel_Gallery user="MaxonC4D" videowidth="500" ratio="16x9" theme="light" color="white" autoplay="1" rel="1" showinfo="1" maxitems="9" thumbwidth="90" thumbratio="16x9" thumbcolumns="3" title="1" description="1" thumbnail_alignment="left" descriptionwordsnumber="10"]`
 
-The attributes used in the shortcode are the same as the fields available in the widget, except the title field.
-
-* user: YouTube user name (required).
-
-Player:
-
-* videowidth: Video width. Values: Number. (optional).
-* ratio: Aspect ratio. Values:  4/3 (default) / 16x9. (optional).
-* theme: Theme. Values: dark (default) / light. (optional).
-* color: Progress bar color. Values: red (default) / white. (optional).
-* autoplay: Autoplay. Values: 0 (default) / 1. (optional).
-* rel: Show related videos. Values: 0 (default) / 1. (optional).
-* showinfo: Show info (title, uploader). Values: 0 (default) / 1. (optional).
-
-Thumbnails:
-
-* maxitems: Number of videos to show. Values: Number. (optional).
-* thumbwidth: Thumbnail size. Values: Number. (optional).
-* thumbratio: Aspect ratio. Values: 4/3 (default) / 16x9. (optional).
-* thumbcolumns: Thumbnail columns. Values: Number. (optional).
-
-Link:
-
-* link_tx: Link text. Values: String. (optional).
-* link: Show link to channel. Values: 0 (default) / 1. (optional).
 
 = Languages: =
 * Spanish (es_ES) - [PoseLab](http://poselab.com/)
-* Brazilian Portuguese (pt_BR). Thanks to Rodny.
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:javierpose@gmail.com) your gettext PO and MO so that I can bundle it into the Youtube Channel Gallery.
 
@@ -129,10 +94,17 @@ The username who uploaded a video to Youtube is located below each video, where 
 == Screenshots ==
 
 1. Youtube Channel Gallery admin area.
-2. Youtube Channel Gallery.
+2. Youtube Channel Gallery example.
+3. Youtube Channel Gallery example.
+4. Youtube Channel Gallery example.
 
 
 == Changelog ==
+
+= 1.6.1 =
+* Added options to show title and description with thumbnails.
+* Added new classes to better manage the final appearance (rows, columns, even, odd, number of row an column).
+* Calculated width between thumbnails.
 
 = 1.5.4 =
 * Corrected error when file_get_contents() is disabled in the server configuration by allow_url_fopen=0.

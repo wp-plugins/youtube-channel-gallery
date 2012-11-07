@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: youtube-channel-gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-17 10:30+0100\n"
-"PO-Revision-Date: 2012-10-17 10:34+0100\n"
+"POT-Creation-Date: 2012-11-07 13:47+0100\n"
+"PO-Revision-Date: 2012-11-07 13:50+0100\n"
 "Last-Translator: Javier <javierpose@gmail.com>\n"
 "Language-Team: PoseLab <javierpose@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -31,98 +31,146 @@ msgstr "Galería de Canal de Youtube"
 msgid "Show a youtube video and a gallery of thumbnails for a youtube channel"
 msgstr "Muestra un vídeo y una galería de miniaturas de una canal de Youtube "
 
-#: youtube-channel-gallery.php:134
+#: youtube-channel-gallery.php:142
 msgid "Title:"
 msgstr "Título:"
 
-#: youtube-channel-gallery.php:139
+#: youtube-channel-gallery.php:147
 msgid "YouTube user name:"
 msgstr "Nombre de usuario de Youtube:"
 
-#: youtube-channel-gallery.php:181
+#: youtube-channel-gallery.php:223
+msgid "Player"
+msgstr "Reproductor"
+
+#: youtube-channel-gallery.php:224
+msgid "Thumbnails"
+msgstr "Miniaturas"
+
+#: youtube-channel-gallery.php:225
+msgid "Link"
+msgstr "Enlace"
+
+#: youtube-channel-gallery.php:238
 msgid "Video width:"
 msgstr "Ancho del vídeo:"
 
-#: youtube-channel-gallery.php:187
-#: youtube-channel-gallery.php:241
+#: youtube-channel-gallery.php:244
+#: youtube-channel-gallery.php:304
 msgid "Aspect ratio:"
 msgstr "Relación de aspecto:"
 
-#: youtube-channel-gallery.php:189
-#: youtube-channel-gallery.php:243
+#: youtube-channel-gallery.php:246
+#: youtube-channel-gallery.php:306
 msgid "Standard (4x3)"
 msgstr "Estándar (4x3)"
 
-#: youtube-channel-gallery.php:190
-#: youtube-channel-gallery.php:244
+#: youtube-channel-gallery.php:247
+#: youtube-channel-gallery.php:307
 msgid "Widescreen (16x9)"
 msgstr "Panorámico (16x9)"
 
-#: youtube-channel-gallery.php:196
+#: youtube-channel-gallery.php:253
 msgid "Theme:"
 msgstr "Tema:"
 
-#: youtube-channel-gallery.php:198
+#: youtube-channel-gallery.php:255
 msgid "Dark"
 msgstr "Oscuro"
 
-#: youtube-channel-gallery.php:199
+#: youtube-channel-gallery.php:256
 msgid "Light"
 msgstr "Claro"
 
-#: youtube-channel-gallery.php:205
+#: youtube-channel-gallery.php:262
 msgid "Progress bar color:"
 msgstr "Color de barra de progreso:"
 
-#: youtube-channel-gallery.php:207
+#: youtube-channel-gallery.php:264
 msgid "Red"
 msgstr "Rojo"
 
-#: youtube-channel-gallery.php:208
+#: youtube-channel-gallery.php:265
 msgid "White"
 msgstr "Blanco"
 
-#: youtube-channel-gallery.php:213
+#: youtube-channel-gallery.php:270
 msgid "Autoplay"
 msgstr "Autoplay"
 
-#: youtube-channel-gallery.php:218
+#: youtube-channel-gallery.php:275
 msgid "Show related videos"
 msgstr "Mostrar los vídeos relacionados"
 
-#: youtube-channel-gallery.php:223
+#: youtube-channel-gallery.php:280
 msgid "Show info (title, uploader)"
 msgstr "Mostrar información (título, cargador)"
 
-#: youtube-channel-gallery.php:230
+#: youtube-channel-gallery.php:293
 msgid "Number of videos to show:"
 msgstr "Número de vídeos a mostrar:"
 
-#: youtube-channel-gallery.php:235
+#: youtube-channel-gallery.php:298
 msgid "Thumbnail width:"
 msgstr "Ancho de miniaturas:"
 
-#: youtube-channel-gallery.php:249
+#: youtube-channel-gallery.php:312
 msgid "Thumbnail columns:"
 msgstr "Columnas de las miniaturas:"
 
-#: youtube-channel-gallery.php:258
+#: youtube-channel-gallery.php:319
+msgid "Show title or description"
+msgstr "Mostrar título y descripción"
+
+#: youtube-channel-gallery.php:326
+msgid "Show title"
+msgstr "Mostrar Título"
+
+#: youtube-channel-gallery.php:331
+msgid "Show description"
+msgstr "Mostrar descripción"
+
+#: youtube-channel-gallery.php:335
+msgid "Thumbnail alignment:"
+msgstr "Alineación de miniaturas:"
+
+#: youtube-channel-gallery.php:337
+msgid "Left"
+msgstr "Izquierda"
+
+#: youtube-channel-gallery.php:338
+msgid "Right"
+msgstr "Derecha"
+
+#: youtube-channel-gallery.php:339
+msgid "Top"
+msgstr "Arriba"
+
+#: youtube-channel-gallery.php:340
+msgid "Bottom"
+msgstr "Abajo"
+
+#: youtube-channel-gallery.php:345
+msgid "Description words number:"
+msgstr "Número de palabras en la descripción:"
+
+#: youtube-channel-gallery.php:366
 msgid "Link text:"
 msgstr "Texto del enlace"
 
-#: youtube-channel-gallery.php:264
+#: youtube-channel-gallery.php:372
 msgid "Show link to channel:"
 msgstr "Mostrar enlace al canal:"
 
-#: youtube-channel-gallery.php:325
+#: youtube-channel-gallery.php:443
 msgid "Show more videos»"
 msgstr "Ver más vídeos»"
 
-#: youtube-channel-gallery.php:358
+#: youtube-channel-gallery.php:614
 msgid "You must insert a valid YouTube user name."
 msgstr "Debe introducir un nombre válido de usuario de YouTube."
 
-#: youtube-channel-gallery.php:447
+#: youtube-channel-gallery.php:619
 msgid "There is no video to show."
 msgstr "No hay ningún vídeo para mostrar."
 
