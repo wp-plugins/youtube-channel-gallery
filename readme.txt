@@ -14,6 +14,18 @@ Show a YouTube video and a gallery of thumbnails for a youtube channel.
 
 Show a youtube video and a gallery of thumbnails for a youtube user channel. 
 
+
+= Demo: =
+You can see a demo of the plugin in the following URLs:
+
+* [Widget Demo](http://poselab.com/youtube-channel-gallery)
+* [Demo only with thumbnails](http://poselab.com/youtube-channel-gallery-demo-solo-con-miniaturas)
+* [Demo with title and description and thumbnail at top](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-descripcion-y-miniatura-arriba)
+* [Demo with title and thumbnail at top](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-miniatura-arriba)
+* [Demo with title and description and thumbnail on the left](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-descripcion-y-miniatura-a-la-izquierda)
+* [Demo with title and thumbnail at bottom](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-miniatura-abajo)
+
+
 = Features: =
 * Display latest thumbnail videos from YouTube user channel.
 * When you click on one of the thumbnails the video plays at the top.
@@ -22,43 +34,37 @@ Show a youtube video and a gallery of thumbnails for a youtube user channel.
 * You can use multiple instances of the plugin on the same page.
 
 
-= Demo: =
-You can see a demo of the plugin at the following URL:
-
-[Youtube Channel Gallery Demo](http://poselab.com/youtube-channel-gallery)
-
-
 = Widget fields: =
 Description of the different fields of the plugin:
 
-* Title: Widget Title.
-* YouTube user name: the username of the user's Youtube videos you want to show. Shortcode attribute: user; value: String. (Required).
+* **Title:** Widget Title.
+* **YouTube user name:** the username of the user's Youtube videos you want to show. Shortcode attribute: user; value: String. (Required).
 
-Player:
+**Player tab:**
 
-* Video width: indicates the width of the video player. Shortcode attribute: videowidth; value: Number. (Optional).
-* Aspect ratio: indicates the proportions of the player, standard (4:3) or widescreen (16:9) format. Shortcode attribute: ratio; values: 4x3 (default) or 16x9. (Optional).
-* Theme: display player controls (like a 'play' button or volume control) within a dark or light control bar. Shortcode attribute: theme; values: dark (default) or light. (Optional).
-* Progress bar color: specifies the color that will be used in the player's video progress bar to highlight the amount of the video that the viewer has already seen. Shortcode attribute: color; values: red (default) or white. (Optional).
-* Autoplay: automatically play the initial video when the player loads. Shortcode attribute: autoplay; values: 0 (default) or 1. (Optional).
-* Show related videos: this parameter indicates whether the player should show related videos when playback of the initial video ends. Shortcode attribute: rel; values: 0 (default) or 1. (Optional).
-* Show info (title, uploader): display information like the video title and rating before the video starts playing. Shortcode attribute: showinfo; values: 0 (default) or 1. (Optional).
+* **Video width:** indicates the width of the video player. Shortcode attribute: videowidth; value: Number. (Optional).
+* **Aspect ratio:** indicates the proportions of the player, standard (4:3) or widescreen (16:9) format. Shortcode attribute:** ratio; values: 4x3 (default) or 16x9. (Optional).
+* **Theme:** display player controls (like a 'play' button or volume control) within a dark or light control bar. Shortcode attribute: theme; values: dark (default) or light. (Optional).
+* **Progress bar color:** specifies the color that will be used in the player's video progress bar to highlight the amount of the video that the viewer has already seen. Shortcode attribute: color; values: red (default) or white. (Optional).
+* **Autoplay:** automatically play the initial video when the player loads. Shortcode attribute: autoplay; values: 0 (default) or 1. (Optional).
+* **Show related videos:** this parameter indicates whether the player should show related videos when playback of the initial video ends. Shortcode attribute: rel; values: 0 (default) or 1. (Optional).
+* **Show info (title, uploader):** display information like the video title and rating before the video starts playing. Shortcode attribute: showinfo; values: 0 (default) or 1. (Optional).
 
-Thumbnails:
+**Thumbnails tab:**
 
-* Number of videos to show: it must be a number indicating the number of thumbnails to be displayed. Shortcode attribute: maxitems; value: Number. (Optional).
-* Thumbnail width: indicates the width of the thumbnails. The height is automatically generated based on the aspect ratio selected. Shortcode attribute: thumbwidth; value: Number. (Optional).
-* Aspect ratio: indicates the proportions of the thumbnails, standard (4:3) or widescreen (16:9) format. Shortcode attribute: thumbratio; values: 4x3 (default) or 16x9. (Optional).
-* Thumbnail columns: it allows to control the number of columns in which the thumbnails are distributed. Shortcode attribute: thumbcolumns; value: Number. (Optional).
-* Show title: it displays the title of the thumbnail with a link to play the video in the player. Shortcode attribute: title; values: 0 (default) or 1. (Optional).
-* Show description: it shows the description of the thumbnail with the number of specified words. Shortcode attribute: description; values: 0 (default) or 1. (Optional).
-* Thumbnail alignment: it defines the alignment of the thumbnail respect to its description and title. Shortcode attribute: thumbnail_alignment; values: left (default), right, top or bottom. (Optional).
-* Description words number: the maximum number of words displayed in the description. Shortcode attribute: descriptionwordsnumber; value: Number. (Optional).
+* **Number of videos to show:** it must be a number indicating the number of thumbnails to be displayed. Shortcode attribute: maxitems; value: Number. (Optional).
+* **Thumbnail width:** indicates the width of the thumbnails. The height is automatically generated based on the aspect ratio selected. Shortcode attribute: thumbwidth; value: Number. (Optional).
+* **Aspect ratio:** indicates the proportions of the thumbnails, standard (4:3) or widescreen (16:9) format. Shortcode attribute: thumbratio; values: 4x3 (default) or 16x9. (Optional).
+* **Thumbnail columns:** it allows to control the number of columns in which the thumbnails are distributed. Shortcode attribute: thumbcolumns; value: Number. (Optional).
+* **Show title:** it displays the title of the thumbnail with a link to play the video in the player. Shortcode attribute: title; values: 0 (default) or 1. (Optional).
+* **Show description:** it shows the description of the thumbnail with the number of specified words. Shortcode attribute: description; values: 0 (default) or 1. (Optional).
+* **Thumbnail alignment:** it defines the alignment of the thumbnail respect to its description and title. Shortcode attribute: thumbnail_alignment; values: left (default), right, top or bottom. (Optional).
+* **Description words number:** the maximum number of words displayed in the description. Shortcode attribute: descriptionwordsnumber; value: Number. (Optional).
 
-Link:
+**Link tab:**
 
-* Link text: field to customize the text of the link to the gallery on YouTube. Shortcode attribute: link_tx; value: String. (Optional).
-* Show link to channel: option to display a link to the youtube user channel. Shortcode attribute: link; values: 0 (default) or 1. (Optional).
+* **Link text:** field to customize the text of the link to the gallery on YouTube. Shortcode attribute: link_tx; value: String. (Optional).
+* **Show link to channel:** option to display a link to the youtube user channel. Shortcode attribute: link; values: 0 (default) or 1. (Optional).
 
 
 = Shortcode syntax: =
