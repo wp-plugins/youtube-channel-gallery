@@ -19,24 +19,24 @@ iframe.ytcplayer{display: block;margin-bottom: 10px;padding: 0;}
 
 /*Thumbnails, title and description*/
 /*---------------------------------------------------*/
-ul.ytchagallery{margin: 0; padding: 0;list-style: none;}
-ul.ytchagallery li{float:left;padding:0;margin: 0}
-ul.ytchagallery li.ytccell-first{clear: left;}
+ul.ytchagallery.ytccf{margin: 0; padding: 0;list-style: none;}
+ul.ytchagallery.ytccf li{float:left;padding:0;margin: 0}
+ul.ytchagallery.ytccf li.ytccell-first{clear: left;}
 
 	/*Thumbnails*/
-	ul.ytchagallery div.ytcthumb-cont{float: left;}
-	ul.ytchagallery li a.ytcthumb{display: inline-block;border:1px solid #999;background-position: center center;background-size: 110%;background-repeat: no-repeat;}
-	ul.ytchagallery li a.ytcthumb .ytcplay{background: url(img/play.png) -9999px -9999px no-repeat;}
-	ul.ytchagallery li a.ytcthumb:hover{opacity: 0.75;}
-	ul.ytchagallery li a.ytcthumb:hover .ytcplay{background-position: center center;}
+	ul.ytchagallery.ytccf div.ytcthumb-cont{float: left;}
+	ul.ytchagallery.ytccf li a.ytcthumb{display: inline-block;border:1px solid #999;background-position: center center;background-size: 110%;background-repeat: no-repeat;}
+	ul.ytchagallery.ytccf li a.ytcthumb .ytcplay{background: url(img/play.png) -9999px -9999px no-repeat;}
+	ul.ytchagallery.ytccf li a.ytcthumb:hover{opacity: 0.75;}
+	ul.ytchagallery.ytccf li a.ytcthumb:hover .ytcplay{background-position: center center;}
 
 	/*Title and description*/
 
-		ul.ytchagallery .ytctitle a{word-wrap: break-word; 
+		ul.ytchagallery.ytccf .ytctitle a{word-wrap: break-word; 
 		/*delete*/	font-size: 12px; font-family: Arial; /*end delete*/
 		}
 
-		/*delete*/ul.ytchagallery .ytctitle{line-height: 1}
+		/*delete*/ul.ytchagallery.ytccf .ytctitle{line-height: 1}
 
 		/*left*/
 		ul.ytchagallery.ytc-td-left div.ytcthumb-cont{margin: 0 5px 5px 0}
@@ -85,8 +85,8 @@ ul.ytchagallery li.ytccell-first{clear: left;}
 	.ytc-columns10 li{ width: 20%; width:-webkit-calc(100%/10 + 10px/(10 - 1)); width:calc(100%/10 + 10px/(10 - 1));}
 	.ytc-columns10 li.ytccell-last{width:-webkit-calc(100%/10 - 10px); width:calc(100%/10 - 10px);}
 
-	ul.ytchagallery li .ytcliinner{padding: 0 10px 10px 0;overflow: hidden;}
-	ul.ytchagallery li.ytccell-last .ytcliinner{padding-right: 0;}
+	ul.ytchagallery.ytccf li .ytcliinner{padding: 0 10px 10px 0;overflow: hidden;}
+	ul.ytchagallery.ytccf li.ytccell-last .ytcliinner{padding-right: 0;}
 	
 
 /*link to YouTube*/

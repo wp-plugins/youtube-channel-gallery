@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.6.1
+	Version: 1.6.2
 	License: GPL2
 		
 		Copyright 2010 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -537,7 +537,8 @@
 							$columnlastfirst = '';
 							if($ytchag_thumb_columns !=0 && $column%$ytchag_thumb_columns === 0){
 								$columnlastfirst = ' ytccell-last';
-							} else if($ytchag_thumb_columns !=0 && $column === 1){
+							}
+							if($ytchag_thumb_columns !=0 && $column === 1){
 								$columnlastfirst = ' ytccell-first';
 								STATIC $rowcount = 0;
 								$rowcount++;					
@@ -567,10 +568,11 @@
 
 
 							if($columnlastfirst == ' ytccell-first'){
-								$content.= '<div class="ytccf ytc-row ytc-r-' . $rowcount . $row_oddeven . ' ">';
+								$content.=  "\n\n" .'<div class="ytccf ytc-row ytc-r-' . $rowcount . $row_oddeven . ' ">' . "\n\n";
 							}
 
-							$content.= '<li class="ytccell-' . $column . $columnlastfirst . '">';
+							//$content.= '$column: ' + $column;
+							$content.=  "\n\n" . '	<li class="ytccell-' . $column . $columnlastfirst . '">';
 
 								if($ytchag_thumb_columns !=0 && $column%$ytchag_thumb_columns === 0 ){
 									$column = 0;								
@@ -598,10 +600,15 @@
 							$content.= '</li>' . "\n\n";
 
 							if($columnlastfirst == ' ytccell-last'){
-								$content.= '</div>';
+								$content.= '</div>' . "\n\n\n";
 							}
 							
 						} //foreach end
+
+						//if last row 
+						if($ytchag_thumb_columns !=0 && $columnlastfirst != ' ytccell-last'){
+								$content.= '</div>' . "\n\n\n";
+						}
 
 						$content.= '</ul>';
 

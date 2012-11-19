@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -106,6 +106,10 @@ The username who uploaded a video to Youtube is located below each video, where 
 
 
 == Changelog ==
+
+= 1.6.2 =
+* Fixed bug with columns.
+* Fixed issue with CSS.
 
 = 1.6.1 =
 * Added options to show title and description with thumbnails.
