@@ -1,23 +1,33 @@
-//thumbnails
-var ytcplayer = {};
+jQuery(document).ready(function(){
 
-function ytcplayVideo (iframeid, youtubeid) {
+	//thumbnails
+	var ytcplayer = {};
+	$('.ytcthumb').click(function(){
+		var iframeid = $(this).attr('data-playerid');
+		var youtubeid = $(this).attr('href').split("youtu.be/")[1];
+		var quality = $(this).attr('data-quality');
+		ytcplayVideo (iframeid, youtubeid, quality);
 
-	if(iframeid in ytcplayer) { 
-		ytcplayer[iframeid].loadVideoById(youtubeid); 
-	}else{
-		ytcplayer[iframeid] = new YT.Player(iframeid, {
-			events: { 
-				'onReady': function(){
-					ytcplayer[iframeid].loadVideoById(youtubeid);
+		return false;
+	});
+
+	function ytcplayVideo (iframeid, youtubeid, quality) {
+		if(iframeid in ytcplayer) { 
+			ytcplayer[iframeid].loadVideoById(youtubeid); 
+		}else{
+			ytcplayer[iframeid] = new YT.Player(iframeid, {
+				events: { 
+					'onReady': function(){
+						ytcplayer[iframeid].loadVideoById(youtubeid);
+						ytcplayer[iframeid].setPlaybackQuality(quality);
+					}
 				}
-			}
-		});
+			});
+		}
+
 	}
 
-}
 
-jQuery(document).ready(function(){
 	//Equal Height Blocks in Rows
 	//http://css-tricks.com/equal-height-blocks-in-rows/
 	var currentTallest = 0,

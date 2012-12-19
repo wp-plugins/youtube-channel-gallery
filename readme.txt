@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.6.2
+Stable tag: 1.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,7 +27,7 @@ You can see a demo of the plugin in the following URLs:
 
 
 = Features: =
-* Display latest thumbnail videos from YouTube user channel.
+* Display latest thumbnail videos from YouTube user channel or playlist.
 * When you click on one of the thumbnails the video plays at the top.
 * This plugin uses the YouTube IFrame player API that allows YouTube to serve an HTML5 player, rather than a Flash player, for mobile devices that do not support Flash.
 * You can choose to use this plugin as a widget or as a shortcode.
@@ -38,7 +38,11 @@ You can see a demo of the plugin in the following URLs:
 Description of the different fields of the plugin:
 
 * **Title:** Widget Title.
-* **YouTube user name:** the username of the user's Youtube videos you want to show. Shortcode attribute: user; value: String. (Required).
+
+**Feed tab:**
+
+* **YouTube user name:** the user id of the user's Youtube videos you want to show or the id of the playlist. Shortcode attribute: user; value: String. (Required).
+* **Video feed type:** option to select the feed type to use to show videos. Yo can select uploaded by the user or playlist. Shortcode attribute: feed; value: user (default) or playlist. (Optional).
 
 **Player tab:**
 
@@ -46,6 +50,7 @@ Description of the different fields of the plugin:
 * **Aspect ratio:** indicates the proportions of the player, standard (4:3) or widescreen (16:9) format. Shortcode attribute:** ratio; values: 4x3 (default) or 16x9. (Optional).
 * **Theme:** display player controls (like a 'play' button or volume control) within a dark or light control bar. Shortcode attribute: theme; values: dark (default) or light. (Optional).
 * **Progress bar color:** specifies the color that will be used in the player's video progress bar to highlight the amount of the video that the viewer has already seen. Shortcode attribute: color; values: red (default) or white. (Optional).
+* **Video quality:** sets the suggested video quality for the videos. The suggested quality parameter value can be small, medium, large, hd720, hd1080, highres or default. YouTube recommend that you set the parameter value to default, which instructs YouTube to select the most appropriate playback quality, which will vary for different users, videos, systems and other playback conditions. If you set suggested quality level that is not available for the video, then the quality will be set to the next lowest level that is available. Shortcode attribute: quality; values: small, medium, large, hd720, hd1080, highres or default (default). (Optional).
 * **Autoplay:** automatically play the initial video when the player loads. Shortcode attribute: autoplay; values: 0 (default) or 1. (Optional).
 * **Show related videos:** this parameter indicates whether the player should show related videos when playback of the initial video ends. Shortcode attribute: rel; values: 0 (default) or 1. (Optional).
 * **Show info (title, uploader):** display information like the video title and rating before the video starts playing. Shortcode attribute: showinfo; values: 0 (default) or 1. (Optional).
@@ -65,12 +70,13 @@ Description of the different fields of the plugin:
 
 * **Link text:** field to customize the text of the link to the gallery on YouTube. Shortcode attribute: link_tx; value: String. (Optional).
 * **Show link to channel:** option to display a link to the youtube user channel. Shortcode attribute: link; values: 0 (default) or 1. (Optional).
+* **Open in a new window or tab:** option to open the link to YouTube in a new window or tab . Shortcode attribute: link_window; values: 0 (default) or 1. (Optional).
 
 
 = Shortcode syntax: =
 In the following example are all attributes that can be used with the shortcode and explained above:
 
-`[Youtube_Channel_Gallery user="MaxonC4D" videowidth="500" ratio="16x9" theme="light" color="white" autoplay="1" rel="1" showinfo="1" maxitems="9" thumbwidth="90" thumbratio="16x9" thumbcolumns="3" title="1" description="1" thumbnail_alignment="left" descriptionwordsnumber="10"]`
+`[Youtube_Channel_Gallery feed="user" user="MaxonC4D" videowidth="500" ratio="16x9" theme="light" color="white" quality="small" autoplay="1" rel="1" showinfo="1" maxitems="9" thumbwidth="90" thumbratio="16x9" thumbcolumns="3" title="1" description="1" thumbnail_alignment="left" descriptionwordsnumber="10" link_window="0"]`
 
 
 = Languages: =
@@ -92,20 +98,29 @@ If you have created your own language pack, or have an update of an existing one
 
 The “widgets” admin page is found in the administrator part (wp-admin) of your WordPress site. Go to Appearance > Widgets.
 
-= How do I find the YouTube user name? =
+= How do I find the YouTube user id? =
 
 The username who uploaded a video to Youtube is located below each video, where says something like in this example, "Published on June 25, 2012 by DisneyShorts", where DisneyShorts is the username.
 
 
 == Screenshots ==
 
-1. Youtube Channel Gallery admin area.
-2. Youtube Channel Gallery example.
+1. Youtube Channel Gallery widget: Feed and Player tabs.
+2. Youtube Channel Gallery widget: Thumbnails and Link tabs.
 3. Youtube Channel Gallery example.
 4. Youtube Channel Gallery example.
+5. Youtube Channel Gallery example.
 
 
 == Changelog ==
+
+= 1.7.2 =
+* Added playlist feed support.
+* Added control to select video quality.
+* Added control to open link to Youtube in a new window.
+* Improved accessibility of video links. 
+* Fixed bug with 1 column.
+* CSS improvements.
 
 = 1.6.2 =
 * Fixed bug with columns.

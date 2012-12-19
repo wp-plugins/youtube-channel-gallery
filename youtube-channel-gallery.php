@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.6.2
+	Version: 1.7.2
 	License: GPL2
 		
 		Copyright 2010 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -77,6 +77,9 @@
 		public function update( $new_instance, $old_instance ) {
 			$instance = $old_instance;
 			$instance['title'] = strip_tags( $new_instance['title'] );
+
+			// Feed options
+			$instance['ytchag_feed'] = strip_tags( $new_instance['ytchag_feed'] );
 			$instance['ytchag_user'] = strip_tags( $new_instance['ytchag_user'] );
 
 			// Player options
@@ -84,6 +87,7 @@
 			$instance['ytchag_ratio'] = strip_tags( $new_instance['ytchag_ratio'] );
 			$instance['ytchag_theme'] = strip_tags( $new_instance['ytchag_theme'] );
 			$instance['ytchag_color'] = strip_tags( $new_instance['ytchag_color'] );
+			$instance['ytchag_quality'] = strip_tags( $new_instance['ytchag_quality'] );
 			$instance['ytchag_autoplay'] = strip_tags( $new_instance['ytchag_autoplay'] );
 			$instance['ytchag_rel'] = strip_tags( $new_instance['ytchag_rel'] );
 			$instance['ytchag_showinfo'] = strip_tags( $new_instance['ytchag_showinfo'] );	
@@ -101,6 +105,7 @@
 			// Link options
 			$instance['ytchag_link'] = $new_instance['ytchag_link'];
 			$instance['ytchag_link_tx'] = strip_tags( $new_instance['ytchag_link_tx'] );
+			$instance['ytchag_link_window'] = strip_tags( $new_instance['ytchag_link_window'] );
 
 			return $instance;
 		}
@@ -109,31 +114,36 @@
 		 * Back-end widget form.
 		 */
 		public function form( $instance ) {
-			$title = esc_attr($instance['title']);
-			$ytchag_user = strip_tags($instance['ytchag_user']);
+			$title = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
+
+			// Feed options
+			$ytchag_feed = isset( $instance['ytchag_feed'] ) ? esc_attr( $instance['ytchag_feed'] ) : '';
+			$ytchag_user = isset( $instance['ytchag_user'] ) ? esc_attr( $instance['ytchag_user'] ) : ''; //left ytchag_user variable name for backward compatibility
 
 			// Player options
-			$ytchag_video_width = strip_tags($instance['ytchag_video_width']);
-			$ytchag_ratio = strip_tags($instance['ytchag_ratio']);
-			$ytchag_theme = strip_tags($instance['ytchag_theme']);
-			$ytchag_color = strip_tags($instance['ytchag_color']);
-			$ytchag_autoplay = strip_tags($instance['ytchag_autoplay']);
-			$ytchag_rel = strip_tags($instance['ytchag_rel']);
-			$ytchag_showinfo = strip_tags($instance['ytchag_showinfo']);
+			$ytchag_video_width = isset( $instance['ytchag_video_width'] ) ? esc_attr( $instance['ytchag_video_width'] ) : ''; 
+			$ytchag_ratio = isset( $instance['ytchag_ratio'] ) ? esc_attr( $instance['ytchag_ratio'] ) : ''; 
+			$ytchag_theme = isset( $instance['ytchag_theme'] ) ? esc_attr( $instance['ytchag_theme'] ) : ''; 
+			$ytchag_color = isset( $instance['ytchag_color'] ) ? esc_attr( $instance['ytchag_color'] ) : ''; 
+			$ytchag_quality = isset( $instance['ytchag_quality'] ) ? esc_attr( $instance['ytchag_quality'] ) : ''; 
+			$ytchag_autoplay = isset( $instance['ytchag_autoplay'] ) ? esc_attr( $instance['ytchag_autoplay'] ) : ''; 
+			$ytchag_rel = isset( $instance['ytchag_rel'] ) ? esc_attr( $instance['ytchag_rel'] ) : ''; 
+			$ytchag_showinfo = isset( $instance['ytchag_showinfo'] ) ? esc_attr( $instance['ytchag_showinfo'] ) : ''; 
 
 			// Thumbnail options
-			$ytchag_maxitems = strip_tags($instance['ytchag_maxitems']);
-			$ytchag_thumb_width = strip_tags($instance['ytchag_thumb_width']);
-			$ytchag_thumb_ratio = strip_tags($instance['ytchag_thumb_ratio']);
-			$ytchag_thumb_columns = strip_tags($instance['ytchag_thumb_columns']);
-			$ytchag_title = strip_tags($instance['ytchag_title']);
-			$ytchag_description = strip_tags($instance['ytchag_description']);
-			$ytchag_thumbnail_alignment = strip_tags($instance['ytchag_thumbnail_alignment']);
-			$ytchag_description_words_number = strip_tags($instance['ytchag_description_words_number']);
+			$ytchag_maxitems = isset( $instance['ytchag_maxitems'] ) ? esc_attr( $instance['ytchag_maxitems'] ) : ''; 
+			$ytchag_thumb_width = isset( $instance['ytchag_thumb_width'] ) ? esc_attr( $instance['ytchag_thumb_width'] ) : ''; 
+			$ytchag_thumb_ratio = isset( $instance['ytchag_thumb_ratio'] ) ? esc_attr( $instance['ytchag_thumb_ratio'] ) : ''; 
+			$ytchag_thumb_columns = isset( $instance['ytchag_thumb_columns'] ) ? esc_attr( $instance['ytchag_thumb_columns'] ) : ''; 
+			$ytchag_title = isset( $instance['ytchag_title'] ) ? esc_attr( $instance['ytchag_title'] ) : ''; 
+			$ytchag_description = isset( $instance['ytchag_description'] ) ? esc_attr( $instance['ytchag_description'] ) : ''; 
+			$ytchag_thumbnail_alignment = isset( $instance['ytchag_thumbnail_alignment'] ) ? esc_attr( $instance['ytchag_thumbnail_alignment'] ) : ''; 
+			$ytchag_description_words_number = isset( $instance['ytchag_description_words_number'] ) ? esc_attr( $instance['ytchag_description_words_number'] ) : ''; 
 
 			// Link options
-			$ytchag_link = esc_attr($instance['ytchag_link']);
-			$ytchag_link_tx = strip_tags($instance['ytchag_link_tx']);
+			$ytchag_link = isset( $instance['ytchag_link'] ) ? esc_attr( $instance['ytchag_link'] ) : 0;
+			$ytchag_link_tx = isset( $instance['ytchag_link_tx'] ) ? esc_attr( $instance['ytchag_link_tx'] ) : '';
+			$ytchag_link_window = isset( $instance['ytchag_link_window'] ) ? esc_attr( $instance['ytchag_link_window'] ) : 0; 
 
 			?>
 
@@ -142,12 +152,6 @@
 					<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'youtube-channel-gallery' ); ?></label> 
 					<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 				</p>
-
-				<p>
-					<label for="<?php echo $this->get_field_id( 'ytchag_user' ); ?>"><?php _e( 'YouTube user name:', 'youtube-channel-gallery' ); ?></label>
-					<input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_user' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_user' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_user ); ?>" />
-				</p>
-
 
 				<script type="text/javascript">
 					jQuery(document).ready(function($) {
@@ -177,7 +181,7 @@
 						show_title_description ();
 
 
-						$('#tabs-<?php echo $this->id; ?>-2 .ytchg-tit-desc a').click(function(){
+						$('#tabs-<?php echo $this->id; ?>-3 .ytchg-tit-desc a').click(function(){
 							if(!$(this).parent().parent().hasClass('active')){
 								slide_title_description ( 'slideDown' );								
 							} else{
@@ -189,27 +193,46 @@
 
 						function slide_title_description ( action ){
 							if(action == 'slideDown'){								
-								$('#tabs-<?php echo $this->id; ?>-2 .ytchg-title-and-description').slideDown('fast');
-								$('#tabs-<?php echo $this->id; ?>-2 fieldset.ytchg-field-tit-desc').addClass('ytchg-fieldborder active');
+								$('#tabs-<?php echo $this->id; ?>-3 .ytchg-title-and-description').slideDown('fast');
+								$('#tabs-<?php echo $this->id; ?>-3 fieldset.ytchg-field-tit-desc').addClass('ytchg-fieldborder active');
 							} else if(action == 'slideUp'){
-								$('#tabs-<?php echo $this->id; ?>-2 .ytchg-title-and-description').slideUp('fast');
-								$('#tabs-<?php echo $this->id; ?>-2 fieldset.ytchg-field-tit-desc').removeClass('ytchg-fieldborder active');
+								$('#tabs-<?php echo $this->id; ?>-3 .ytchg-title-and-description').slideUp('fast');
+								$('#tabs-<?php echo $this->id; ?>-3 fieldset.ytchg-field-tit-desc').removeClass('ytchg-fieldborder active');
 							}
 						}
 
 						function show_title_description (){
-							if( $('#tabs-<?php echo $this->id; ?>-2 .ytchg-tit').is(':checked') || $('#tabs-<?php echo $this->id; ?>-2 .ytchg-desc').is(':checked')){
-								$('#tabs-<?php echo $this->id; ?>-2 .ytchg-title-and-description').show();
-								$('#tabs-<?php echo $this->id; ?>-2 fieldset.ytchg-field-tit-desc').addClass('ytchg-fieldborder active');
+							if( $('#tabs-<?php echo $this->id; ?>-3 .ytchg-tit').is(':checked') || $('#tabs-<?php echo $this->id; ?>-3 .ytchg-desc').is(':checked')){
+								$('#tabs-<?php echo $this->id; ?>-3 .ytchg-title-and-description').show();
+								$('#tabs-<?php echo $this->id; ?>-3 fieldset.ytchg-field-tit-desc').addClass('ytchg-fieldborder active');
 							} else{
-								$('#tabs-<?php echo $this->id; ?>-2 .ytchg-title-and-description').hide();
+								$('#tabs-<?php echo $this->id; ?>-3 .ytchg-title-and-description').hide();
 
 							}
 						}
 
-						/*
-						*/
 
+						//Feed label title
+						//---------------
+						var feedselect = '#<?php echo $this->get_field_id( 'ytchag_feed' ); ?>';
+						var userLabel = 'label[for="<?php echo $this->get_field_id( 'ytchag_user' ); ?>"]';
+
+						changeFeedTitle ();
+						$(feedselect).change(function () {
+							changeFeedTitle ();
+						});
+
+						function changeFeedTitle (){
+							if($(feedselect + ' option:selected').val() == 'user'){
+								$(userLabel).text('<?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?>');								
+							}
+							if($(feedselect + ' option:selected').val() == 'userfav'){
+								$(userLabel).text('<?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?>');								
+							}
+							if($(feedselect + ' option:selected').val() == 'playlist'){
+								$(userLabel).text('<?php _e( 'YouTube playlist id:', 'youtube-channel-gallery' ); ?>');								
+							}
+						}
 					});
 				</script>
 
@@ -220,10 +243,36 @@
 
 
 					<ul class="ytchgtabs-tabs">
-						<li><a href="#tabs-<?php echo $this->id; ?>-1"><?php _e( 'Player', 'youtube-channel-gallery' ); ?></a></li>
-						<li><a href="#tabs-<?php echo $this->id; ?>-2"><?php _e( 'Thumbnails', 'youtube-channel-gallery' ); ?></a></li>
-						<li><a href="#tabs-<?php echo $this->id; ?>-3"><?php _e( 'Link', 'youtube-channel-gallery' ); ?></a></li>
+						<li><a href="#tabs-<?php echo $this->id; ?>-1"><?php _e( 'Feed', 'youtube-channel-gallery' ); ?></a></li>
+						<li><a href="#tabs-<?php echo $this->id; ?>-2"><?php _e( 'Player', 'youtube-channel-gallery' ); ?></a></li>
+						<li><a href="#tabs-<?php echo $this->id; ?>-3"><?php _e( 'Thumbnails', 'youtube-channel-gallery' ); ?></a></li>
+						<li><a href="#tabs-<?php echo $this->id; ?>-4"><?php _e( 'Link', 'youtube-channel-gallery' ); ?></a></li>
 					</ul>
+
+
+					<?php 
+					/*
+					Feed Tab
+					--------------------
+					*/
+					?>
+					<div id="tabs-<?php echo $this->id; ?>-1" class="ytchgtabs-content">
+
+						<p>
+							<label for="ytchag_feed"><?php _e( 'Video feed type:', 'youtube-channel-gallery' ); ?></label>
+							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_feed' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_feed' ); ?>">
+								<option value="user"<?php selected( $instance['ytchag_feed'], 'user' ); ?>><?php _e( 'Uploaded by a user', 'youtube-channel-gallery' ); ?></option>
+								<?php /*<option value="favorites"<?php selected( $instance['ytchag_feed'], 'favorites' ); ?>><?php _e( 'User\'s favorites', 'youtube-channel-gallery' ); ?></option>*/?>
+								<option value="playlist"<?php selected( $instance['ytchag_feed'], 'playlist' ); ?>><?php _e( 'Playlist', 'youtube-channel-gallery' ); ?></option>
+							</select>
+						</p>
+
+						<p>
+							<label for="<?php echo $this->get_field_id( 'ytchag_user' ); ?>"><?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?></label>
+							<input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_user' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_user' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_user ); ?>" />
+						</p>
+
+					</div>
 
 
 					<?php 
@@ -232,7 +281,7 @@
 					--------------------
 					*/
 					?>
-					<div id="tabs-<?php echo $this->id; ?>-1" class="ytchgtabs-content">
+					<div id="tabs-<?php echo $this->id; ?>-2" class="ytchgtabs-content">
 
 						<p>
 							<label for="ytchag_video_width"><?php _e( 'Video width:', 'youtube-channel-gallery' ); ?></label>
@@ -240,7 +289,6 @@
 						</p>
 
 						<p>
-
 							<label for="ytchag_ratio"><?php _e( 'Aspect ratio:', 'youtube-channel-gallery' ); ?></label>
 							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_ratio' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_ratio' ); ?>">
 								<option value="4x3"<?php selected( $instance['ytchag_ratio'], '4x3' ); ?>><?php _e( 'Standard (4x3)', 'youtube-channel-gallery' ); ?></option>
@@ -249,7 +297,6 @@
 						</p>
 
 						<p>
-
 							<label for="ytchag_theme"><?php _e( 'Theme:', 'youtube-channel-gallery' ); ?></label>
 							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_theme' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_theme' ); ?>">
 								<option value="dark"<?php selected( $instance['ytchag_theme'], 'dark' ); ?>><?php _e( 'Dark', 'youtube-channel-gallery' ); ?></option>
@@ -258,11 +305,23 @@
 						</p>
 
 						<p>
-
 							<label for="ytchag_color"><?php _e( 'Progress bar color:', 'youtube-channel-gallery' ); ?></label>
 							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_color' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_color' ); ?>">
 								<option value="red"<?php selected( $instance['ytchag_color'], 'red' ); ?>><?php _e( 'Red', 'youtube-channel-gallery' ); ?></option>
 								<option value="white"<?php selected( $instance['ytchag_color'], 'white' ); ?>><?php _e( 'White', 'youtube-channel-gallery' ); ?></option>
+							</select>
+						</p>
+
+						<p>
+							<label for="ytchag_quality"><?php _e( 'Video quality:', 'youtube-channel-gallery' ); ?></label>
+							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_quality' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_quality' ); ?>">
+								<option value="default"<?php selected( $instance['ytchag_quality'], 'default' ); ?>><?php _e( 'default', 'youtube-channel-gallery' ); ?></option>
+								<option value="highres"<?php selected( $instance['ytchag_quality'], 'highres' ); ?>><?php _e( 'highres', 'youtube-channel-gallery' ); ?></option>
+								<option value="hd1080"<?php selected( $instance['ytchag_quality'], 'hd1080' ); ?>><?php _e( 'hd1080', 'youtube-channel-gallery' ); ?></option>
+								<option value="hd720"<?php selected( $instance['ytchag_quality'], 'hd720' ); ?>><?php _e( 'hd720', 'youtube-channel-gallery' ); ?></option>
+								<option value="large"<?php selected( $instance['ytchag_quality'], 'large' ); ?>><?php _e( 'large', 'youtube-channel-gallery' ); ?></option>
+								<option value="medium"<?php selected( $instance['ytchag_quality'], 'medium' ); ?>><?php _e( 'medium', 'youtube-channel-gallery' ); ?></option>
+								<option value="small"<?php selected( $instance['ytchag_quality'], 'small' ); ?>><?php _e( 'small', 'youtube-channel-gallery' ); ?></option>
 							</select>
 						</p>
 														 
@@ -288,7 +347,7 @@
 					--------------------
 					*/
 					?>
-					<div id="tabs-<?php echo $this->id; ?>-2">
+					<div id="tabs-<?php echo $this->id; ?>-3">
 						<p>
 							<label for="ytchag_maxitems"><?php _e( 'Number of videos to show:', 'youtube-channel-gallery' ); ?></label>
 							<input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_maxitems' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_maxitems' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_maxitems ); ?>" />
@@ -360,7 +419,7 @@
 					--------------------
 					*/
 					?>
-					<div id="tabs-<?php echo $this->id; ?>-3">
+					<div id="tabs-<?php echo $this->id; ?>-4">
 
 						<p>
 							<label for="ytchag_link_tx"><?php _e( 'Link text:', 'youtube-channel-gallery' ); ?></label>
@@ -369,7 +428,12 @@
 
 						<p>
 							<input class="checkbox" type="checkbox" <?php checked( (bool) $instance['ytchag_link'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_link' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_link' ); ?>" />
-							<label for="<?php echo $this->get_field_id( 'ytchag_link' ); ?>"><?php _e('Show link to channel:', 'youtube-channel-gallery'); ?></label>
+							<label for="<?php echo $this->get_field_id( 'ytchag_link' ); ?>"><?php _e('Show link to channel', 'youtube-channel-gallery'); ?></label>
+						
+						</br>
+						
+							<input class="checkbox" type="checkbox" <?php checked( (bool) $instance['ytchag_link_window'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_link_window' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_link_window' ); ?>" />
+							<label for="<?php echo $this->get_field_id( 'ytchag_link_window' ); ?>"><?php _e('Open in a new window or tab', 'youtube-channel-gallery'); ?></label>
 						</p>
 
 					</div>
@@ -390,6 +454,9 @@
 
 			//$instance variables
 			//--------------------------------
+
+			// Feed options
+			$ytchag_feed = apply_filters('ytchag_feed', $instance['ytchag_feed']);
 			$ytchag_user = apply_filters('ytchag_user', $instance['ytchag_user']);
 
 			// Player options
@@ -397,6 +464,7 @@
 			$ytchag_ratio = apply_filters('ytchag_ratio', $instance['ytchag_ratio']);
 			$ytchag_theme = apply_filters('ytchag_theme', $instance['ytchag_theme']);
 			$ytchag_color = apply_filters('ytchag_color', $instance['ytchag_color']);
+			$ytchag_quality = apply_filters('ytchag_quality', $instance['ytchag_quality']);
 			$ytchag_autoplay = apply_filters('ytchag_autoplay', $instance['ytchag_autoplay']);
 			$ytchag_rel = apply_filters('ytchag_rel', $instance['ytchag_rel']);
 			$ytchag_showinfo = apply_filters('ytchag_showinfo', $instance['ytchag_showinfo']);
@@ -414,23 +482,29 @@
 			// Link options
 			$ytchag_link = apply_filters('ytchag_link', $instance['ytchag_link']);
 			$ytchag_link_tx = apply_filters('ytchag_link_tx', $instance['ytchag_link_tx']);
+			$ytchag_link_window = apply_filters('ytchag_link_window', $instance['ytchag_link_window']);
 			//--------------------------------
 			//end $instance variables
 
 
 			//defaults
 			//--------------------------------
+
+			// Feed options
+			$ytchag_feed = ( $ytchag_feed ) ? $ytchag_feed : 'user'; //default user
+
 			// Player options
 			$ytchag_video_width = ( $ytchag_video_width ) ? $ytchag_video_width : 250;
-			$ytchag_theme = ( $ytchag_theme ) ? '&theme='. $ytchag_theme : ''; //defaul dark
-			$ytchag_color = ( $ytchag_color ) ? '&color='. $ytchag_color : ''; //defaul red
-			$ytchag_autoplay = ( $ytchag_autoplay ) ? '&autoplay='. $ytchag_autoplay : ''; //defaul 0
-			$ytchag_rel = ( $ytchag_rel ) ? '&rel='. $ytchag_rel : '&rel=0'; //defaul 1
-			$ytchag_showinfo = ( $ytchag_showinfo ) ? '&showinfo='. $ytchag_showinfo : '&showinfo=0'; //defaul 1
+			$ytchag_theme = ( $ytchag_theme ) ? '&theme='. $ytchag_theme : ''; //default dark
+			$ytchag_color = ( $ytchag_color ) ? '&color='. $ytchag_color : ''; //default red
+			$ytchag_quality = ( $ytchag_quality ) ? $ytchag_quality : 'default'; //default default
+			$ytchag_autoplay = ( $ytchag_autoplay ) ? '&autoplay='. $ytchag_autoplay : ''; //default 0
+			$ytchag_rel = ( $ytchag_rel ) ? '&rel='. $ytchag_rel : '&rel=0'; //default 1
+			$ytchag_showinfo = ( $ytchag_showinfo ) ? '&showinfo='. $ytchag_showinfo : '&showinfo=0'; //default 1
 
 			// Thumbnail options
 			$ytchag_thumb_width = ( $ytchag_thumb_width ) ? $ytchag_thumb_width : 85;
-			$ytchag_thumb_columns = ( $ytchag_thumb_columns ) ? $ytchag_thumb_columns : 0;
+			$ytchag_thumb_columns = (( $ytchag_thumb_columns ) || ( $ytchag_thumb_columns != 0 )) ? $ytchag_thumb_columns : 0;
 
 				//title and desc
 				$ytchag_title = ( $ytchag_title ) ? $ytchag_title : 0;
@@ -441,6 +515,7 @@
 			// Link options
 			$ytchag_link = ( $ytchag_link ) ? $ytchag_link : 0;
 			$ytchag_link_tx = ( $ytchag_link_tx ) ? $ytchag_link_tx : __('Show more videos»', 'youtube-channel-gallery');
+			$ytchag_link_window = ( $ytchag_link_window ) ? 'target="_blank"' : 0;
 			//--------------------------------
 			//end defaults
 
@@ -465,9 +540,26 @@
 			// only if user name inserted 
 			if( $ytchag_user ) { 
 				
+
+				// YouTube feed types 
+				//--------------------------------
+				$youtube_feed_url = 'http://gdata.youtube.com/feeds/api';
 				// links
-				$ytchag_rss_url 	= "http://gdata.youtube.com/feeds/api/users/" . $ytchag_user . "/uploads";
-				$ytchag_link_url 	= "http://www.youtube.com/user/" . $ytchag_user;
+				if($ytchag_feed == 'user'){
+					$ytchag_rss_url 	= $youtube_feed_url . '/users/' . $ytchag_user . '/uploads';
+					$ytchag_link_url 	= 'http://www.youtube.com/user/' . $ytchag_user;
+					$errorMesagge = __('You must insert a valid YouTube user id.', 'youtube-channel-gallery');
+				}
+				if($ytchag_feed == 'favorites'){
+					$ytchag_rss_url 	= $youtube_feed_url . '/users/' . $ytchag_user . '/favorites';
+					$ytchag_link_url 	= 'http://www.youtube.com/user/' . $ytchag_user . '/favorites';
+					$errorMesagge = __('You must insert a valid YouTube user id.', 'youtube-channel-gallery');
+				}
+				if($ytchag_feed == 'playlist'){
+					$ytchag_rss_url 	= $youtube_feed_url . '/playlists/' . $ytchag_user . '?alt=rss&v=2&orderby=published&rel=0';
+					$ytchag_link_url 	= 'http://www.youtube.com/playlist?list=' . $ytchag_user;
+					$errorMesagge = __('You must insert a valid playlist id.', 'youtube-channel-gallery');
+				}
 				
 				//RSS Feed				
 				include_once(ABSPATH . WPINC . '/feed.php');
@@ -514,6 +606,7 @@
 
 
 							//title and description content
+
 							if($ytchag_title || $ytchag_description){
 								$title_and_description_alignment_class = ' ytc-td-' . $ytchag_thumbnail_alignment;
 								$title_and_description_content= '<div class="ytctitledesc-cont">';
@@ -528,17 +621,18 @@
 								}
 
 								$title_and_description_content.= '</div>';
-							}//end title and description content
+							} else{
+								$title_and_description_alignment_class = '';
+								$title_and_description_content = '';
+							}
+							//end title and description content
 
 
 							//rows and columns control
 
 							$column++;
-							$columnlastfirst = '';
-							if($ytchag_thumb_columns !=0 && $column%$ytchag_thumb_columns === 0){
-								$columnlastfirst = ' ytccell-last';
-							}
-							if($ytchag_thumb_columns !=0 && $column === 1){
+							$columnlastfirst = $tableclass = $columnnumber = '';
+							if($ytchag_thumb_columns !=0 && $column == 1){
 								$columnlastfirst = ' ytccell-first';
 								STATIC $rowcount = 0;
 								$rowcount++;					
@@ -546,6 +640,9 @@
 								$tableclass = ' ytc-table';			
 								$columnnumber = ' ytc-columns'. $ytchag_thumb_columns;
 
+							}
+							if($ytchag_thumb_columns !=0 && $column%$ytchag_thumb_columns == 0){
+								$columnlastfirst = ' ytccell-last';
 							}// end columns control
 
 
@@ -566,41 +663,40 @@
 							$i++;
 
 
-
-							if($columnlastfirst == ' ytccell-first'){
+		//----
+							if($ytchag_thumb_columns !=0 && $column == 1){
 								$content.=  "\n\n" .'<div class="ytccf ytc-row ytc-r-' . $rowcount . $row_oddeven . ' ">' . "\n\n";
 							}
 
-							//$content.= '$column: ' + $column;
-							$content.=  "\n\n" . '	<li class="ytccell-' . $column . $columnlastfirst . '">';
+									//$content.= '$column: ' + $column;
+									$content.=  "\n\n" . '	<li class="ytccell-' . $column . $columnlastfirst . '">';
 
-								if($ytchag_thumb_columns !=0 && $column%$ytchag_thumb_columns === 0 ){
-									$column = 0;								
-								}
+										$content.= '<div class="ytcliinner">';
 
-								$content.= '<div class="ytcliinner">';
+											if($ytchag_thumbnail_alignment == 'bottom'){
+												$content.= $title_and_description_content;
 
-									if($ytchag_thumbnail_alignment == 'bottom'){
-										$content.= $title_and_description_content;
+											}
 
-									}
+											$content.= '<div class="ytcthumb-cont">';
+											$content.= '<a class="ytcthumb" href="http://youtu.be/' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" alt="' . $title . '" title="' . $title . '" style="background-image: url(' . $thumb . ');">';
+											$content.= '<div class="ytcplay" style="width: ' . $ytchag_thumb_width . 'px; height: ' . $ytchag_thumb_height . 'px"></div>';
+											$content.= '</a>';
+											$content.= '</div>';
 
-									$content.= '<div class="ytcthumb-cont">';
-									$content.= '<a class="ytcthumb" href="javascript: ytcplayVideo(\'ytcplayer' . $plugincount . '\', \'' . $youtubeid . '\');" alt="' . $title . '" title="' . $title . '" style="background-image: url(' . $thumb . ');">';
-									$content.= '<div class="ytcplay" style="width: ' . $ytchag_thumb_width . 'px; height: ' . $ytchag_thumb_height . 'px"></div>';
-									$content.= '</a>';
-									$content.= '</div>';
+											if($ytchag_thumbnail_alignment != 'bottom'){
+												$content.= $title_and_description_content;
+											}
 
-									if($ytchag_thumbnail_alignment != 'bottom'){
-										$content.= $title_and_description_content;
-									}
+										$content.= '</div>';
 
-								$content.= '</div>';
+									$content.= '</li>' . "\n\n";
 
-							$content.= '</li>' . "\n\n";
-
-							if($columnlastfirst == ' ytccell-last'){
-								$content.= '</div>' . "\n\n\n";
+		//----
+							if($ytchag_thumb_columns !=0 && $column%$ytchag_thumb_columns == 0 ){
+											$column = 0;
+											$columnlastfirst = ' ytccell-last';	
+											$content.= '</div>' . "\n\n\n";						
 							}
 							
 						} //foreach end
@@ -614,11 +710,11 @@
 
 							//link to youtube.com gallery
 						if( $ytchag_link) {
-							$content.= '<a href="' . $ytchag_link_url . '" class="ytcmore">' . $ytchag_link_tx . '</a>';						
+							$content.= '<a href="' . $ytchag_link_url . '" class="ytcmore" ' .$ytchag_link_window. ' >' . $ytchag_link_tx . '</a>';
 						}
 					}
 				} else {
-					$content= '<p class="empty">' .  __('You must insert a valid YouTube user name.', 'youtube-channel-gallery') . '</p>';
+					$content= '<p class="empty">' .  $errorMesagge . '</p>';
 				} // end check user name
 
 			// user name not inserted 
@@ -663,11 +759,15 @@
 			extract( shortcode_atts( array(
 				'user' => '',
 
+				// Feed options
+				'feed' => '',
+
 				// Player options
 				'videowidth' => '',
 				'ratio' => '',
 				'theme' => '',
 				'color' => '',
+				'quality' => '',
 				'autoplay' => '',
 				'rel' => '',
 				'showinfo' => '',
@@ -684,10 +784,13 @@
 
 				// Link options
 				'link' => '',
-				'link_tx' => ''
+				'link_tx' => '',
+				'link_window' => ''
 
 			), $atts ) );
 
+			// Feed options
+			$instance['ytchag_feed'] = $feed;
 			$instance['ytchag_user'] = $user;
 
 			// Player options
@@ -695,6 +798,7 @@
 			$instance['ytchag_ratio'] = $ratio;
 			$instance['ytchag_theme'] = $theme;
 			$instance['ytchag_color'] = $color;
+			$instance['ytchag_quality'] = $quality;
 			$instance['ytchag_autoplay'] = $autoplay;
 			$instance['ytchag_rel'] = $rel;
 			$instance['ytchag_showinfo'] = $showinfo;
@@ -712,6 +816,7 @@
 			// Link options
 			$instance['ytchag_link'] = $link;
 			$instance['ytchag_link_tx'] = $link_tx;
+			$instance['ytchag_link_window'] = $link_window;
 
 
 			return '<div class="ytcshort">'. $this->ytchag_rss_markup($instance) . '</div>';
