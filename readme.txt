@@ -100,7 +100,11 @@ The “widgets” admin page is found in the administrator part (wp-admin) of yo
 
 = How do I find the YouTube user id? =
 
-The username who uploaded a video to Youtube is located below each video, where says something like in this example, "Published on June 25, 2012 by DisneyShorts", where DisneyShorts is the username.
+The username who uploaded a video to Youtube is located below each video, where says something like in this example, "Published on June 25, 2012 by DisneyShorts", where DisneyShorts is the username. Click on the user name and you will find the user id in the url of that page: https://www.youtube.com/user/DisneyShorts. DisneyShorts is the id of that user.
+
+= How do I find a YouTube playlist id? =
+
+If you go to a playlist you will get the following url format: https://www.youtube.com/playlist?list=PL33942589618ABDE3. The playlist id is what you have after list=. In this example, the playlist id is PL33942589618ABDE3.
 
 
 == Screenshots ==
