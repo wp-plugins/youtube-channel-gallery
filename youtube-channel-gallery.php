@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.7.2
+	Version: 1.7.3
 	License: GPL2
 		
 		Copyright 2010 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -577,32 +577,39 @@
 					if (!empty($items)) {
 						$i = 0;
 						$column = 0;
+						STATIC $plugincount = 0;
 						foreach ( $items as $item ) {
 							$url = $item->get_permalink();
 							$youtubeid = $this->youtubeid($url);
 							$title = $item->get_title();
 							$description = $item->get_description();
 
+							//default url thumbnail
 							if ($enclosure = $item->get_enclosure()){
-
-								//extract thumbnail
-								//-----------------
-
-								//thumbnail index in xml
-								$big = 0;
-								$small = 1;
-								$size = $small;
-								if($ytchag_thumb_width > '120'){
-									$size = $big;
-								}
-
-								$allThumbs = $enclosure->get_thumbnails();
-								foreach ($allThumbs as $index => $allThumb) {
-									if ($index == $size) {
-										$thumb = $allThumbs[$index];
-									}
-								}
+								$thumb = $enclosure->get_thumbnail();
 							}
+							
+							//to appropriate thumbnail
+							if($plugincount == 0){
+
+								//media:thumbnail tag
+								$media_group = $item->get_item_tags('http://search.yahoo.com/mrss/', 'group');
+								$media_content = $media_group[0]['child']['http://search.yahoo.com/mrss/']['thumbnail'];
+
+								//Check the thumbnail width
+								$thumbW = array();
+								foreach ($media_content as $index => $media_contentw) {
+									$thumbW[$index] = $media_content[$index]['attribs']['']['width'];
+								}
+								//appropriate thumbnail width
+								$thumbcorrectW = $this->closest($thumbW, $ytchag_thumb_width);
+
+								//index in array of thumbnail width
+	    						$thumbcorrectWIndex = array_search($thumbcorrectW, $thumbW);
+
+	    						//appropriate url thumbnail
+	    						$thumb = $media_content[$thumbcorrectWIndex]['attribs']['']['url'];
+    						}
 
 
 							//title and description content
@@ -652,7 +659,6 @@
 							//Show me the player: iframe player
 							if($i == 0) {
 								//count the plugin occurrences on page
-								STATIC $plugincount = 0;
 								$plugincount++;
 
 								$content = '<iframe id="ytcplayer' . $plugincount . '" class="ytcplayer" allowfullscreen width="' . $ytchag_video_width . '" height="' . $ytchag_video_heigh . '" src="http://www.youtube.com/embed/' . $youtubeid . '?version=3' . $ytchag_theme . $ytchag_color .  $ytchag_autoplay . $ytchag_rel . $ytchag_showinfo .'&enablejsapi=1" frameborder="0"></iframe>';
@@ -733,6 +739,15 @@
 			return isset($args['v']) ? $args['v'] : false;
 		}//youtubeid
 
+
+		private function closest($array, $number) {
+			sort($array);
+			foreach ($array as $a) {
+				if ($a >= $number) return $a;
+			}
+			return end($array); // or return NULL;
+
+		}
 
 		// load css or js
 		private function register_scripts_and_styles() {
