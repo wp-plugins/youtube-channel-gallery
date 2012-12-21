@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.7.4
+	Version: 1.7.4.1
 	License: GPL2
 		
 		Copyright 2010 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -596,20 +596,18 @@
 							$media_content = $media_group[0]['child']['http://search.yahoo.com/mrss/']['thumbnail'];
 
 							//Check the thumbnail width
-							if($plugincount == 0){
-								$thumbW = array();
-								foreach ($media_content as $index => $media_contentw) {
-									$thumbW[$index] = $media_content[$index]['attribs']['']['width'];
-								}
-								//appropriate thumbnail width
-								$thumbcorrectW = $this->closest($thumbW, $ytchag_thumb_width);
+							$thumbW = array();
+							foreach ($media_content as $index => $media_contentw) {
+								$thumbW[$index] = $media_content[$index]['attribs']['']['width'];
+							}
+							//appropriate thumbnail width
+							$thumbcorrectW = $this->closest($thumbW, $ytchag_thumb_width);
 
-								//index in array of thumbnail width
-	    							$thumbcorrectWIndex = array_search($thumbcorrectW, $thumbW);
-    							}
+							//index in array of thumbnail width
+    							$thumbcorrectWIndex = array_search($thumbcorrectW, $thumbW);
 
-	    						//appropriate url thumbnail
-	    						$thumb = $media_content[$thumbcorrectWIndex]['attribs']['']['url'];
+    						//appropriate url thumbnail
+    						$thumb = $media_content[$thumbcorrectWIndex]['attribs']['']['url'];
 
 
 							//title and description content
