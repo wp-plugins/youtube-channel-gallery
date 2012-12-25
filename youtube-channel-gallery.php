@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.7.4.1
+	Version: 1.7.4.2
 	License: GPL2
 		
 		Copyright 2010 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -610,27 +610,6 @@
     						$thumb = $media_content[$thumbcorrectWIndex]['attribs']['']['url'];
 
 
-							//title and description content
-
-							if($ytchag_title || $ytchag_description){
-								$title_and_description_alignment_class = ' ytc-td-' . $ytchag_thumbnail_alignment;
-								$title_and_description_content= '<div class="ytctitledesc-cont">';
-
-								if($ytchag_title){
-									$title_and_description_content.= '<h5 class="ytctitle"><a href="javascript: ytcplayVideo(\'ytcplayer' . $plugincount . '\', \'' . $youtubeid . '\');">' . $title . '</a></h5>';
-								}
-
-								if($ytchag_description){
-									$description = wp_trim_words( $description, $num_words = $ytchag_description_words_number, $more = '&hellip;' );
-									$title_and_description_content.= '<div class="ytctdescription">' . $description . '</div>';
-								}
-
-								$title_and_description_content.= '</div>';
-							} else{
-								$title_and_description_alignment_class = '';
-								$title_and_description_content = '';
-							}
-							//end title and description content
 
 
 							//rows and columns control
@@ -651,6 +630,14 @@
 							}// end columns control
 
 
+							//check if title or description
+							if($ytchag_title || $ytchag_description){
+								$title_and_description_alignment_class = ' ytc-td-' . $ytchag_thumbnail_alignment;
+							} else{
+								$title_and_description_alignment_class = '';
+							}
+
+
 							//The content
 							//--------------------------------
 
@@ -665,6 +652,28 @@
 
 							} // if player end
 							$i++;
+
+
+
+							//title and description content
+
+							if($ytchag_title || $ytchag_description){
+								$title_and_description_content= '<div class="ytctitledesc-cont">';
+
+								if($ytchag_title){
+									$title_and_description_content.= '<h5 class="ytctitle"><a class="ytclink" href="http://youtu.be/' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" alt="' . $title . '" title="' . $title . '">' . $title . '</a></h5>';
+								}
+
+								if($ytchag_description){
+									$description = wp_trim_words( $description, $num_words = $ytchag_description_words_number, $more = '&hellip;' );
+									$title_and_description_content.= '<div class="ytctdescription">' . $description . '</div>';
+								}
+
+								$title_and_description_content.= '</div>';
+							} else{
+								$title_and_description_content = '';
+							}
+							//end title and description content
 
 
 		//----
@@ -683,7 +692,7 @@
 											}
 
 											$content.= '<div class="ytcthumb-cont">';
-											$content.= '<a class="ytcthumb" href="http://youtu.be/' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" alt="' . $title . '" title="' . $title . '" style="background-image: url(' . $thumb . ');">';
+											$content.= '<a class="ytcthumb ytclink" href="http://youtu.be/' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" alt="' . $title . '" title="' . $title . '" style="background-image: url(' . $thumb . ');">';
 											$content.= '<div class="ytcplay" style="width: ' . $ytchag_thumb_width . 'px; height: ' . $ytchag_thumb_height . 'px"></div>';
 											$content.= '</a>';
 											$content.= '</div>';

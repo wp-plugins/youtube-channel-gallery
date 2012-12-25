@@ -1,8 +1,8 @@
-jQuery(document).ready(function(){
-
+jQuery(document).ready(function($) {
+	
 	//thumbnails
 	var ytcplayer = {};
-	$('.ytcthumb').click(function(){
+	$('.ytclink').click(function(){
 		var iframeid = $(this).attr('data-playerid');
 		var youtubeid = $(this).attr('href').split("youtu.be/")[1];
 		var quality = $(this).attr('data-quality');
