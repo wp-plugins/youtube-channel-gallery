@@ -6,6 +6,7 @@ jQuery(document).ready(function($) {
 		var iframeid = $(this).attr('data-playerid');
 		var youtubeid = $(this).attr('href').split("youtu.be/")[1];
 		var quality = $(this).attr('data-quality');
+		checkIfInView($('#' + iframeid));
 		ytcplayVideo (iframeid, youtubeid, quality);
 
 		return false;
@@ -25,6 +26,21 @@ jQuery(document).ready(function($) {
 			});
 		}
 
+	}
+
+
+	//Scroll to element only if not in view - jQuery
+	//http://stackoverflow.com/a/10130707/1504078
+	function checkIfInView(element){
+		if($(element).position()){
+			if($(element).position().top < $(window).scrollTop()){
+			//scroll up
+			$('html,body').animate({scrollTop:$(element).position().top - 10}, 500);
+		}
+		else if($(element).position().top + $(element).height() > $(window).scrollTop() + (window.innerHeight || document.documentElement.clientHeight)){
+			//scroll down
+			$('html,body').animate({scrollTop:$(element).position().top - (window.innerHeight || document.documentElement.clientHeight) + $(element).height() + 10}, 500);}
+		}
 	}
 
 

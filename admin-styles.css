@@ -1,8 +1,8 @@
 
 /*clearfix*/
-.clearfix:before, .clearfix:after { content: ""; display: table; }
-.clearfix:after { clear: both; }
-.clearfix { zoom: 1; }
+.ytchgtabs .clearfix:before, .ytchgtabs .clearfix:after { content: ""; display: table; }
+.ytchgtabs .clearfix:after { clear: both; }
+.ytchgtabs .clearfix { zoom: 1; }
 
 
 /*tabs ul*/

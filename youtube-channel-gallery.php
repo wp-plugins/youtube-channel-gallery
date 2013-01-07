@@ -5,10 +5,10 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.7.4.2
+	Version: 1.7.5
 	License: GPL2
 		
-		Copyright 2010 Javier Gómez Pose  (email : javierpose@gmail.com)
+		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
 
 		This program is free software; you can redistribute it and/or modify
 		it under the terms of the GNU General Public License, version 2, as 
@@ -41,7 +41,7 @@
 			add_shortcode('Youtube_Channel_Gallery', array($this, 'YoutubeChannelGallery_Shortcode'));   
 		
 			//load admin scripts
-			add_action('admin_print_scripts', array($this, 'register_admin_scripts_and_styles'));
+			add_action('admin_enqueue_scripts', array($this, 'register_admin_scripts_and_styles'));
 			
 			parent::__construct(
 				'youtubechannelgallery_widget', // Base ID
@@ -156,10 +156,42 @@
 				<script type="text/javascript">
 					jQuery(document).ready(function($) {
 
+						//Update widget form after drag-and-drop (WP save bug)
+						//http://wordpress.stackexchange.com/a/37707/16964
+						$('#widgets-right').ajaxComplete(function(event, XMLHttpRequest, ajaxOptions){
+
+							// determine which ajax request is this (we're after "save-widget")
+							var request = {}, pairs = ajaxOptions.data.split('&'), i, split, widget;
+
+							for(i in pairs){
+								split = pairs[i].split('=');
+								request[decodeURIComponent(split[0])] = decodeURIComponent(split[1]);
+							}
+
+							// only proceed if this was a widget-save request
+							if(request.action && (request.action === 'save-widget')){
+
+							// locate the widget block
+							widget = $('input.widget-id[value="' + request['widget-id'] + '"]').parents('.widget');
+
+							// trigger manual save, if this was the save request 
+							// and if we didn't get the form html response (the wp bug)
+							if(!XMLHttpRequest.responseText)
+								wpWidgets.save(widget, 0, 1, 0);
+
+							// we got an response, this could be either our request above,
+							// or a correct widget-save call, so fire an event on which we can hook our js
+							else
+								$(document).trigger('saved_widget', widget);
+
+							}
+
+						});
+
 						//tabs
 						//---------------
-						$('#tabs-<?php echo $this->id; ?> > div').hide();
-						$('#tabs-<?php echo $this->id; ?>-1').show();
+						$('#tabs-<?php echo $this->id; ?> > div:not(:first)').hide();
+						//$('#tabs-<?php echo $this->id; ?>-1').show();
 						$('#tabs-<?php echo $this->id; ?> ul li:first').addClass('active');
 
 						$('#tabs-<?php echo $this->id; ?> ul li a').click(function(){
@@ -192,10 +224,10 @@
 
 
 						function slide_title_description ( action ){
-							if(action == 'slideDown'){								
+							if(action === 'slideDown'){								
 								$('#tabs-<?php echo $this->id; ?>-3 .ytchg-title-and-description').slideDown('fast');
 								$('#tabs-<?php echo $this->id; ?>-3 fieldset.ytchg-field-tit-desc').addClass('ytchg-fieldborder active');
-							} else if(action == 'slideUp'){
+							} else if(action === 'slideUp'){
 								$('#tabs-<?php echo $this->id; ?>-3 .ytchg-title-and-description').slideUp('fast');
 								$('#tabs-<?php echo $this->id; ?>-3 fieldset.ytchg-field-tit-desc').removeClass('ytchg-fieldborder active');
 							}
@@ -223,10 +255,10 @@
 						});
 
 						function changeFeedTitle (){
-							if($(feedselect + ' option:selected').val() == 'user'){
+							if($(feedselect + ' option:selected').val() === 'user'){
 								$(userLabel).text('<?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?>');								
 							}
-							if($(feedselect + ' option:selected').val() == 'userfav'){
+							if($(feedselect + ' option:selected').val() === 'userfav'){
 								$(userLabel).text('<?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?>');								
 							}
 							if($(feedselect + ' option:selected').val() == 'playlist'){
@@ -240,8 +272,6 @@
 				<?php //http://wordpress.stackexchange.com/questions/5515/update-widget-form-after-drag-and-drop-wp-save-bug?>
 
 				<div id="tabs-<?php echo $this->id; ?>" class="ytchgtabs">
-
-
 					<ul class="ytchgtabs-tabs">
 						<li><a href="#tabs-<?php echo $this->id; ?>-1"><?php _e( 'Feed', 'youtube-channel-gallery' ); ?></a></li>
 						<li><a href="#tabs-<?php echo $this->id; ?>-2"><?php _e( 'Player', 'youtube-channel-gallery' ); ?></a></li>
@@ -556,7 +586,8 @@
 					$errorMesagge = __('You must insert a valid YouTube user id.', 'youtube-channel-gallery');
 				}
 				if($ytchag_feed == 'playlist'){
-					$ytchag_rss_url 	= $youtube_feed_url . '/playlists/' . $ytchag_user . '?alt=rss&v=2&orderby=published&rel=0';
+					$ytchag_rss_url 	= $youtube_feed_url . '/playlists/' . $ytchag_user . '?alt=atom&v=2&orderby=published&prettyprint=true';
+					//print_r($ytchag_rss_url . '<br>');
 					$ytchag_link_url 	= 'http://www.youtube.com/playlist?list=' . $ytchag_user;
 					$errorMesagge = __('You must insert a valid playlist id.', 'youtube-channel-gallery');
 				}
@@ -566,13 +597,32 @@
 				
 				$rss = fetch_feed($ytchag_rss_url);
 
-
 				// check if no correct user name
 				if (!is_wp_error( $rss ) ) {
 
+					//items requested by the user
 					$maxitems = ( $ytchag_maxitems ) ? $ytchag_maxitems : 9;
+
+					//get totalResultsData from playlist rss to order correctly videos
+					if($ytchag_feed == 'playlist'){
+						//openSearch:totalResults
+						$totalResults = $rss->get_feed_tags('http://a9.com/-/spec/opensearch/1.1/', 'totalResults');
+						$totalResultsData = $totalResults[0]['data'];
+						//print_r($totalResultsData . '<br>');
+
+						//get rss playlist again with the last videos. YouTube does not load in the first request, even if the orderby parameter is set.
+						$startindex = $totalResultsData - $maxitems + 1;
+						//print_r($startindex . '<br>');
+						$ytchag_rss_url = $ytchag_rss_url . '&start-index=' . $startindex . '&max-results=' . $maxitems;
+						$rss = fetch_feed($ytchag_rss_url);
+
+						//to get the appropriate order of items
+						$rss->enable_order_by_date(false);
+						//print_r($ytchag_rss_url . '<br>');
+					}
+
 					$items = $rss->get_items(0, $maxitems);
-					
+
 
 					if (!empty($items)) {
 						$i = 0;
@@ -595,6 +645,16 @@
 							$media_group = $item->get_item_tags('http://search.yahoo.com/mrss/', 'group');
 							$media_content = $media_group[0]['child']['http://search.yahoo.com/mrss/']['thumbnail'];
 
+							/* to check order
+							$episode = $item->get_item_tags('http://gdata.youtube.com/schemas/2007', 'episode'); //yt
+							$episodecontent = $episode[0]['attribs']['']['number'];
+							if(!$episode){
+								$episode = $item->get_item_tags('http://gdata.youtube.com/schemas/2007', 'position'); //yt
+								$episodecontent = $episode[0]['data'];
+							}
+							print_r($episodecontent . '-');
+							*/
+
 							//Check the thumbnail width
 							$thumbW = array();
 							foreach ($media_content as $index => $media_contentw) {
@@ -608,8 +668,6 @@
 
     						//appropriate url thumbnail
     						$thumb = $media_content[$thumbcorrectWIndex]['attribs']['']['url'];
-
-
 
 
 							//rows and columns control
@@ -647,7 +705,6 @@
 								$plugincount++;
 
 								$content = '<iframe id="ytcplayer' . $plugincount . '" class="ytcplayer" allowfullscreen width="' . $ytchag_video_width . '" height="' . $ytchag_video_heigh . '" src="http://www.youtube.com/embed/' . $youtubeid . '?version=3' . $ytchag_theme . $ytchag_color .  $ytchag_autoplay . $ytchag_rel . $ytchag_showinfo .'&enablejsapi=1" frameborder="0"></iframe>';
-
 								$content.= '<ul class="ytchagallery ytccf' . $tableclass . $title_and_description_alignment_class . $columnnumber . '">';
 
 							} // if player end
@@ -766,7 +823,9 @@
 
 
 		public function register_admin_scripts_and_styles($hook) {
-			wp_enqueue_style('youtube-channel-gallery', plugins_url('/admin-styles.css', __FILE__), false, false, 'all');
+			if( 'widgets.php' != $hook )
+				return;
+			wp_enqueue_style('youtube-channel-gallery', plugins_url('/admin-styles.css', __FILE__));
 		}
 
 		/*--------------------------------------------------*/ 
@@ -850,6 +909,5 @@
 
 	// register YoutubeChannelGallery_Widget widget
 	add_action( 'widgets_init', create_function( '', 'register_widget( "YoutubeChannelGallery_Widget" );' ) );
-
 
 ?>

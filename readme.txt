@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.7.4.2
+Stable tag: 1.7.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,6 +117,13 @@ If you go to a playlist you will get the following url format: https://www.youtu
 
 
 == Changelog ==
+
+= 1.7.5 =
+* Corrected order of playlists videos.
+* Enqueue of admin style only in widget page.
+* admin-styles.css tweaks.
+* Update widget form after drag-and-drop (WP save bug). 
+* Added scroll to player only if not in view. 
 
 = 1.7.4.2 =
 * Corrected problem with jQuery.noConflict.
