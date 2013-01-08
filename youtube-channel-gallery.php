@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.7.5
+	Version: 1.7.5.1
 	License: GPL2
 		
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -81,6 +81,7 @@
 			// Feed options
 			$instance['ytchag_feed'] = strip_tags( $new_instance['ytchag_feed'] );
 			$instance['ytchag_user'] = strip_tags( $new_instance['ytchag_user'] );
+			$instance['ytchag_feed_order'] = strip_tags( $new_instance['ytchag_feed_order'] );
 
 			// Player options
 			$instance['ytchag_video_width'] = strip_tags( $new_instance['ytchag_video_width'] );
@@ -119,6 +120,8 @@
 			// Feed options
 			$ytchag_feed = isset( $instance['ytchag_feed'] ) ? esc_attr( $instance['ytchag_feed'] ) : '';
 			$ytchag_user = isset( $instance['ytchag_user'] ) ? esc_attr( $instance['ytchag_user'] ) : ''; //left ytchag_user variable name for backward compatibility
+			$ytchag_feed_order = isset( $instance['ytchag_feed_order'] ) ? esc_attr( $instance['ytchag_feed_order'] ) : '';
+
 
 			// Player options
 			$ytchag_video_width = isset( $instance['ytchag_video_width'] ) ? esc_attr( $instance['ytchag_video_width'] ) : ''; 
@@ -246,23 +249,26 @@
 
 						//Feed label title
 						//---------------
-						var feedselect = '#<?php echo $this->get_field_id( 'ytchag_feed' ); ?>';
+						var feedSelect = '#<?php echo $this->get_field_id( 'ytchag_feed' ); ?>';
 						var userLabel = 'label[for="<?php echo $this->get_field_id( 'ytchag_user' ); ?>"]';
+						var feedOrder = '.<?php echo $this->get_field_id( 'ytchag_feed_order' ); ?>';
 
-						changeFeedTitle ();
-						$(feedselect).change(function () {
-							changeFeedTitle ();
+						changeFeedType ();
+						$(feedSelect).change(function () {
+							changeFeedType ();
 						});
 
-						function changeFeedTitle (){
-							if($(feedselect + ' option:selected').val() === 'user'){
-								$(userLabel).text('<?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?>');								
+						function changeFeedType (){
+							if($(feedSelect + ' option:selected').val() === 'user'){
+								$(userLabel).text('<?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?>');	
+								$(feedOrder).slideUp('fast');
 							}
-							if($(feedselect + ' option:selected').val() === 'userfav'){
+							/*if($(feedSelect + ' option:selected').val() === 'userfav'){
 								$(userLabel).text('<?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?>');								
-							}
-							if($(feedselect + ' option:selected').val() == 'playlist'){
-								$(userLabel).text('<?php _e( 'YouTube playlist id:', 'youtube-channel-gallery' ); ?>');								
+							}*/
+							if($(feedSelect + ' option:selected').val() === 'playlist'){
+								$(userLabel).text('<?php _e( 'YouTube playlist id:', 'youtube-channel-gallery' ); ?>');
+								$(feedOrder).slideDown('fast');								
 							}
 						}
 					});
@@ -289,7 +295,7 @@
 					<div id="tabs-<?php echo $this->id; ?>-1" class="ytchgtabs-content">
 
 						<p>
-							<label for="ytchag_feed"><?php _e( 'Video feed type:', 'youtube-channel-gallery' ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'ytchag_feed' ); ?>"><?php _e( 'Video feed type:', 'youtube-channel-gallery' ); ?></label>
 							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_feed' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_feed' ); ?>">
 								<option value="user"<?php selected( $instance['ytchag_feed'], 'user' ); ?>><?php _e( 'Uploaded by a user', 'youtube-channel-gallery' ); ?></option>
 								<?php /*<option value="favorites"<?php selected( $instance['ytchag_feed'], 'favorites' ); ?>><?php _e( 'User\'s favorites', 'youtube-channel-gallery' ); ?></option>*/?>
@@ -300,6 +306,14 @@
 						<p>
 							<label for="<?php echo $this->get_field_id( 'ytchag_user' ); ?>"><?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?></label>
 							<input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_user' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_user' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_user ); ?>" />
+						</p>
+
+						<p class="<?php echo $this->get_field_id( 'ytchag_feed_order' ); ?>">
+							<label for="<?php echo $this->get_field_id( 'ytchag_feed_order' ); ?>"><?php _e( 'Playlist order:', 'youtube-channel-gallery' ); ?></label>
+							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_feed_order' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_feed_order' ); ?>">
+								<option value="asc"<?php selected( $instance['ytchag_feed_order'], 'asc' ); ?>><?php _e( 'Ascending Order', 'youtube-channel-gallery' ); ?></option>
+								<option value="desc"<?php selected( $instance['ytchag_feed_order'], 'desc' ); ?>><?php _e( 'Descending Order', 'youtube-channel-gallery' ); ?></option>
+							</select>
 						</p>
 
 					</div>
@@ -314,12 +328,12 @@
 					<div id="tabs-<?php echo $this->id; ?>-2" class="ytchgtabs-content">
 
 						<p>
-							<label for="ytchag_video_width"><?php _e( 'Video width:', 'youtube-channel-gallery' ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'ytchag_video_width' ); ?>"><?php _e( 'Video width:', 'youtube-channel-gallery' ); ?></label>
 							<input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_video_width' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_video_width' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_video_width ); ?>" />
 						</p>
 
 						<p>
-							<label for="ytchag_ratio"><?php _e( 'Aspect ratio:', 'youtube-channel-gallery' ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'ytchag_ratio' ); ?>"><?php _e( 'Aspect ratio:', 'youtube-channel-gallery' ); ?></label>
 							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_ratio' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_ratio' ); ?>">
 								<option value="4x3"<?php selected( $instance['ytchag_ratio'], '4x3' ); ?>><?php _e( 'Standard (4x3)', 'youtube-channel-gallery' ); ?></option>
 								<option value="16x9"<?php selected( $instance['ytchag_ratio'], '16x9' ); ?>><?php _e( 'Widescreen (16x9)', 'youtube-channel-gallery' ); ?></option>
@@ -327,7 +341,7 @@
 						</p>
 
 						<p>
-							<label for="ytchag_theme"><?php _e( 'Theme:', 'youtube-channel-gallery' ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'ytchag_theme' ); ?>"><?php _e( 'Theme:', 'youtube-channel-gallery' ); ?></label>
 							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_theme' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_theme' ); ?>">
 								<option value="dark"<?php selected( $instance['ytchag_theme'], 'dark' ); ?>><?php _e( 'Dark', 'youtube-channel-gallery' ); ?></option>
 								<option value="light"<?php selected( $instance['ytchag_theme'], 'light' ); ?>><?php _e( 'Light', 'youtube-channel-gallery' ); ?></option>
@@ -335,7 +349,7 @@
 						</p>
 
 						<p>
-							<label for="ytchag_color"><?php _e( 'Progress bar color:', 'youtube-channel-gallery' ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'ytchag_color' ); ?>"><?php _e( 'Progress bar color:', 'youtube-channel-gallery' ); ?></label>
 							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_color' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_color' ); ?>">
 								<option value="red"<?php selected( $instance['ytchag_color'], 'red' ); ?>><?php _e( 'Red', 'youtube-channel-gallery' ); ?></option>
 								<option value="white"<?php selected( $instance['ytchag_color'], 'white' ); ?>><?php _e( 'White', 'youtube-channel-gallery' ); ?></option>
@@ -343,7 +357,7 @@
 						</p>
 
 						<p>
-							<label for="ytchag_quality"><?php _e( 'Video quality:', 'youtube-channel-gallery' ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'ytchag_quality' ); ?>"><?php _e( 'Video quality:', 'youtube-channel-gallery' ); ?></label>
 							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_quality' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_quality' ); ?>">
 								<option value="default"<?php selected( $instance['ytchag_quality'], 'default' ); ?>><?php _e( 'default', 'youtube-channel-gallery' ); ?></option>
 								<option value="highres"<?php selected( $instance['ytchag_quality'], 'highres' ); ?>><?php _e( 'highres', 'youtube-channel-gallery' ); ?></option>
@@ -379,18 +393,18 @@
 					?>
 					<div id="tabs-<?php echo $this->id; ?>-3">
 						<p>
-							<label for="ytchag_maxitems"><?php _e( 'Number of videos to show:', 'youtube-channel-gallery' ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'ytchag_maxitems' ); ?>"><?php _e( 'Number of videos to show:', 'youtube-channel-gallery' ); ?></label>
 							<input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_maxitems' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_maxitems' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_maxitems ); ?>" />
 						</p>    
 					
 						<p>
-							<label for="ytchag_thumb_width"><?php _e( 'Thumbnail width:', 'youtube-channel-gallery' ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'ytchag_thumb_width' ); ?>"><?php _e( 'Thumbnail width:', 'youtube-channel-gallery' ); ?></label>
 							<input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_thumb_width' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_width' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_thumb_width ); ?>" />
 						</p>
 
 						<p>
 
-							<label for="ytchag_thumb_ratio"><?php _e( 'Aspect ratio:', 'youtube-channel-gallery' ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'ytchag_thumb_ratio' ); ?>"><?php _e( 'Aspect ratio:', 'youtube-channel-gallery' ); ?></label>
 							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_thumb_ratio' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_ratio' ); ?>">
 								<option value="4x3"<?php selected( $instance['ytchag_thumb_ratio'], '4x3' ); ?>><?php _e( 'Standard (4x3)', 'youtube-channel-gallery' ); ?></option>
 								<option value="16x9"<?php selected( $instance['ytchag_thumb_ratio'], '16x9' ); ?>><?php _e( 'Widescreen (16x9)', 'youtube-channel-gallery' ); ?></option>
@@ -398,7 +412,7 @@
 						</p>
 					
 						<p>
-							<label for="ytchag_thumb_columns"><?php _e( 'Thumbnail columns:', 'youtube-channel-gallery' ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'ytchag_thumb_columns' ); ?>"><?php _e( 'Thumbnail columns:', 'youtube-channel-gallery' ); ?></label>
 							<input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_thumb_columns' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_columns' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_thumb_columns ); ?>" />
 						</p>
 
@@ -421,7 +435,7 @@
 									</p>
 
 									<p>
-										<label for="ytchag_thumbnail_alignment"><?php _e( 'Thumbnail alignment:', 'youtube-channel-gallery' ); ?></label>
+										<label for="<?php echo $this->get_field_id( 'ytchag_thumbnail_alignment' ); ?>"><?php _e( 'Thumbnail alignment:', 'youtube-channel-gallery' ); ?></label>
 										<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_thumbnail_alignment' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumbnail_alignment' ); ?>">
 											<option value="left"<?php selected( $instance['ytchag_thumbnail_alignment'], 'left' ); ?>><?php _e( 'Left', 'youtube-channel-gallery' ); ?></option>
 											<option value="right"<?php selected( $instance['ytchag_thumbnail_alignment'], 'right' ); ?>><?php _e( 'Right', 'youtube-channel-gallery' ); ?></option>
@@ -431,7 +445,7 @@
 									</p>
 
 									<p>
-										<label for="ytchag_description_words_number"><?php _e( 'Description words number:', 'youtube-channel-gallery' ); ?></label>
+										<label for="<?php echo $this->get_field_id( 'ytchag_description_words_number' ); ?>"><?php _e( 'Description words number:', 'youtube-channel-gallery' ); ?></label>
 										<input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_description_words_number' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_description_words_number' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_description_words_number ); ?>" />
 									</p> 
 								</div>
@@ -452,7 +466,7 @@
 					<div id="tabs-<?php echo $this->id; ?>-4">
 
 						<p>
-							<label for="ytchag_link_tx"><?php _e( 'Link text:', 'youtube-channel-gallery' ); ?></label>
+							<label for="<?php echo $this->get_field_id( 'ytchag_link_tx' ); ?>"><?php _e( 'Link text:', 'youtube-channel-gallery' ); ?></label>
 							<input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_link_tx' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_link_tx' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_link_tx ); ?>" />
 						</p>
 
@@ -488,6 +502,7 @@
 			// Feed options
 			$ytchag_feed = apply_filters('ytchag_feed', $instance['ytchag_feed']);
 			$ytchag_user = apply_filters('ytchag_user', $instance['ytchag_user']);
+			$ytchag_feed_order = apply_filters('ytchag_feed_order', $instance['ytchag_feed_order']);
 
 			// Player options
 			$ytchag_video_width = apply_filters('ytchag_video_width', $instance['ytchag_video_width']);
@@ -522,6 +537,7 @@
 
 			// Feed options
 			$ytchag_feed = ( $ytchag_feed ) ? $ytchag_feed : 'user'; //default user
+			$ytchag_feed_order = ( $ytchag_feed_order ) ? $ytchag_feed_order : 'asc'; //default ascending
 
 			// Player options
 			$ytchag_video_width = ( $ytchag_video_width ) ? $ytchag_video_width : 250;
@@ -533,6 +549,7 @@
 			$ytchag_showinfo = ( $ytchag_showinfo ) ? '&showinfo='. $ytchag_showinfo : '&showinfo=0'; //default 1
 
 			// Thumbnail options
+			$ytchag_maxitems = ( $ytchag_maxitems ) ? $ytchag_maxitems : 9;
 			$ytchag_thumb_width = ( $ytchag_thumb_width ) ? $ytchag_thumb_width : 85;
 			$ytchag_thumb_columns = (( $ytchag_thumb_columns ) || ( $ytchag_thumb_columns != 0 )) ? $ytchag_thumb_columns : 0;
 
@@ -586,7 +603,7 @@
 					$errorMesagge = __('You must insert a valid YouTube user id.', 'youtube-channel-gallery');
 				}
 				if($ytchag_feed == 'playlist'){
-					$ytchag_rss_url 	= $youtube_feed_url . '/playlists/' . $ytchag_user . '?alt=atom&v=2&orderby=published&prettyprint=true';
+					$ytchag_rss_url 	= $youtube_feed_url . '/playlists/' . $ytchag_user . '?v=2';//&prettyprint=true
 					//print_r($ytchag_rss_url . '<br>');
 					$ytchag_link_url 	= 'http://www.youtube.com/playlist?list=' . $ytchag_user;
 					$errorMesagge = __('You must insert a valid playlist id.', 'youtube-channel-gallery');
@@ -596,33 +613,42 @@
 				include_once(ABSPATH . WPINC . '/feed.php');
 				
 				$rss = fetch_feed($ytchag_rss_url);
+				//to get the appropriate order of items
+				$rss->set_stupidly_fast(true);
 
 				// check if no correct user name
 				if (!is_wp_error( $rss ) ) {
 
-					//items requested by the user
-					$maxitems = ( $ytchag_maxitems ) ? $ytchag_maxitems : 9;
-
+					//playlist descending order
 					//get totalResultsData from playlist rss to order correctly videos
-					if($ytchag_feed == 'playlist'){
+					if($ytchag_feed == 'playlist' && $ytchag_feed_order == 'desc'){
 						//openSearch:totalResults
 						$totalResults = $rss->get_feed_tags('http://a9.com/-/spec/opensearch/1.1/', 'totalResults');
 						$totalResultsData = $totalResults[0]['data'];
-						//print_r($totalResultsData . '<br>');
+						//print_r('totalResultsData: ' . $totalResultsData . '<br>');
 
 						//get rss playlist again with the last videos. YouTube does not load in the first request, even if the orderby parameter is set.
-						$startindex = $totalResultsData - $maxitems + 1;
-						//print_r($startindex . '<br>');
-						$ytchag_rss_url = $ytchag_rss_url . '&start-index=' . $startindex . '&max-results=' . $maxitems;
+
+						//Youtube feed limit is 1000
+						if($totalResultsData >= 1000){
+							$startindex = 1000 - $ytchag_maxitems + 1;
+						} elseif ($ytchag_maxitems >= $totalResultsData) {
+							$startindex = 1;
+						} else {
+							$startindex = $totalResultsData - $ytchag_maxitems + 1;
+						}
+
+						//print_r('startindex: ' . $startindex . '<br>');
+						$ytchag_rss_url = $ytchag_rss_url . '&start-index=' . $startindex . '&max-results=' . $ytchag_maxitems . '&orderby=reversedPosition';
+						//print_r($ytchag_rss_url . '<br>');
 						$rss = fetch_feed($ytchag_rss_url);
 
 						//to get the appropriate order of items
-						$rss->enable_order_by_date(false);
+						$rss->set_stupidly_fast(true);
 						//print_r($ytchag_rss_url . '<br>');
 					}
 
-					$items = $rss->get_items(0, $maxitems);
-
+					$items = $rss->get_items(0, $ytchag_maxitems);
 
 					if (!empty($items)) {
 						$i = 0;
@@ -645,14 +671,15 @@
 							$media_group = $item->get_item_tags('http://search.yahoo.com/mrss/', 'group');
 							$media_content = $media_group[0]['child']['http://search.yahoo.com/mrss/']['thumbnail'];
 
-							/* to check order
+							/*
+							// to check order of playlist items
 							$episode = $item->get_item_tags('http://gdata.youtube.com/schemas/2007', 'episode'); //yt
 							$episodecontent = $episode[0]['attribs']['']['number'];
 							if(!$episode){
 								$episode = $item->get_item_tags('http://gdata.youtube.com/schemas/2007', 'position'); //yt
 								$episodecontent = $episode[0]['data'];
 							}
-							print_r($episodecontent . '-');
+							//print_r($episodecontent . '-');
 							*/
 
 							//Check the thumbnail width
@@ -842,6 +869,7 @@
 
 				// Feed options
 				'feed' => '',
+				'feedorder' => '',
 
 				// Player options
 				'videowidth' => '',
@@ -873,6 +901,7 @@
 			// Feed options
 			$instance['ytchag_feed'] = $feed;
 			$instance['ytchag_user'] = $user;
+			$instance['ytchag_feed_order'] = $feedorder;
 
 			// Player options
 			$instance['ytchag_video_width'] = $videowidth;

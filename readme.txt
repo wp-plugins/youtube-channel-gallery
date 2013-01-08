@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.7.5
+Stable tag: 1.7.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,8 +41,9 @@ Description of the different fields of the plugin:
 
 **Feed tab:**
 
-* **YouTube user name:** the user id of the user's Youtube videos you want to show or the id of the playlist. Shortcode attribute: user; value: String. (Required).
 * **Video feed type:** option to select the feed type to use to show videos. Yo can select uploaded by the user or playlist. Shortcode attribute: feed; value: user (default) or playlist. (Optional).
+* **YouTube user id/YouTube playlist id:** the user id of the user's Youtube videos you want to show or the id of the playlist. Shortcode attribute: user; value: String. (Required).
+* **Playlist order:** this option appears if you selected playlist as Video feed type. You can show videos in a playlist by ascending or descending order. Shortcode attribute: feedorder; value: asc (default) or desc. (Optional).
 
 **Player tab:**
 
@@ -76,7 +77,7 @@ Description of the different fields of the plugin:
 = Shortcode syntax: =
 In the following example are all attributes that can be used with the shortcode and explained above:
 
-`[Youtube_Channel_Gallery feed="user" user="MaxonC4D" videowidth="500" ratio="16x9" theme="light" color="white" quality="small" autoplay="1" rel="1" showinfo="1" maxitems="9" thumbwidth="90" thumbratio="16x9" thumbcolumns="3" title="1" description="1" thumbnail_alignment="left" descriptionwordsnumber="10" link_window="0"]`
+`[Youtube_Channel_Gallery feed="user" user="MaxonC4D" feedorder="desc" videowidth="500" ratio="16x9" theme="light" color="white" quality="small" autoplay="1" rel="1" showinfo="1" maxitems="9" thumbwidth="90" thumbratio="16x9" thumbcolumns="3" title="1" description="1" thumbnail_alignment="left" descriptionwordsnumber="10" link_window="0"]`
 
 
 = Languages: =
@@ -106,6 +107,10 @@ The username who uploaded a video to Youtube is located below each video, where 
 
 If you go to a playlist you will get the following url format: https://www.youtube.com/playlist?list=PL33942589618ABDE3. The playlist id is what you have after list=. In this example, the playlist id is PL33942589618ABDE3.
 
+= I selected showing my playlist in descending order but the latest videos are not displayed, why? =
+
+This will happen if your playlist has more than 1000 videos because YouTube API has this limit.
+
 
 == Screenshots ==
 
@@ -117,6 +122,12 @@ If you go to a playlist you will get the following url format: https://www.youtu
 
 
 == Changelog ==
+
+= 1.7.5.1 =
+* Fixed order of playlists videos, now by ascending and descending position.
+* Added control to select playlist order.
+* Fixed for attributes of some wigdet labels.
+
 
 = 1.7.5 =
 * Corrected order of playlists videos.
