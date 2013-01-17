@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.7.5.1
+Stable tag: 1.7.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,6 +122,9 @@ This will happen if your playlist has more than 1000 videos because YouTube API 
 
 
 == Changelog ==
+
+= 1.7.6 =
+* Add &wmode=transparent to the YouTube iframe url in order to allow layers to overlap it.
 
 = 1.7.5.1 =
 * Fixed order of playlists videos, now by ascending and descending position.

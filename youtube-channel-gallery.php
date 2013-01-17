@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.7.5.1
+	Version: 1.7.6
 	License: GPL2
 		
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -731,7 +731,7 @@
 								//count the plugin occurrences on page
 								$plugincount++;
 
-								$content = '<iframe id="ytcplayer' . $plugincount . '" class="ytcplayer" allowfullscreen width="' . $ytchag_video_width . '" height="' . $ytchag_video_heigh . '" src="http://www.youtube.com/embed/' . $youtubeid . '?version=3' . $ytchag_theme . $ytchag_color .  $ytchag_autoplay . $ytchag_rel . $ytchag_showinfo .'&enablejsapi=1" frameborder="0"></iframe>';
+								$content = '<iframe id="ytcplayer' . $plugincount . '" class="ytcplayer" allowfullscreen width="' . $ytchag_video_width . '" height="' . $ytchag_video_heigh . '" src="http://www.youtube.com/embed/' . $youtubeid . '?version=3' . $ytchag_theme . $ytchag_color .  $ytchag_autoplay . $ytchag_rel . $ytchag_showinfo .'&enablejsapi=1&wmode=transparent" frameborder="0"></iframe>';
 								$content.= '<ul class="ytchagallery ytccf' . $tableclass . $title_and_description_alignment_class . $columnnumber . '">';
 
 							} // if player end
