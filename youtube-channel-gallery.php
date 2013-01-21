@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.7.6
+	Version: 1.7.7
 	License: GPL2
 		
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -603,7 +603,7 @@
 					$errorMesagge = __('You must insert a valid YouTube user id.', 'youtube-channel-gallery');
 				}
 				if($ytchag_feed == 'playlist'){
-					$ytchag_rss_url 	= $youtube_feed_url . '/playlists/' . $ytchag_user . '?v=2';//&prettyprint=true
+					$ytchag_rss_url 	= $youtube_feed_url . '/playlists/' . $ytchag_user . '?v=2&prettyprint=true';//&prettyprint=true
 					//print_r($ytchag_rss_url . '<br>');
 					$ytchag_link_url 	= 'http://www.youtube.com/playlist?list=' . $ytchag_user;
 					$errorMesagge = __('You must insert a valid playlist id.', 'youtube-channel-gallery');
@@ -658,7 +658,15 @@
 							$url = $item->get_permalink();
 							$youtubeid = $this->youtubeid($url);
 							$title = $item->get_title();
-							$description = $item->get_description();
+
+							//descriptions in playlists are in media:description
+							if ($ytchag_feed == 'playlist') {
+								$media_group = $item->get_item_tags('http://search.yahoo.com/mrss/', 'group');
+								$description = $media_group[0]['child']['http://search.yahoo.com/mrss/']['description'][0]['data'];
+							} else {
+								$description = $item->get_description();
+							}
+
 
 							//default url thumbnail
 							if ($enclosure = $item->get_enclosure()){
