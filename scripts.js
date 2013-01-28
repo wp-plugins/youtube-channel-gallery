@@ -32,14 +32,14 @@ jQuery(document).ready(function($) {
 	//Scroll to element only if not in view - jQuery
 	//http://stackoverflow.com/a/10130707/1504078
 	function checkIfInView(element){
-		if($(element).position()){
-			if($(element).position().top < $(window).scrollTop()){
+		if($(element).offset()){
+			if($(element).offset().top < $(window).scrollTop()){
 			//scroll up
-			$('html,body').animate({scrollTop:$(element).position().top - 10}, 500);
+			$('html,body').animate({scrollTop:$(element).offset().top - 10}, 500);
 		}
-		else if($(element).position().top + $(element).height() > $(window).scrollTop() + (window.innerHeight || document.documentElement.clientHeight)){
+		else if($(element).offset().top + $(element).height() > $(window).scrollTop() + (window.innerHeight || document.documentElement.clientHeight)){
 			//scroll down
-			$('html,body').animate({scrollTop:$(element).position().top - (window.innerHeight || document.documentElement.clientHeight) + $(element).height() + 10}, 500);}
+			$('html,body').animate({scrollTop:$(element).offset().top - (window.innerHeight || document.documentElement.clientHeight) + $(element).height() + 10}, 500);}
 		}
 	}
 

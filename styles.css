@@ -16,17 +16,17 @@ Description: Show a youtube video and a gallery of thumbnails for a youtube chan
 
 /*Player*/
 /*---------------------------------------------------*/
-iframe.ytcplayer{display: block;margin-bottom: 10px;padding: 0;}
+iframe.ytcplayer{display: block!important;margin-bottom: 10px!important;padding: 0!important;}
 
 /*Thumbnails, title and description*/
 /*---------------------------------------------------*/
-ul.ytchagallery.ytccf{margin: 0; padding: 0;list-style: none;}
-ul.ytchagallery.ytccf li{float:left;padding:0;margin: 0;list-style: none;}
-ul.ytchagallery.ytccf li.ytccell-first{clear: left;}
+ul.ytchagallery.ytccf{margin: 0!important; padding: 0!important;list-style: none!important;}
+ul.ytchagallery.ytccf li{float:left;padding:0!important;margin: 0!important;list-style: none!important;}
+ul.ytchagallery.ytccf li.ytccell-first{clear: left!important;}
 
 	/*Thumbnails*/
-	ul.ytchagallery.ytccf div.ytcthumb-cont{float: left;}
-	ul.ytchagallery.ytccf li a.ytcthumb{display: inline-block;border:1px solid #999;background-position: center center;background-size: 110%;background-repeat: no-repeat;}
+	ul.ytchagallery.ytccf div.ytcthumb-cont{float: left!important;}
+	ul.ytchagallery.ytccf li a.ytcthumb{display: inline-block!important;border:1px solid #999;background-position: center center;background-size: 110%;background-repeat: no-repeat;}
 	ul.ytchagallery.ytccf li a.ytcthumb .ytcplay{background: url(img/play.png) -9999px -9999px no-repeat;}
 	ul.ytchagallery.ytccf li a.ytcthumb:hover{opacity: 0.75;}
 	ul.ytchagallery.ytccf li a.ytcthumb:hover .ytcplay{background-position: center center;}
