@@ -8,11 +8,11 @@ Stable tag: 1.7.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Show a YouTube video and a gallery of thumbnails for a youtube channel.
+Show a YouTube video and a gallery of thumbnails for a YouTube channel.
 
 == Description ==
 
-Show a youtube video and a gallery of thumbnails for a youtube user channel. 
+Show a YouTube video and a gallery of thumbnails for a YouTube user channel. 
 
 
 = Demo: =
@@ -71,7 +71,7 @@ Description of the different fields of the plugin:
 **Link tab:**
 
 * **Link text:** field to customize the text of the link to the gallery on YouTube. Shortcode attribute: link_tx; value: String. (Optional).
-* **Show link to channel:** option to display a link to the youtube user channel. Shortcode attribute: link; values: 0 (default) or 1. (Optional).
+* **Show link to channel:** option to display a link to the YouTube user channel. Shortcode attribute: link; values: 0 (default) or 1. (Optional).
 * **Open in a new window or tab:** option to open the link to YouTube in a new window or tab . Shortcode attribute: link_window; values: 0 (default) or 1. (Optional).
 
 
