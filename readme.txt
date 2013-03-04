@@ -18,12 +18,13 @@ Show a youtube video and a gallery of thumbnails for a youtube user channel.
 = Demo: =
 You can see a demo of the plugin in the following URLs:
 
-* [Widget Demo](http://poselab.com/youtube-channel-gallery)
-* [Demo only with thumbnails](http://poselab.com/youtube-channel-gallery-demo-solo-con-miniaturas)
-* [Demo with title and description and thumbnail at top](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-descripcion-y-miniatura-arriba)
-* [Demo with title and thumbnail at top](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-miniatura-arriba)
-* [Demo with title and description and thumbnail on the left](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-descripcion-y-miniatura-a-la-izquierda)
-* [Demo with title and thumbnail at bottom](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-miniatura-abajo)
+* [Widget Demo](http://poselab.com/en/youtube-channel-gallery/) | [ES](http://poselab.com/youtube-channel-gallery)
+* [Demo only with thumbnails](http://poselab.com/en/youtube-channel-gallery-demo-only-with-thumbnails/) | [ES](http://poselab.com/youtube-channel-gallery-demo-solo-con-miniaturas)
+* [Demo with title and description and thumbnail at top](http://poselab.com/en/youtube-channel-gallery-demo-with-the-title-description-and-thumbnail-shown-at-the-top/) | [ES](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-descripcion-y-miniatura-arriba)
+* [Demo with title and thumbnail at top](http://poselab.com/en/youtube-channel-gallery-demo-with-the-title-and-thumbnail-at-the-top/) | [Demo with title and thumbnail at top](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-miniatura-arriba)
+* [Demo with title and description and thumbnail on the left](http://poselab.com/en/youtube-channel-gallery-demo-with-title-description-and-thumbnail-on-the-left/) | [ES](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-descripcion-y-miniatura-a-la-izquierda)
+* [Demo with title and thumbnail at bottom](http://poselab.com/en/youtube-channel-gallery-demo-with-title-and-thumbnail-at-the-bottom/) | [ES](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-miniatura-abajo)
+* [Demo with playlist](http://poselab.com/en/youtube-channel-gallery-demo-with-playlist/) | [ES](http://poselab.com/youtube-channel-gallery-demo-con-lista-de-reproduccion/)
 
 
 = Features: =
