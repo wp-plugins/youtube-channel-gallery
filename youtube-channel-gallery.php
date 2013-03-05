@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.7.9
+	Version: 1.7.10
 	License: GPL2
 		
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -593,7 +593,7 @@
 				$youtube_feed_url = 'http://gdata.youtube.com/feeds/api';
 				// links
 				if($ytchag_feed == 'user'){
-					$ytchag_rss_url 	= $youtube_feed_url . '/users/' . $ytchag_user . '/uploads?max-results=50';
+					$ytchag_rss_url 	= $youtube_feed_url . '/users/' . $ytchag_user . '/uploads';
 					$ytchag_link_url 	= 'http://www.youtube.com/user/' . $ytchag_user;
 					$errorMesagge = __('You must insert a valid YouTube user id.', 'youtube-channel-gallery');
 				}
@@ -603,7 +603,7 @@
 					$errorMesagge = __('You must insert a valid YouTube user id.', 'youtube-channel-gallery');
 				}
 				if($ytchag_feed == 'playlist'){
-					$ytchag_rss_url 	= $youtube_feed_url . '/playlists/' . $ytchag_user . '?v=2&max-results=50';//&prettyprint=true
+					$ytchag_rss_url 	= $youtube_feed_url . '/playlists/' . $ytchag_user . '?v=2';//&prettyprint=true
 					//print_r($ytchag_rss_url . '<br>');
 					$ytchag_link_url 	= 'http://www.youtube.com/playlist?list=' . $ytchag_user;
 					$errorMesagge = __('You must insert a valid playlist id.', 'youtube-channel-gallery');

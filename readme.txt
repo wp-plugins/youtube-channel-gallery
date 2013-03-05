@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.7.9
+Stable tag: 1.7.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,6 +123,9 @@ This will happen if your playlist has more than 1000 videos because YouTube API 
 
 
 == Changelog ==
+
+= 1.7.10 =
+*  max-results=50 parameter removed from playlists. Some users have reported plugin crashes. After check it out I found that the plugin fails with multiple playlist because of this parameter randomly.
 
 = 1.7.9 =
 * Changed the max-results parameter to 50 to allow the maximum display value of a single request. The plugin will not show more than 50 videos at least until version 2
