@@ -48,3 +48,16 @@
 
 
 .ytchgtabs fieldset.ytchg-fieldborder{border: 1px solid #DFDFDF;border-radius: 5px;}
+
+.ytchgtabs .ytchag_info {
+background: #ADD3E2;
+border-radius: 20px;
+font-size: 11px;
+width: 15px;
+height: 15px;
+line-height: 14px;
+display: inline-block;
+text-align: center;
+cursor: pointer;
+}
+.wideinfo{width: 88%;margin-right: 2px;}

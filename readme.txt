@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.7.10
+Stable tag: 1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,15 +45,17 @@ Description of the different fields of the plugin:
 * **Video feed type:** option to select the feed type to use to show videos. Yo can select uploaded by the user or playlist. Shortcode attribute: feed; value: user (default) or playlist. (Optional).
 * **YouTube user id/YouTube playlist id:** the user id of the user's Youtube videos you want to show or the id of the playlist. Shortcode attribute: user; value: String. (Required).
 * **Playlist order:** this option appears if you selected playlist as Video feed type. You can show videos in a playlist by ascending or descending order. Shortcode attribute: feedorder; value: asc (default) or desc. (Optional).
+* **Cache time (hours):** Hours that RSS data is saved in database, to not make a request every time the page is displayed. Assign this value according to how often you upgrade your playlist in YouTube. Shortcode attribute: cache_time; value: Number. (Optional).
+* **Activate cache:** If you disable this field the cache will be deleted and will not be used. This is useful to refresh immediately the YouTube RSS used by the plugin. Reenable the cache when the gallery shows the changes you made in your YouTube account. Shortcode attribute: cache; values: 0 or 1 (default). (Optional).
 
 **Player tab:**
 
-* **Video width:** indicates the width of the video player. Shortcode attribute: videowidth; value: Number. (Optional).
 * **Aspect ratio:** indicates the proportions of the player, standard (4:3) or widescreen (16:9) format. Shortcode attribute:** ratio; values: 4x3 (default) or 16x9. (Optional).
 * **Theme:** display player controls (like a 'play' button or volume control) within a dark or light control bar. Shortcode attribute: theme; values: dark (default) or light. (Optional).
 * **Progress bar color:** specifies the color that will be used in the player's video progress bar to highlight the amount of the video that the viewer has already seen. Shortcode attribute: color; values: red (default) or white. (Optional).
 * **Video quality:** sets the suggested video quality for the videos. The suggested quality parameter value can be small, medium, large, hd720, hd1080, highres or default. YouTube recommend that you set the parameter value to default, which instructs YouTube to select the most appropriate playback quality, which will vary for different users, videos, systems and other playback conditions. If you set suggested quality level that is not available for the video, then the quality will be set to the next lowest level that is available. Shortcode attribute: quality; values: small, medium, large, hd720, hd1080, highres or default (default). (Optional).
 * **Autoplay:** automatically play the initial video when the player loads. Shortcode attribute: autoplay; values: 0 (default) or 1. (Optional).
+* **Show YouTube logo:** Activate this field to show the YouTube logo in the control bar. Setting the color parameter to white will show the YouTube logo in the control bar. Shortcode attribute: modestbranding; values: 0 (default) or 1. (Optional).
 * **Show related videos:** this parameter indicates whether the player should show related videos when playback of the initial video ends. Shortcode attribute: rel; values: 0 (default) or 1. (Optional).
 * **Show info (title, uploader):** display information like the video title and rating before the video starts playing. Shortcode attribute: showinfo; values: 0 (default) or 1. (Optional).
 
@@ -76,7 +78,7 @@ Description of the different fields of the plugin:
 
 
 = Shortcode syntax: =
-In the following example are all attributes that can be used with the shortcode and explained above:
+In the following example are many attributes that can be used with the shortcode and explained above:
 
 `[Youtube_Channel_Gallery feed="user" user="MaxonC4D" feedorder="desc" videowidth="500" ratio="16x9" theme="light" color="white" quality="small" autoplay="1" rel="1" showinfo="1" maxitems="9" thumbwidth="90" thumbratio="16x9" thumbcolumns="3" title="1" description="1" thumbnail_alignment="left" descriptionwordsnumber="10" link_window="0"]`
 
@@ -124,8 +126,26 @@ This will happen if your playlist has more than 1000 videos because YouTube API 
 
 == Changelog ==
 
+= 1.8 =
+* Replaced SimplePie for SimpleXML to solve problems that many users have with Simplepie.
+* Replaced SimplePie FeedCache for Transients API cache data to manage cache of RSS.
+* Added a field to set the number of hours to keep the data before refreshing.
+* Added a checkbox to deactivate the cache. Useful to check or flush new videos. 
+* Added default values.
+* Changed the max-results parameter to 50 to allow the maximum display value of a single request.
+* Fixed row counter with multiple instances of the plugin in the same page.
+* Responsive design.
+* Deleted video width field to make video player width responsive.
+* Thumbnail width field is used for top and bottom alignments to obtain the most appropriate thumbnails from rss.
+* Added checkbox Show YouTube logo, which if is unchecked, will prevent the YouTube logo from displaying in the control bar.
+* Added contextual help to widget.
+* Parameter orderby=reversedPosition of Google Data API is not working. The descending order of the playlist is created without the parameter of the api.
+* Increased the width of the widget to show in a single row the tabs in Spanish.
+* Changes in CSS.
+* Update language file.
+
 = 1.7.10 =
-*  max-results=50 parameter removed from playlists. Some users have reported plugin crashes. After check it out I found that the plugin fails with multiple playlist because of this parameter randomly.
+* max-results=50 parameter removed from playlists. Some users have reported plugin crashes. After check it out I found that the plugin fails with multiple playlist because of this parameter randomly.
 
 = 1.7.9 =
 * Changed the max-results parameter to 50 to allow the maximum display value of a single request. The plugin will not show more than 50 videos at least until version 2
