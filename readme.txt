@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.8
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -125,6 +125,10 @@ This will happen if your playlist has more than 1000 videos because YouTube API 
 
 
 == Changelog ==
+
+= 1.8.1 =
+* Added some classes to html.
+* Fixed thumbnail size error when the number of columns is equal to 0 or 1.
 
 = 1.8 =
 * Replaced SimplePie for SimpleXML to solve problems that many users have with Simplepie.

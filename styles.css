@@ -102,6 +102,8 @@ ul.ytchagallery li .ytcliinner {overflow: hidden;}
 	/*columns*/
 	.ytc-row{clear: both;}
 
+	.ytc-columns1 li{ width: 100%; }
+
 	.ytc-columns2 li{ width: 50%; width:-webkit-calc(100%/2); width:calc(100%/2);}
 
 	.ytc-columns3 li{ width: 33.33%; width:-webkit-calc(100%/3); width:calc(100%/3);}

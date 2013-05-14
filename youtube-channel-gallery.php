@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.8
+	Version: 1.8.1
 	License: GPL2
 
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -45,7 +45,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			'youtubechannelgallery_widget', // Base ID
 			__( 'Youtube Channel Gallery', 'youtube-channel-gallery' ), // Name
 
-			array( 'classname'  => 'youtubechannelgallery', 'description' => __( 'Show a youtube video and a gallery of thumbnails for a youtube channel', 'youtube-channel-gallery' ), ), // Args
+			array( 'classname'  => 'youtubechannelgallery ytccf', 'description' => __( 'Show a youtube video and a gallery of thumbnails for a youtube channel', 'youtube-channel-gallery' ), ), // Args
 
 			array( 'width' => 260)
 		);
@@ -813,14 +813,16 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 				}// end columns control
 
 				//check if title or description
-				$ytchag_thumbnail_alignment_witdh = '';
+				$ytchag_thumbnail_fixed_witdh = '';
 				$title_and_description_alignment_class = '';
+
 
 				if ( $ytchag_title || $ytchag_description ) {
 					$title_and_description_alignment_class = ' ytc-td-' . $ytchag_thumbnail_alignment;
-					if ( $ytchag_thumbnail_alignment == 'left' || $ytchag_thumbnail_alignment == 'right' ) {
-						$ytchag_thumbnail_alignment_witdh = ' style="width: ' . $ytchag_thumb_width . 'px; "';
-					}
+				}
+				//fixed width for columns 0 or with alignment
+				if ( $ytchag_thumbnail_alignment == 'left' || $ytchag_thumbnail_alignment == 'right'  || $ytchag_thumb_columns ==0 ) {
+					$ytchag_thumbnail_fixed_witdh = ' style="width: ' . $ytchag_thumb_width . 'px; "';
 				}
 
 
@@ -877,7 +879,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 				}
 
-				$content.= '<div class="ytcthumb-cont"' . $ytchag_thumbnail_alignment_witdh . '>';
+				$content.= '<div class="ytcthumb-cont"' . $ytchag_thumbnail_fixed_witdh . '>';
 				$content.= '<a class="ytcthumb ytclink" href="http://youtu.be/' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" title="' . $title . '" style="background-image:url(' . $thumb . ')">';
 				$content.= '<div class="ytcplay"></div>';
 				$content.= '</a>';
@@ -925,7 +927,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 	function get_rss_data ( $ytchag_cache, $transientId, $ytchag_rss_url, $ytchag_cache_time ) {
 		//use cache
 		if ( $ytchag_cache == '1' ) {
-
+			
 			//if cache does not exist
 			if ( false === ( $videos_result = get_transient( $transientId ) ) ) {
 				//get rss
@@ -1084,7 +1086,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$instance['ytchag_link_window'] = $link_window;
 
 
-		return '<div class="ytcshort youtubechannelgallery">'. $this->ytchag_rss_markup( $instance ) . '</div>';
+		return '<div class="ytcshort youtubechannelgallery ytccf">'. $this->ytchag_rss_markup( $instance ) . '</div>';
 
 	} // YoutubeChannelGallery_Shortcode
 
