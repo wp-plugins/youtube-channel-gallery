@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: youtube-channel-gallery\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-10 16:25+0100\n"
-"PO-Revision-Date: 2013-05-10 16:31+0100\n"
+"POT-Creation-Date: 2013-05-15 18:09+0100\n"
+"PO-Revision-Date: 2013-05-15 18:09+0100\n"
 "Last-Translator: Javier <javierpose@gmail.com>\n"
 "Language-Team: PoseLab <javierpose@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -27,264 +27,264 @@ msgstr ""
 msgid "Youtube Channel Gallery"
 msgstr "Galería de Canal de Youtube"
 
-#: youtube-channel-gallery.php:49
+#: youtube-channel-gallery.php:48
 msgid "Show a youtube video and a gallery of thumbnails for a youtube channel"
 msgstr "Muestra un vídeo y una galería de miniaturas de una canal de Youtube "
 
-#: youtube-channel-gallery.php:191
+#: youtube-channel-gallery.php:201
 msgid "Title:"
 msgstr "Título:"
 
-#: youtube-channel-gallery.php:299
-#: youtube-channel-gallery.php:303
-#: youtube-channel-gallery.php:343
+#: youtube-channel-gallery.php:327
+#: youtube-channel-gallery.php:331
+#: youtube-channel-gallery.php:372
 msgid "YouTube user id:"
 msgstr "Id de usuario de Youtube:"
 
-#: youtube-channel-gallery.php:306
+#: youtube-channel-gallery.php:334
 msgid "YouTube playlist id:"
 msgstr "Id de lista de reproducción de YouTube:"
 
-#: youtube-channel-gallery.php:318
+#: youtube-channel-gallery.php:347
 msgid "Feed"
 msgstr "Feed"
 
-#: youtube-channel-gallery.php:319
+#: youtube-channel-gallery.php:348
 msgid "Player"
 msgstr "Reproductor"
 
-#: youtube-channel-gallery.php:320
+#: youtube-channel-gallery.php:349
 msgid "Thumbnails"
 msgstr "Miniaturas"
 
-#: youtube-channel-gallery.php:321
+#: youtube-channel-gallery.php:350
 msgid "Link"
 msgstr "Enlace"
 
-#: youtube-channel-gallery.php:334
+#: youtube-channel-gallery.php:363
 msgid "Video feed type:"
 msgstr "Tipo de feed de vídeo:"
 
-#: youtube-channel-gallery.php:336
+#: youtube-channel-gallery.php:365
 msgid "Uploaded by a user"
 msgstr "Subidos por el usuario"
 
-#: youtube-channel-gallery.php:338
+#: youtube-channel-gallery.php:367
 msgid "Playlist"
 msgstr "Lista de reproducción"
 
-#: youtube-channel-gallery.php:348
+#: youtube-channel-gallery.php:377
 msgid "Playlist order:"
 msgstr "Orden de lista de reproducción:"
 
-#: youtube-channel-gallery.php:350
+#: youtube-channel-gallery.php:379
 msgid "Ascending Order"
 msgstr "Ascendente"
 
-#: youtube-channel-gallery.php:351
+#: youtube-channel-gallery.php:380
 msgid "Descending Order"
 msgstr "Descendente"
 
-#: youtube-channel-gallery.php:356
+#: youtube-channel-gallery.php:385
 msgid "Cache time (hours):"
 msgstr "Tiempo de cache (horas):"
 
-#: youtube-channel-gallery.php:358
+#: youtube-channel-gallery.php:387
 msgid "Hours that RSS data is saved in database, to not make a request every time the page is displayed. Assign this value according to how often you upgrade your playlist in YouTube."
 msgstr "Horas que los datos del RSS se guardan en la base de datos, para no hacer una solicitud cada vez que se muestra la página. Asigna este valor en función de la frecuencia con que actualizas la lista de reproducción en YouTube."
 
-#: youtube-channel-gallery.php:363
+#: youtube-channel-gallery.php:392
 msgid "Activate cache"
 msgstr "Activar caché"
 
-#: youtube-channel-gallery.php:364
+#: youtube-channel-gallery.php:393
 msgid "If you disable this field the cache will be deleted and will not be used. This is useful to refresh immediately the YouTube RSS used by the plugin. Reenable the cache when the gallery shows the changes you made in your youtube account."
 msgstr "Si se deshabilita este campo la caché se borrará y no será utilizada. Esto es útil para actualizar inmediatamente el RSS de YouTube usado por el plugin. Vuelve a habilitar la caché cuando la galería muestre los cambios que ha realizado en su cuenta de YouTube."
 
-#: youtube-channel-gallery.php:379
-#: youtube-channel-gallery.php:461
+#: youtube-channel-gallery.php:408
+#: youtube-channel-gallery.php:490
 msgid "Aspect ratio:"
 msgstr "Relación de aspecto:"
 
-#: youtube-channel-gallery.php:381
-#: youtube-channel-gallery.php:463
+#: youtube-channel-gallery.php:410
+#: youtube-channel-gallery.php:492
 msgid "Standard (4x3)"
 msgstr "Estándar (4x3)"
 
-#: youtube-channel-gallery.php:382
-#: youtube-channel-gallery.php:464
+#: youtube-channel-gallery.php:411
+#: youtube-channel-gallery.php:493
 msgid "Widescreen (16x9)"
 msgstr "Panorámico (16x9)"
 
-#: youtube-channel-gallery.php:387
+#: youtube-channel-gallery.php:416
 msgid "Theme:"
 msgstr "Tema:"
 
-#: youtube-channel-gallery.php:389
+#: youtube-channel-gallery.php:418
 msgid "Dark"
 msgstr "Oscuro"
 
-#: youtube-channel-gallery.php:390
+#: youtube-channel-gallery.php:419
 msgid "Light"
 msgstr "Claro"
 
-#: youtube-channel-gallery.php:395
+#: youtube-channel-gallery.php:424
 msgid "Progress bar color:"
 msgstr "Color de barra de progreso:"
 
-#: youtube-channel-gallery.php:397
+#: youtube-channel-gallery.php:426
 msgid "Red"
 msgstr "Rojo"
 
-#: youtube-channel-gallery.php:398
+#: youtube-channel-gallery.php:427
 msgid "White"
 msgstr "Blanco"
 
-#: youtube-channel-gallery.php:403
+#: youtube-channel-gallery.php:432
 msgid "Video quality:"
 msgstr "Calidad del vídeo:"
 
-#: youtube-channel-gallery.php:405
+#: youtube-channel-gallery.php:434
 msgid "default"
 msgstr "por defecto"
 
-#: youtube-channel-gallery.php:406
+#: youtube-channel-gallery.php:435
 msgid "highres"
 msgstr "alta resolución"
 
-#: youtube-channel-gallery.php:407
+#: youtube-channel-gallery.php:436
 msgid "hd1080"
 msgstr "hd1080"
 
-#: youtube-channel-gallery.php:408
+#: youtube-channel-gallery.php:437
 msgid "hd720"
 msgstr "hd720"
 
-#: youtube-channel-gallery.php:409
+#: youtube-channel-gallery.php:438
 msgid "large"
 msgstr "largo"
 
-#: youtube-channel-gallery.php:410
+#: youtube-channel-gallery.php:439
 msgid "medium"
 msgstr "mediano"
 
-#: youtube-channel-gallery.php:411
+#: youtube-channel-gallery.php:440
 msgid "small"
 msgstr "pequeño"
 
-#: youtube-channel-gallery.php:413
+#: youtube-channel-gallery.php:442
 msgid "Default value enables YouTube to select the most appropriate playback quality. If you select a quality level that is not available for the video, then the quality will be set to the next lowest level that is available."
 msgstr "El valor predeterminado permite a YouTube seleccionar la calidad de reproducción más adecuada. Si selecciona un nivel de calidad que no está disponible para el vídeo, la calidad se ajustará al siguiente nivel más bajo que este disponible."
 
-#: youtube-channel-gallery.php:417
+#: youtube-channel-gallery.php:446
 msgid "Autoplay"
 msgstr "Autoplay"
 
-#: youtube-channel-gallery.php:422
+#: youtube-channel-gallery.php:451
 msgid "Show YouTube logo"
 msgstr "Mostrar el logotipo de YouTube"
 
-#: youtube-channel-gallery.php:423
+#: youtube-channel-gallery.php:452
 msgid "Activate this field to show the YouTube logo in the control bar. Setting the color parameter to white will show the YouTube logo in the control bar."
 msgstr "Activa este campo para mostrar el logotipo de YouTube en la barra de control. Un ajuste del parámetro de color a blanco mostrará el logotipo de YouTube en la barra de control."
 
-#: youtube-channel-gallery.php:428
+#: youtube-channel-gallery.php:457
 msgid "Show related videos"
 msgstr "Mostrar los vídeos relacionados"
 
-#: youtube-channel-gallery.php:429
+#: youtube-channel-gallery.php:458
 msgid "Activate this field to show related videos when playback of the video ends."
 msgstr "Activa este campo para mostrar videos relacionados cuando termine la reproducción del vídeo."
 
-#: youtube-channel-gallery.php:434
+#: youtube-channel-gallery.php:463
 msgid "Show info"
 msgstr "Mostrar información"
 
-#: youtube-channel-gallery.php:435
+#: youtube-channel-gallery.php:464
 msgid "Activate this field to display information like the video title and uploader before the video starts playing."
 msgstr "Active este campo para mostrar información como el título del vídeo y nombre de usuario antes de que el vídeo comience a reproducirse."
 
-#: youtube-channel-gallery.php:448
+#: youtube-channel-gallery.php:477
 msgid "Number of videos to show:"
 msgstr "Número de vídeos a mostrar:"
 
-#: youtube-channel-gallery.php:450
+#: youtube-channel-gallery.php:479
 msgid "The plugin can display a maximum of 50 videos. This limitation will change in a future release."
 msgstr "El plugin puede mostrar un máximo de 50 vídeos. Esta limitación cambiará  en una futura versión."
 
-#: youtube-channel-gallery.php:454
+#: youtube-channel-gallery.php:483
 msgid "Thumbnail width:"
 msgstr "Ancho de miniaturas:"
 
-#: youtube-channel-gallery.php:456
+#: youtube-channel-gallery.php:485
 msgid "This field is used to assign the appropriate quality of thumbnail images in top and bottom alignments and to assign width to thumbnails in left and right alignments. If the quality of thumbnail images is not enough, insert a larger value. If you are unsure you can assign one of the following values​​: 120, 320, 480 or 640"
 msgstr "Este campo se utiliza para asignar la calidad de imagen más adecuada a las miniaturas en las alineaciones superior e inferior y para asignar ancho a las miniaturas en las alineaciones izquierda y derecha. Si la calidad de las imágenes de las miniaturas no es suficiente, introduzca un valor mayor. Si no está seguro de que valor usar puede asignar uno de los siguientes valores: 120, 320, 480 ó 640"
 
-#: youtube-channel-gallery.php:469
+#: youtube-channel-gallery.php:498
 msgid "Thumbnail columns:"
 msgstr "Columnas de las miniaturas:"
 
-#: youtube-channel-gallery.php:476
+#: youtube-channel-gallery.php:505
 msgid "Show title or description"
 msgstr "Mostrar título y descripción"
 
-#: youtube-channel-gallery.php:483
+#: youtube-channel-gallery.php:512
 msgid "Show title"
 msgstr "Mostrar Título"
 
-#: youtube-channel-gallery.php:488
+#: youtube-channel-gallery.php:517
 msgid "Show description"
 msgstr "Mostrar descripción"
 
-#: youtube-channel-gallery.php:492
+#: youtube-channel-gallery.php:521
 msgid "Thumbnail alignment:"
 msgstr "Alineación de miniaturas:"
 
-#: youtube-channel-gallery.php:494
+#: youtube-channel-gallery.php:523
 msgid "Left"
 msgstr "Izquierda"
 
-#: youtube-channel-gallery.php:495
+#: youtube-channel-gallery.php:524
 msgid "Right"
 msgstr "Derecha"
 
-#: youtube-channel-gallery.php:496
+#: youtube-channel-gallery.php:525
 msgid "Top"
 msgstr "Arriba"
 
-#: youtube-channel-gallery.php:497
+#: youtube-channel-gallery.php:526
 msgid "Bottom"
 msgstr "Abajo"
 
-#: youtube-channel-gallery.php:502
+#: youtube-channel-gallery.php:531
 msgid "Description words number:"
 msgstr "Número de palabras en la descripción:"
 
-#: youtube-channel-gallery.php:504
+#: youtube-channel-gallery.php:533
 msgid "Set the maximum number of words that will be displayed of the description. This field is useful when the descriptions of videos in the gallery have different sizes."
 msgstr "Establece el número máximo de palabras que se mostrarán en la descripción. Este campo es útil cuando la descripción de los vídeos de la galería tienen diferentes tamaños."
 
-#: youtube-channel-gallery.php:524
+#: youtube-channel-gallery.php:553
 msgid "Link text:"
 msgstr "Texto del enlace"
 
-#: youtube-channel-gallery.php:530
+#: youtube-channel-gallery.php:559
 msgid "Show link to channel"
 msgstr "Mostrar enlace al canal"
 
-#: youtube-channel-gallery.php:535
+#: youtube-channel-gallery.php:564
 msgid "Open in a new window or tab"
-msgstr "Abri en una ventana nueva o pestaña"
+msgstr "Abrir en una ventana nueva o pestaña"
 
-#: youtube-channel-gallery.php:621
+#: youtube-channel-gallery.php:650
 msgid "Show more videos»"
 msgstr "Ver más vídeos»"
 
-#: youtube-channel-gallery.php:634
+#: youtube-channel-gallery.php:663
 msgid "There is no video to show."
 msgstr "No hay ningún vídeo para mostrar."
 
-#: youtube-channel-gallery.php:692
+#: youtube-channel-gallery.php:734
 #, php-format
 msgid "Message from server: %1$s. Check in YouTube if the id <a href=\"%2$s\" target=\"_blank\">%3$s</a> belongs to a %4$s. To locate the id of your %4$s check the <a href=\"http://wordpress.org/extend/plugins/youtube-channel-gallery/faq/\" target=\"_blank\">FAQ</a> of the plugin."
 msgstr "Mensaje del servidor: %1$s. Compruebe en YouTube si el id <a href=\"%2$s\" target=\"_blank\">%3$s</a> pertenece a un %4$s. Para localizar el id de la carpeta %4$s revise el <a href=\"http://wordpress.org/extend/plugins/youtube-channel-gallery/faq/\" target=\"_blank\"> FAQ </ a> del plugin."
