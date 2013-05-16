@@ -1,18 +1,20 @@
 /*------------------------------------------------------------
 Plugin Name: Youtube Channel Gallery
 Plugin URI: http://www.poselab.com/
-Version: 1.7.4
+Version: 1.8.2
 Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 ------------------------------------------------------------*/	
 /*plugin wrapper*/
 .youtubechannelgallery, .youtubechannelgallery *{
-	-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; 
+	-webkit-box-sizing: border-box!important;
+	 -moz-box-sizing: border-box!important; 
+	 box-sizing: border-box!important; 
 }
 
 /*clearfix*/
-.ytccf:before,.ytccf:after {content: " "; display: table;}
-.ytccf:after {clear: both;}
-.ytccf {*zoom: 1;}
+.ytccf:before,.ytccf:after {content: " "!important; display: table!important;}
+.ytccf:after {clear: both!important;}
+.ytccf {*zoom: 1!important;}
 
 
 /*shortcode wrapper*/
@@ -26,51 +28,50 @@ padding-top: player chrome height
 padding-bottom: height of player;
 */
 .ytcplayer-wrapper{
-	/*display: block!important;margin-bottom: 10px!important;padding: 0!important;*/
-	position: relative;	padding-bottom: 56.25%; height: 0; width: 100%;
+	position: relative!important;padding: 0!important;padding-bottom: 56.25%!important; height: 0!important; width: 100%!important;
 	margin-bottom: 10px;
 }
 .ytcplayer-wrapper.ytc-player4x3{
-	padding-bottom: 75%;
+	padding-bottom: 75%!important;
 }
 iframe.ytcplayer{
-	position: absolute;	top: 0;	left: 0; width: 100%; height: 100%;
+	position: absolute!important; top: 0!important;left: 0!important; width: 100%!important; height: 100%!important;
 }
 
 /*Thumbnails, title and description*/
 /*---------------------------------------------------*/
-ul.ytchagallery{margin: 0!important; padding: 0!important;list-style: none!important; width: 100%; overflow: hidden;}
-ul.ytchagallery .ytc-row{width:-webkit-calc(100% + 10px); width:calc(100% + 10px)}
-ul.ytchagallery li{float:left;margin: 0!important;list-style: none!important;padding: 0 10px 10px 0!important;clear: none;}
+ul.ytchagallery{margin: 0!important; padding: 0!important;list-style: none!important; width: 100%!important; overflow: hidden!important;}
+ul.ytchagallery .ytc-row{width:-webkit-calc(100% + 10px)!important; width:calc(100% + 10px)!important}
+ul.ytchagallery li{float:left!important;margin: 0!important;list-style: none!important;padding: 0 10px 10px 0!important;clear: none!important;}
 ul.ytchagallery li.ytccell-first{clear: left!important;}
-ul.ytchagallery li .ytcliinner {overflow: hidden;}
+ul.ytchagallery li .ytcliinner {overflow: hidden!important;}
 
 	/*Thumbnails*/
 	/*----------------------------*/
 	ul.ytchagallery a.ytcthumb{
-		display: block!important;border:1px solid #999; position: relative; line-height: 0;width: 100%;
-		padding: 0; margin: 0; height: 0; overflow: hidden; 
-		background-size: cover; background-position: center;
+		display: block!important;border:1px solid #999; position: relative!important; line-height: 0!important;width: 100%!important;
+		padding: 0!important; margin: 0!important; height: 0!important; overflow: hidden!important; 
+		background-size: cover!important; background-position: center!important;
 	}
 
 	/*Play button*/
-	ul.ytchagallery a.ytcthumb .ytcplay{background: url(img/play.png) -9999px -9999px no-repeat; position: absolute; width: 100%; height: 100%}
+	ul.ytchagallery a.ytcthumb .ytcplay{background: url(img/play.png) -9999px -9999px no-repeat!important; position: absolute!important; width: 100%!important; height: 100%!important}
 	ul.ytchagallery a.ytcthumb:hover{opacity: 0.75;}
 	ul.ytchagallery a.ytcthumb:hover .ytcplay{background-position: center center;}
 
-	ul.ytchagallery p{display: none}/*for some themes*/
+	ul.ytchagallery p{display: none!important}/*for some themes*/
 
 	/*images*/
 	/*----------------------------*/
 
 	/*4x3*/
 	ul.ytc-thumb4x3 a.ytcthumb{
-		 padding-bottom: 75%;
+		 padding-bottom: 75%!important;
 	}
 
 	/*16x9*/
 	ul.ytc-thumb16x9 a.ytcthumb{
-		padding-bottom: 55%;
+		padding-bottom: 55%!important;
 	}
 
 
@@ -100,27 +101,27 @@ ul.ytchagallery li .ytcliinner {overflow: hidden;}
 
 
 	/*columns*/
-	.ytc-row{clear: both;}
+	.ytc-row{clear: both!important;}
 
-	.ytc-columns1 li{ width: 100%; }
+	.ytc-columns1 li{ width: 100%!important; }
 
-	.ytc-columns2 li{ width: 50%; width:-webkit-calc(100%/2); width:calc(100%/2);}
+	.ytc-columns2 li{ width: 50%!important; width:calc(100%/2)!important;}
 
-	.ytc-columns3 li{ width: 33.33%; width:-webkit-calc(100%/3); width:calc(100%/3);}
+	.ytc-columns3 li{ width: 33.33%!important; width:calc(100%/3)!important;}
 
-	.ytc-columns4 li{ width: 25%; width:-webkit-calc(100%/4); width:calc(100%/4);}
+	.ytc-columns4 li{ width: 25%!important;  width:calc(100%/4)!important;}
 
-	.ytc-columns5 li{ width: 20%; width:-webkit-calc(100%/5); width:calc(100%/5);}
+	.ytc-columns5 li{ width: 20%!important;  width:calc(100%/5)!important;}
 
-	.ytc-columns6 li{ width: 16.66%; width:-webkit-calc(100%/6); width:calc(100%/6);}
+	.ytc-columns6 li{ width: 16.66%!important; width:calc(100%/6)!important;}
 
-	.ytc-columns7 li{ width: 14.28%; width:-webkit-calc(100%/7); width:calc(100%/7);}
+	.ytc-columns7 li{ width: 14.28%!important; width:calc(100%/7)!important;}
 
-	.ytc-columns8 li{ width: 12.5%; width:-webkit-calc(100%/8); width:calc(100%/8);}
+	.ytc-columns8 li{ width: 12.5%!important;  width:calc(100%/8)!important;}
 
-	.ytc-columns9 li{ width: 11.11%; width:-webkit-calc(100%/9); width:calc(100%/9);}
+	.ytc-columns9 li{ width: 11.11%!important; width:calc(100%/9)!important;}
 
-	.ytc-columns10 li{ width: 10%; width:-webkit-calc(100%/10); width:calc(100%/10);}
+	.ytc-columns10 li{ width: 10%!important; width:calc(100%/10)!important;}
 
 
 /*link to YouTube*/

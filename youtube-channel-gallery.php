@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.8.1
+	Version: 1.8.2
 	License: GPL2
 
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -149,6 +149,13 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			'ytchag_description' => '',
 			'ytchag_thumbnail_alignment' => 'top',
 			'ytchag_description_words_number' => '',
+
+			// Link options
+			'ytchag_link' => '',
+			'ytchag_link_tx' => '',
+			'ytchag_link_window' => '',
+
+
 		);
 
 		$instance = wp_parse_args( (array) $instance, $defaults );
@@ -195,133 +202,12 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 				</p>
 
-				<script type="text/javascript">
-					jQuery(document).ready(function($) {
-
-						//Update widget form after drag-and-drop (WP save bug)
-						//http://wordpress.stackexchange.com/a/37707/16964
-						$('#widgets-right').ajaxComplete(function(event, XMLHttpRequest, ajaxOptions){
-
-							// determine which ajax request is this (we're after "save-widget")
-							var request = {}, pairs = ajaxOptions.data.split('&'), i, split, widget;
-
-							for(i in pairs){
-								split = pairs[i].split('=');
-								request[decodeURIComponent(split[0])] = decodeURIComponent(split[1]);
-							}
-
-							// only proceed if this was a widget-save request
-							if(request.action && (request.action === 'save-widget')){
-
-							// locate the widget block
-							widget = $('input.widget-id[value="' + request['widget-id'] + '"]').parents('.widget');
-
-							// trigger manual save, if this was the save request
-							// and if we didn't get the form html response (the wp bug)
-							if(!XMLHttpRequest.responseText)
-								wpWidgets.save(widget, 0, 1, 0);
-
-							// we got an response, this could be either our request above,
-							// or a correct widget-save call, so fire an event on which we can hook our js
-							else
-								$(document).trigger('saved_widget', widget);
-
-							}
-
-						});
-
-						//tabs
-						//---------------
-						$('#tabs-<?php echo $this->id; ?> > div:not(:first)').hide();
-						//$('#tabs-<?php echo $this->id; ?>-1').show();
-						$('#tabs-<?php echo $this->id; ?> ul li:first').addClass('active');
-
-						$('#tabs-<?php echo $this->id; ?> ul li a').click(function(){
-							//not work on the current tab
-							if(!$(this).parent().hasClass('active')){
-								$('#tabs-<?php echo $this->id; ?> ul li').removeClass('active');
-								$(this).parent().addClass('active');
-								var currentTab = $(this).attr('href');
-								//slideUp and slideDown to give it animation
-								$('#tabs-<?php echo $this->id; ?> > div').slideUp('fast');
-								$(currentTab).slideDown('fast');
-							}
-							return false;
-						});
-
-
-						//checkboxes with associated content
-						//---------------
-						show_title_description ();
-
-
-						$('#tabs-<?php echo $this->id; ?>-3 .ytchg-tit-desc a').click(function(){
-							if(!$(this).parent().parent().hasClass('active')){
-								slide_title_description ( 'slideDown' );
-							} else{
-								slide_title_description ( 'slideUp' );
-							}
-							return false;
-						});
-
-
-						function slide_title_description ( action ){
-							if(action === 'slideDown'){
-								$('#tabs-<?php echo $this->id; ?>-3 .ytchg-title-and-description').slideDown('fast');
-								$('#tabs-<?php echo $this->id; ?>-3 fieldset.ytchg-field-tit-desc').addClass('ytchg-fieldborder active');
-							} else if(action === 'slideUp'){
-								$('#tabs-<?php echo $this->id; ?>-3 .ytchg-title-and-description').slideUp('fast');
-								$('#tabs-<?php echo $this->id; ?>-3 fieldset.ytchg-field-tit-desc').removeClass('ytchg-fieldborder active');
-							}
-						}
-
-						function show_title_description (){
-							if( $('#tabs-<?php echo $this->id; ?>-3 .ytchg-tit').is(':checked') || $('#tabs-<?php echo $this->id; ?>-3 .ytchg-desc').is(':checked')){
-								$('#tabs-<?php echo $this->id; ?>-3 .ytchg-title-and-description').show();
-								$('#tabs-<?php echo $this->id; ?>-3 fieldset.ytchg-field-tit-desc').addClass('ytchg-fieldborder active');
-							} else{
-								$('#tabs-<?php echo $this->id; ?>-3 .ytchg-title-and-description').hide();
-
-							}
-						}
-
-
-						//Feed label title
-						//---------------
-						var feedSelect = '#<?php echo $this->get_field_id( 'ytchag_feed' ); ?>';
-						var userLabel = 'label[for="<?php echo $this->get_field_id( 'ytchag_user' ); ?>"]';
-						var feedOrder = '.<?php echo $this->get_field_id( 'ytchag_feed_order' ); ?>';
-
-						changeFeedType ();
-						$(feedSelect).change(function () {
-							changeFeedType ();
-						});
-
-						function changeFeedType (){
-							if($(feedSelect + ' option:selected').val() === 'user'){
-								$(userLabel).text('<?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?>');
-								$(feedOrder).slideUp('fast');
-							}
-							/*if($(feedSelect + ' option:selected').val() === 'userfav'){
-								$(userLabel).text('<?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?>');
-							}*/
-							if($(feedSelect + ' option:selected').val() === 'playlist'){
-								$(userLabel).text('<?php _e( 'YouTube playlist id:', 'youtube-channel-gallery' ); ?>');
-								$(feedOrder).slideDown('fast');
-							}
-						}
-					});
-				</script>
-
-
-				<?php //http://wordpress.stackexchange.com/questions/5515/update-widget-form-after-drag-and-drop-wp-save-bug?>
-
 				<div id="tabs-<?php echo $this->id; ?>" class="ytchgtabs">
 					<ul class="ytchgtabs-tabs">
-						<li><a href="#tabs-<?php echo $this->id; ?>-1"><?php _e( 'Feed', 'youtube-channel-gallery' ); ?></a></li>
-						<li><a href="#tabs-<?php echo $this->id; ?>-2"><?php _e( 'Player', 'youtube-channel-gallery' ); ?></a></li>
-						<li><a href="#tabs-<?php echo $this->id; ?>-3"><?php _e( 'Thumbnails', 'youtube-channel-gallery' ); ?></a></li>
-						<li><a href="#tabs-<?php echo $this->id; ?>-4"><?php _e( 'Link', 'youtube-channel-gallery' ); ?></a></li>
+						<li><a href=".tabs-1"><?php _e( 'Feed', 'youtube-channel-gallery' ); ?></a></li>
+						<li><a href=".tabs-2"><?php _e( 'Player', 'youtube-channel-gallery' ); ?></a></li>
+						<li><a href=".tabs-3"><?php _e( 'Thumbnails', 'youtube-channel-gallery' ); ?></a></li>
+						<li><a href=".tabs-4"><?php _e( 'Link', 'youtube-channel-gallery' ); ?></a></li>
 					</ul>
 
 
@@ -331,7 +217,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					--------------------
 					*/
 ?>
-					<div id="tabs-<?php echo $this->id; ?>-1" class="ytchgtabs-content">
+					<div id="tabs-<?php echo $this->id; ?>-1" class="ytchgtabs-content tabs-1">
 
 						<p>
 							<label for="<?php echo $this->get_field_id( 'ytchag_feed' ); ?>"><?php _e( 'Video feed type:', 'youtube-channel-gallery' ); ?></label>
@@ -343,7 +229,8 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 						</p>
 
 						<p>
-							<label for="<?php echo $this->get_field_id( 'ytchag_user' ); ?>"><?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?></label>
+							<label class="feed_user_id_label" for="<?php echo $this->get_field_id( 'ytchag_user' ); ?>"><?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?></label>
+							<label class="feed_playlist_id_label" for="<?php echo $this->get_field_id( 'ytchag_user' ); ?>"><?php _e( 'YouTube playlist id:', 'youtube-channel-gallery' ); ?></label>
 							<input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_user' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_user' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_user ); ?>" />
 						</p>
 
@@ -376,7 +263,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					--------------------
 					*/
 ?>
-					<div id="tabs-<?php echo $this->id; ?>-2" class="ytchgtabs-content">
+					<div id="tabs-<?php echo $this->id; ?>-2" class="ytchgtabs-content tabs-2">
 
 						<p>
 							<label for="<?php echo $this->get_field_id( 'ytchag_ratio' ); ?>"><?php _e( 'Aspect ratio:', 'youtube-channel-gallery' ); ?></label>
@@ -446,7 +333,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					--------------------
 					*/
 ?>
-					<div id="tabs-<?php echo $this->id; ?>-3">
+					<div id="tabs-<?php echo $this->id; ?>-3" class="ytchgtabs-content tabs-3">
 						<p>
 							<label for="<?php echo $this->get_field_id( 'ytchag_maxitems' ); ?>"><?php _e( 'Number of videos to show:', 'youtube-channel-gallery' ); ?></label>
 							<input class="widefat wideinfo" id="<?php echo $this->get_field_id( 'ytchag_maxitems' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_maxitems' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_maxitems ); ?>" />
@@ -521,7 +408,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					--------------------
 					*/
 ?>
-					<div id="tabs-<?php echo $this->id; ?>-4">
+					<div id="tabs-<?php echo $this->id; ?>-4" class="ytchgtabs-content tabs-4">
 
 						<p>
 							<label for="<?php echo $this->get_field_id( 'ytchag_link_tx' ); ?>"><?php _e( 'Link text:', 'youtube-channel-gallery' ); ?></label>
@@ -835,7 +722,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					//count the plugin occurrences on page
 					$plugincount++;
 
-					$content = '<div class="ytcplayer-wrapper ytc-player' . $ytchag_ratio . '"><iframe id="ytcplayer' . $plugincount . '" class="ytcplayer" allowfullscreen src="http://www.youtube.com/embed/' . $youtubeid . '?version=3' . $ytchag_theme . $ytchag_color .  $ytchag_autoplay.  $ytchag_modestbranding . $ytchag_rel . $ytchag_showinfo .'&enablejsapi=1&wmode=transparent" frameborder="0"></iframe></div>';
+					$content = '<div class="ytcplayer-fixwidthwrapper"><div class="ytcplayer-wrapper ytc-player' . $ytchag_ratio . '"><iframe id="ytcplayer' . $plugincount . '" class="ytcplayer" allowfullscreen src="http://www.youtube.com/embed/' . $youtubeid . '?version=3' . $ytchag_theme . $ytchag_color .  $ytchag_autoplay.  $ytchag_modestbranding . $ytchag_rel . $ytchag_showinfo .'&enablejsapi=1&wmode=transparent" frameborder="0"></iframe></div></div>';
 					$content.= '<ul class="ytchagallery ytccf' . $tableclass . $title_and_description_alignment_class . $columnnumber . ' ytc-thumb' . $ytchag_thumb_ratio . '">';
 
 				} // if player end
@@ -1006,6 +893,8 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		if ( 'widgets.php' != $hook )
 			return;
 		wp_enqueue_style( 'youtube-channel-gallery', plugins_url( '/admin-styles.css', __FILE__ ) );
+		wp_enqueue_script( 'youtube-channel-gallery', plugins_url( '/admin-scripts.js', __FILE__ ), false, false, true );
+
 	}
 
 	/*--------------------------------------------------*/

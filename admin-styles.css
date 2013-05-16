@@ -43,6 +43,17 @@
 	background: #FAFAFA;
 }
 
+/*
+tab1
+---------------
+*/
+.feed_playlist_id_label{display: none;}
+
+
+/*
+tab3
+---------------
+*/
 /*title and description*/
 .ytchgtabs div.ytchg-title-and-description{border: none; background: none;}
 
