@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.8.2
+	Version: 1.8.3
 	License: GPL2
 
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -706,9 +706,14 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 				if ( $ytchag_title || $ytchag_description ) {
 					$title_and_description_alignment_class = ' ytc-td-' . $ytchag_thumbnail_alignment;
+
+					//fixed width for columns 0 or with alignment
+					if ( $ytchag_thumbnail_alignment == 'left' || $ytchag_thumbnail_alignment == 'right' ) {
+						$ytchag_thumbnail_fixed_witdh = ' style="width: ' . $ytchag_thumb_width . 'px; "';
+					}
 				}
 				//fixed width for columns 0 or with alignment
-				if ( $ytchag_thumbnail_alignment == 'left' || $ytchag_thumbnail_alignment == 'right'  || $ytchag_thumb_columns ==0 ) {
+				if ( $ytchag_thumb_columns ==0 ) {
 					$ytchag_thumbnail_fixed_witdh = ' style="width: ' . $ytchag_thumb_width . 'px; "';
 				}
 
