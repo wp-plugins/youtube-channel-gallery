@@ -477,6 +477,9 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 		// Thumbnail options
 		$ytchag_maxitems = ( $ytchag_maxitems ) ? $ytchag_maxitems : 9;
+		if ( (int) $ytchag_maxitems > 50 ) {
+			$ytchag_maxitems = 50;
+		}
 		$ytchag_thumb_width = ( $ytchag_thumb_width ) ? $ytchag_thumb_width : 85;
 		$ytchag_thumb_columns = ( ( $ytchag_thumb_columns ) || ( $ytchag_thumb_columns != 0 ) ) ? $ytchag_thumb_columns : 0;
 		$ytchag_nofollow = ( $ytchag_nofollow ) ? ' rel="nofollow"' : '';
