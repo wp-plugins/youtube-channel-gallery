@@ -3,8 +3,8 @@ Contributors: javitxu123
 Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos
 Requires at least: 2.8
-Tested up to: 3.4.1
-Stable tag: 1.8.3
+Tested up to: 3.5.1
+Stable tag: 1.8.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,7 @@ Description of the different fields of the plugin:
 * **Thumbnail width:** indicates the width of the thumbnails. The height is automatically generated based on the aspect ratio selected. Shortcode attribute: thumbwidth; value: Number. (Optional).
 * **Aspect ratio:** indicates the proportions of the thumbnails, standard (4:3) or widescreen (16:9) format. Shortcode attribute: thumbratio; values: 4x3 (default) or 16x9. (Optional).
 * **Thumbnail columns:** it allows to control the number of columns in which the thumbnails are distributed. Shortcode attribute: thumbcolumns; value: Number. (Optional).
+* **Add "nofollow" attribute to links:** "nofollow" attribute provides a way for webmasters to tell search engines "Don't follow this specific link". Shortcode attribute: nofollow; values: 0 (default) or 1. (Optional).
 * **Show title:** it displays the title of the thumbnail with a link to play the video in the player. Shortcode attribute: title; values: 0 (default) or 1. (Optional).
 * **Show description:** it shows the description of the thumbnail with the number of specified words. Shortcode attribute: description; values: 0 (default) or 1. (Optional).
 * **Thumbnail alignment:** it defines the alignment of the thumbnail respect to its description and title. Shortcode attribute: thumbnail_alignment; values: left (default), right, top or bottom. (Optional).
@@ -114,6 +115,11 @@ If you go to a playlist you will get the following url format: https://www.youtu
 
 This will happen if your playlist has more than 1000 videos because YouTube API has this limit.
 
+= Thumbnails links go to the YouTube page instead of playing the video in the player? =
+
+If another plugin or your theme throws a javascript error before Youtube Channel Gallery has been executed, it will prevent Youtube Channel Gallery JavaScript from functioning properly, so thumbnails links will go to the YouTube page instead of playing the video in the player.
+
+
 
 == Screenshots ==
 
@@ -125,6 +131,11 @@ This will happen if your playlist has more than 1000 videos because YouTube API 
 
 
 == Changelog ==
+
+= 1.8.4 =
+* Changes in CSS.
+* Added option to add "nofollow" attribute to links.
+* Improvements in the code.
 
 = 1.8.3 =
 * Fixed error with alignments without title or description.

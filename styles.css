@@ -1,11 +1,13 @@
 /*------------------------------------------------------------
 Plugin Name: Youtube Channel Gallery
 Plugin URI: http://www.poselab.com/
-Version: 1.8.3
+Version: 1.8.4
 Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 ------------------------------------------------------------*/	
 /*plugin wrapper*/
-.youtubechannelgallery, .youtubechannelgallery *{
+.youtubechannelgallery, .youtubechannelgallery *,
+.ytcplayer-fixwidthwrapper, .ytcplayer-fixwidthwrapper *,
+.ytchagallery, .ytchagallery * {
 	-webkit-box-sizing: border-box!important;
 	 -moz-box-sizing: border-box!important; 
 	 box-sizing: border-box!important; 
@@ -29,7 +31,7 @@ padding-bottom: height of player;
 */
 .ytcplayer-wrapper{
 	position: relative!important;padding: 0!important;padding-bottom: 56.25%!important; height: 0!important; width: 100%!important;
-	margin-bottom: 10px;
+	margin-bottom: 10px; background: 
 }
 .ytcplayer-wrapper.ytc-player4x3{
 	padding-bottom: 75%!important;
@@ -55,9 +57,9 @@ ul.ytchagallery li .ytcliinner {overflow: hidden!important;}
 	}
 
 	/*Play button*/
-	ul.ytchagallery a.ytcthumb .ytcplay{background: url(img/play.png) -9999px -9999px no-repeat!important; position: absolute!important; width: 100%!important; height: 100%!important}
+	ul.ytchagallery a.ytcthumb .ytcplay{background: url(img/play.png) no-repeat!important; background-position: -9999px -9999px!important;position: absolute!important; width: 100%!important; height: 100%!important}
 	ul.ytchagallery a.ytcthumb:hover{opacity: 0.75;}
-	ul.ytchagallery a.ytcthumb:hover .ytcplay{background-position: center center;}
+	ul.ytchagallery a.ytcthumb:hover .ytcplay{background-position: center center!important;}
 
 	ul.ytchagallery p{display: none!important}/*for some themes*/
 

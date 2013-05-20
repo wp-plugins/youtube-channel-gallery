@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.8.3
+	Version: 1.8.4
 	License: GPL2
 
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -103,6 +103,8 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$instance['ytchag_thumb_width'] = strip_tags( $new_instance['ytchag_thumb_width'] );
 		$instance['ytchag_thumb_ratio'] = strip_tags( $new_instance['ytchag_thumb_ratio'] );
 		$instance['ytchag_thumb_columns'] = strip_tags( $new_instance['ytchag_thumb_columns'] );
+		$instance['ytchag_nofollow'] = strip_tags( $new_instance['ytchag_nofollow'] );
+
 		$instance['ytchag_title'] = strip_tags( $new_instance['ytchag_title'] );
 		$instance['ytchag_description'] = strip_tags( $new_instance['ytchag_description'] );
 		$instance['ytchag_thumbnail_alignment'] = strip_tags( $new_instance['ytchag_thumbnail_alignment'] );
@@ -145,6 +147,8 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			'ytchag_thumb_width' => '90',
 			'ytchag_thumb_ratio' => '4x3',
 			'ytchag_thumb_columns' => '3',
+			'ytchag_nofollow' => '',
+
 			'ytchag_title' => '',
 			'ytchag_description' => '',
 			'ytchag_thumbnail_alignment' => 'top',
@@ -158,41 +162,10 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 		);
 
-		$instance = wp_parse_args( (array) $instance, $defaults );
-
-		$title = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
-
-		// Feed options
-		$ytchag_feed = isset( $instance['ytchag_feed'] ) ? esc_attr( $instance['ytchag_feed'] ) : '';
-		$ytchag_user = isset( $instance['ytchag_user'] ) ? esc_attr( $instance['ytchag_user'] ) : ''; //left ytchag_user variable name for backward compatibility
-		$ytchag_feed_order = isset( $instance['ytchag_feed_order'] ) ? esc_attr( $instance['ytchag_feed_order'] ) : '';
-		$ytchag_cache_time = isset( $instance['ytchag_cache_time'] ) ? esc_attr( $instance['ytchag_cache_time'] ) : '';
-		//$ytchag_cache = isset( $instance['ytchag_cache'] ) ? esc_attr( $instance['ytchag_cache'] ) : '';
-
-		// Player options
-		$ytchag_ratio = isset( $instance['ytchag_ratio'] ) ? esc_attr( $instance['ytchag_ratio'] ) : '';
-		$ytchag_theme = isset( $instance['ytchag_theme'] ) ? esc_attr( $instance['ytchag_theme'] ) : '';
-		$ytchag_color = isset( $instance['ytchag_color'] ) ? esc_attr( $instance['ytchag_color'] ) : '';
-		$ytchag_quality = isset( $instance['ytchag_quality'] ) ? esc_attr( $instance['ytchag_quality'] ) : '';
-		$ytchag_autoplay = isset( $instance['ytchag_autoplay'] ) ? esc_attr( $instance['ytchag_autoplay'] ) : '';
-		$ytchag_modestbranding = isset( $instance['ytchag_modestbranding'] ) ? esc_attr( $instance['ytchag_modestbranding'] ) : '';
-		$ytchag_rel = isset( $instance['ytchag_rel'] ) ? esc_attr( $instance['ytchag_rel'] ) : '';
-		$ytchag_showinfo = isset( $instance['ytchag_showinfo'] ) ? esc_attr( $instance['ytchag_showinfo'] ) : '';
-
-		// Thumbnail options
-		$ytchag_maxitems = isset( $instance['ytchag_maxitems'] ) ? esc_attr( $instance['ytchag_maxitems'] ) : '';
-		$ytchag_thumb_width = isset( $instance['ytchag_thumb_width'] ) ? esc_attr( $instance['ytchag_thumb_width'] ) : '';
-		$ytchag_thumb_ratio = isset( $instance['ytchag_thumb_ratio'] ) ? esc_attr( $instance['ytchag_thumb_ratio'] ) : '';
-		$ytchag_thumb_columns = isset( $instance['ytchag_thumb_columns'] ) ? esc_attr( $instance['ytchag_thumb_columns'] ) : '';
-		$ytchag_title = isset( $instance['ytchag_title'] ) ? esc_attr( $instance['ytchag_title'] ) : '';
-		$ytchag_description = isset( $instance['ytchag_description'] ) ? esc_attr( $instance['ytchag_description'] ) : '';
-		$ytchag_thumbnail_alignment = isset( $instance['ytchag_thumbnail_alignment'] ) ? esc_attr( $instance['ytchag_thumbnail_alignment'] ) : '';
-		$ytchag_description_words_number = isset( $instance['ytchag_description_words_number'] ) ? esc_attr( $instance['ytchag_description_words_number'] ) : '';
-
-		// Link options
-		$ytchag_link = isset( $instance['ytchag_link'] ) ? esc_attr( $instance['ytchag_link'] ) : 0;
-		$ytchag_link_tx = isset( $instance['ytchag_link_tx'] ) ? esc_attr( $instance['ytchag_link_tx'] ) : '';
-		$ytchag_link_window = isset( $instance['ytchag_link_window'] ) ? esc_attr( $instance['ytchag_link_window'] ) : 0;
+		// any options not set get the default
+		$instance = wp_parse_args( $instance, $defaults );
+		// extract them for cleaner code
+		extract( $instance, EXTR_SKIP );
 
 ?>
 
@@ -360,6 +333,11 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 							<input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_thumb_columns' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_columns' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_thumb_columns ); ?>" />
 						</p>
 
+
+							<input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_nofollow'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_nofollow' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_nofollow' ); ?>" />
+							<label for="<?php echo $this->get_field_id( 'ytchag_nofollow' ); ?>"><?php _e( 'Add "nofollow" attribute to links', 'youtube-channel-gallery' ); ?></label>
+							<span class="ytchag_info" title="<?php _e( '"nofollow" attribute provides a way for webmasters to tell search engines "Don\'t follow this specific link."', 'youtube-channel-gallery' ); ?>">?</span>
+
 						<p>
 							<fieldset class="ytchg-field-tit-desc">
 								<legend class="ytchg-tit-desc">
@@ -466,6 +444,8 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$ytchag_thumb_width = apply_filters( 'ytchag_thumb_width', $instance['ytchag_thumb_width'] );
 		$ytchag_thumb_ratio = apply_filters( 'ytchag_thumb_ratio', $instance['ytchag_thumb_ratio'] );
 		$ytchag_thumb_columns = apply_filters( 'ytchag_thumb_columns', $instance['ytchag_thumb_columns'] );
+		$ytchag_nofollow = apply_filters( 'ytchag_nofollow', $instance['ytchag_nofollow'] );
+
 		$ytchag_title = apply_filters( 'ytchag_title', $instance['ytchag_title'] );
 		$ytchag_description = apply_filters( 'ytchag_description', $instance['ytchag_description'] );
 		$ytchag_thumbnail_alignment = apply_filters( 'ytchag_thumbnail_alignment', $instance['ytchag_thumbnail_alignment'] );
@@ -499,6 +479,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$ytchag_maxitems = ( $ytchag_maxitems ) ? $ytchag_maxitems : 9;
 		$ytchag_thumb_width = ( $ytchag_thumb_width ) ? $ytchag_thumb_width : 85;
 		$ytchag_thumb_columns = ( ( $ytchag_thumb_columns ) || ( $ytchag_thumb_columns != 0 ) ) ? $ytchag_thumb_columns : 0;
+		$ytchag_nofollow = ( $ytchag_nofollow ) ? ' rel="nofollow"' : '';
 
 		//title and desc
 		$ytchag_title = ( $ytchag_title ) ? $ytchag_title : 0;
@@ -509,7 +490,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		// Link options
 		$ytchag_link = ( $ytchag_link ) ? $ytchag_link : 0;
 		$ytchag_link_tx = ( $ytchag_link_tx ) ? $ytchag_link_tx : __( 'Show more videos»', 'youtube-channel-gallery' );
-		$ytchag_link_window = ( $ytchag_link_window ) ? 'target="_blank"' : 0;
+		$ytchag_link_window = ( $ytchag_link_window ) ? 'target="_blank"' : '';
 		//--------------------------------
 		//end defaults
 
@@ -741,7 +722,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					$title_and_description_content= '<div class="ytctitledesc-cont">';
 
 					if ( $ytchag_title ) {
-						$title_and_description_content.= '<h5 class="ytctitle"><a class="ytclink" href="http://youtu.be/' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" alt="' . $title . '" title="' . $title . '">' . $title . '</a></h5>';
+						$title_and_description_content.= '<h5 class="ytctitle"><a class="ytclink" href="http://youtu.be/' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" alt="' . $title . '" title="' . $title . '" ' . $ytchag_nofollow . '>' . $title . '</a></h5>';
 					}
 
 					if ( $ytchag_description ) {
@@ -772,7 +753,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 				}
 
 				$content.= '<div class="ytcthumb-cont"' . $ytchag_thumbnail_fixed_witdh . '>';
-				$content.= '<a class="ytcthumb ytclink" href="http://youtu.be/' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" title="' . $title . '" style="background-image:url(' . $thumb . ')">';
+				$content.= '<a class="ytcthumb ytclink" href="http://youtu.be/' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" title="' . $title . '" style="background-image:url(' . $thumb . ')" ' . $ytchag_nofollow . '>';
 				$content.= '<div class="ytcplay"></div>';
 				$content.= '</a>';
 				$content.= '</div>';
@@ -805,7 +786,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 			//link to youtube.com gallery
 			if ( $ytchag_link ) {
-				$content.= '<a href="' . $ytchag_link_url . '" class="ytcmore" ' .$ytchag_link_window. ' >' . $ytchag_link_tx . '</a>';
+				$content.= '<a href="' . $ytchag_link_url . '" class="ytcmore" ' . $ytchag_link_window .' ' . $ytchag_nofollow .' >' . $ytchag_link_tx . '</a>';
 			}
 			//--}
 		}
@@ -935,6 +916,8 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					'thumbwidth' => '90',
 					'thumbratio' => '4x3',
 					'thumbcolumns' => '3',
+					'nofollow' => '',
+
 					'title' => '',
 					'description' => '',
 					'thumbnail_alignment' => 'top',
@@ -969,6 +952,8 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$instance['ytchag_thumb_width'] = $thumbwidth;
 		$instance['ytchag_thumb_ratio'] = $thumbratio;
 		$instance['ytchag_thumb_columns'] = $thumbcolumns;
+		$instance['ytchag_nofollow'] = $nofollow;
+
 		$instance['ytchag_title'] = $title;
 		$instance['ytchag_description'] = $description;
 		$instance['ytchag_thumbnail_alignment'] = $thumbnail_alignment;
