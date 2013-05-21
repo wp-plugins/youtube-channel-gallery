@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos
 Requires at least: 2.8
 Tested up to: 3.5.1
-Stable tag: 1.8.4
+Stable tag: 1.8.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,7 @@ Description of the different fields of the plugin:
 
 **Player tab:**
 
+* **Player:** Select whether you want to display the gallery with or without player. Shortcode attribute: player; values: 0 or 1 (default). (Optional).
 * **Aspect ratio:** indicates the proportions of the player, standard (4:3) or widescreen (16:9) format. Shortcode attribute:** ratio; values: 4x3 (default) or 16x9. (Optional).
 * **Theme:** display player controls (like a 'play' button or volume control) within a dark or light control bar. Shortcode attribute: theme; values: dark (default) or light. (Optional).
 * **Progress bar color:** specifies the color that will be used in the player's video progress bar to highlight the amount of the video that the viewer has already seen. Shortcode attribute: color; values: red (default) or white. (Optional).
@@ -66,6 +67,7 @@ Description of the different fields of the plugin:
 * **Aspect ratio:** indicates the proportions of the thumbnails, standard (4:3) or widescreen (16:9) format. Shortcode attribute: thumbratio; values: 4x3 (default) or 16x9. (Optional).
 * **Thumbnail columns:** it allows to control the number of columns in which the thumbnails are distributed. Shortcode attribute: thumbcolumns; value: Number. (Optional).
 * **Add "nofollow" attribute to links:** "nofollow" attribute provides a way for webmasters to tell search engines "Don't follow this specific link". Shortcode attribute: nofollow; values: 0 (default) or 1. (Optional).
+* **Open in a new window or tab:** this option only appears if you select to use the gallery without player. Thumbnails links will open in a new window or tab. Shortcode attribute: thumb_window; values: 0 (default) or 1. (Optional).
 * **Show title:** it displays the title of the thumbnail with a link to play the video in the player. Shortcode attribute: title; values: 0 (default) or 1. (Optional).
 * **Show description:** it shows the description of the thumbnail with the number of specified words. Shortcode attribute: description; values: 0 (default) or 1. (Optional).
 * **Thumbnail alignment:** it defines the alignment of the thumbnail respect to its description and title. Shortcode attribute: thumbnail_alignment; values: left (default), right, top or bottom. (Optional).
@@ -131,6 +133,14 @@ If another plugin or your theme throws a javascript error before Youtube Channel
 
 
 == Changelog ==
+
+= 1.8.5 =
+* Added option to show only thumbnails without player.
+* Added option to add target="_blank" to thumbnails if the option without player is selected.
+* Control 50 thumbnails limit.
+* Changes in CSS.
+* Changes in admin CSS and JS.
+* Update language file.
 
 = 1.8.4 =
 * Changes in CSS.

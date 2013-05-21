@@ -23,6 +23,7 @@ jQuery(document).ready(function($) {
 			ytchg_SetChosen( $(this) );
 			show_title_description( $(this) );
 			changeFeedType( $(this) );
+			changeplayerType( $(this) );
 			
 		});
 	}
@@ -68,6 +69,15 @@ jQuery(document).ready(function($) {
 				$feed_change = event.currentTarget;
 				$current_widget = $(event.currentTarget).parents('.widget');
 				changeFeedType ($current_widget);
+		});
+
+		//player?
+		var playerSelect = '.tabs-2 select[id*="ytchag_player"]';
+		$(playerSelect, $widget).change(
+			function (event) {
+				$player_change = event.currentTarget;
+				$current_widget = $(event.currentTarget).parents('.widget');
+				changeplayerType ($current_widget);
 		});
 
 	}
@@ -143,6 +153,27 @@ jQuery(document).ready(function($) {
 			$('.feed_playlist_id_label', $widget).show();
 			$('.feed_user_id_label', $widget).hide();
 			$(feedOrder, $widget).slideDown('fast');
+		}
+	}
+
+
+	//Feed label title
+	//---------------
+
+	function changeplayerType ( widget ) {
+		$widget = $(widget);
+
+		var playerSelect = '.tabs-2 select[id*="ytchag_player"]';
+		var player_options = '.tabs-2 .player_options';
+		var thumb_window = '.tabs-3 .thumb_window';
+
+		if($(playerSelect + ' option:selected', $widget).val() === '0'){
+			$(thumb_window, $widget).show();
+			$(player_options, $widget).slideUp('fast');
+		}
+		if($(playerSelect + ' option:selected', $widget).val() === '1'){
+			$(thumb_window, $widget).hide();
+			$(player_options, $widget).slideDown('fast');
 		}
 	}
 

@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.8.4
+	Version: 1.8.5
 	License: GPL2
 
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -47,7 +47,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 			array( 'classname'  => 'youtubechannelgallery ytccf', 'description' => __( 'Show a youtube video and a gallery of thumbnails for a youtube channel', 'youtube-channel-gallery' ), ), // Args
 
-			array( 'width' => 260)
+			array( 'width' => 260 )
 		);
 	}
 
@@ -57,9 +57,6 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 	 * Front-end display of widget.
 	 */
 	public function widget( $args, $instance ) {
-
-		// Load JavaScript and stylesheets
-		$this->register_scripts_and_styles();
 
 		extract( $args );
 		$title = apply_filters( 'widget_title', $instance['title'] );
@@ -89,6 +86,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$instance['ytchag_cache'] = strip_tags( $new_instance['ytchag_cache'] );
 
 		// Player options
+		$instance['ytchag_player'] = strip_tags( $new_instance['ytchag_player'] );
 		$instance['ytchag_ratio'] = strip_tags( $new_instance['ytchag_ratio'] );
 		$instance['ytchag_theme'] = strip_tags( $new_instance['ytchag_theme'] );
 		$instance['ytchag_color'] = strip_tags( $new_instance['ytchag_color'] );
@@ -104,6 +102,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$instance['ytchag_thumb_ratio'] = strip_tags( $new_instance['ytchag_thumb_ratio'] );
 		$instance['ytchag_thumb_columns'] = strip_tags( $new_instance['ytchag_thumb_columns'] );
 		$instance['ytchag_nofollow'] = strip_tags( $new_instance['ytchag_nofollow'] );
+		$instance['ytchag_thumb_window'] = strip_tags( $new_instance['ytchag_thumb_window'] );
 
 		$instance['ytchag_title'] = strip_tags( $new_instance['ytchag_title'] );
 		$instance['ytchag_description'] = strip_tags( $new_instance['ytchag_description'] );
@@ -133,6 +132,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			'ytchag_cache' => '1',
 
 			// Player options
+			'ytchag_player' => '1',
 			'ytchag_ratio' => '4x3',
 			'ytchag_theme' => 'dark',
 			'ytchag_color' => 'red',
@@ -148,6 +148,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			'ytchag_thumb_ratio' => '4x3',
 			'ytchag_thumb_columns' => '3',
 			'ytchag_nofollow' => '',
+			'ytchag_thumb_window' => '',
 
 			'ytchag_title' => '',
 			'ytchag_description' => '',
@@ -239,63 +240,73 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					<div id="tabs-<?php echo $this->id; ?>-2" class="ytchgtabs-content tabs-2">
 
 						<p>
-							<label for="<?php echo $this->get_field_id( 'ytchag_ratio' ); ?>"><?php _e( 'Aspect ratio:', 'youtube-channel-gallery' ); ?></label>
-							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_ratio' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_ratio' ); ?>">
-								<option value="4x3"<?php selected( $instance['ytchag_ratio'], '4x3' ); ?>><?php _e( 'Standard (4x3)', 'youtube-channel-gallery' ); ?></option>
-								<option value="16x9"<?php selected( $instance['ytchag_ratio'], '16x9' ); ?>><?php _e( 'Widescreen (16x9)', 'youtube-channel-gallery' ); ?></option>
+							<label for="<?php echo $this->get_field_id( 'ytchag_player' ); ?>"><?php _e( 'Player:', 'youtube-channel-gallery' ); ?></label>
+							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_player' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_player' ); ?>">
+								<option value="0"<?php selected( $instance['ytchag_player'], '0' ); ?>><?php _e( 'Without player', 'youtube-channel-gallery' ); ?></option>
+								<option value="1"<?php selected( $instance['ytchag_player'], '1' ); ?>><?php _e( 'show player above thumbnails', 'youtube-channel-gallery' ); ?></option>
 							</select>
 						</p>
 
-						<p>
-							<label for="<?php echo $this->get_field_id( 'ytchag_theme' ); ?>"><?php _e( 'Theme:', 'youtube-channel-gallery' ); ?></label>
-							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_theme' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_theme' ); ?>">
-								<option value="dark"<?php selected( $instance['ytchag_theme'], 'dark' ); ?>><?php _e( 'Dark', 'youtube-channel-gallery' ); ?></option>
-								<option value="light"<?php selected( $instance['ytchag_theme'], 'light' ); ?>><?php _e( 'Light', 'youtube-channel-gallery' ); ?></option>
-							</select>
-						</p>
+						<span class="player_options">
+							<p>
+								<label for="<?php echo $this->get_field_id( 'ytchag_ratio' ); ?>"><?php _e( 'Aspect ratio:', 'youtube-channel-gallery' ); ?></label>
+								<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_ratio' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_ratio' ); ?>">
+									<option value="4x3"<?php selected( $instance['ytchag_ratio'], '4x3' ); ?>><?php _e( 'Standard (4x3)', 'youtube-channel-gallery' ); ?></option>
+									<option value="16x9"<?php selected( $instance['ytchag_ratio'], '16x9' ); ?>><?php _e( 'Widescreen (16x9)', 'youtube-channel-gallery' ); ?></option>
+								</select>
+							</p>
 
-						<p>
-							<label for="<?php echo $this->get_field_id( 'ytchag_color' ); ?>"><?php _e( 'Progress bar color:', 'youtube-channel-gallery' ); ?></label>
-							<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_color' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_color' ); ?>">
-								<option value="red"<?php selected( $instance['ytchag_color'], 'red' ); ?>><?php _e( 'Red', 'youtube-channel-gallery' ); ?></option>
-								<option value="white"<?php selected( $instance['ytchag_color'], 'white' ); ?>><?php _e( 'White', 'youtube-channel-gallery' ); ?></option>
-							</select>
-						</p>
+							<p>
+								<label for="<?php echo $this->get_field_id( 'ytchag_theme' ); ?>"><?php _e( 'Theme:', 'youtube-channel-gallery' ); ?></label>
+								<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_theme' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_theme' ); ?>">
+									<option value="dark"<?php selected( $instance['ytchag_theme'], 'dark' ); ?>><?php _e( 'Dark', 'youtube-channel-gallery' ); ?></option>
+									<option value="light"<?php selected( $instance['ytchag_theme'], 'light' ); ?>><?php _e( 'Light', 'youtube-channel-gallery' ); ?></option>
+								</select>
+							</p>
 
-						<p>
-							<label for="<?php echo $this->get_field_id( 'ytchag_quality' ); ?>"><?php _e( 'Video quality:', 'youtube-channel-gallery' ); ?></label>
-							<select class="widefat wideinfo" id="<?php echo $this->get_field_id( 'ytchag_quality' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_quality' ); ?>">
-								<option value="default"<?php selected( $instance['ytchag_quality'], 'default' ); ?>><?php _e( 'default', 'youtube-channel-gallery' ); ?></option>
-								<option value="highres"<?php selected( $instance['ytchag_quality'], 'highres' ); ?>><?php _e( 'highres', 'youtube-channel-gallery' ); ?></option>
-								<option value="hd1080"<?php selected( $instance['ytchag_quality'], 'hd1080' ); ?>><?php _e( 'hd1080', 'youtube-channel-gallery' ); ?></option>
-								<option value="hd720"<?php selected( $instance['ytchag_quality'], 'hd720' ); ?>><?php _e( 'hd720', 'youtube-channel-gallery' ); ?></option>
-								<option value="large"<?php selected( $instance['ytchag_quality'], 'large' ); ?>><?php _e( 'large', 'youtube-channel-gallery' ); ?></option>
-								<option value="medium"<?php selected( $instance['ytchag_quality'], 'medium' ); ?>><?php _e( 'medium', 'youtube-channel-gallery' ); ?></option>
-								<option value="small"<?php selected( $instance['ytchag_quality'], 'small' ); ?>><?php _e( 'small', 'youtube-channel-gallery' ); ?></option>
-							</select>
-							<span class="ytchag_info" title="<?php _e( 'Default value enables YouTube to select the most appropriate playback quality. If you select a quality level that is not available for the video, then the quality will be set to the next lowest level that is available.', 'youtube-channel-gallery' ); ?>">?</span>
-						</p>
+							<p>
+								<label for="<?php echo $this->get_field_id( 'ytchag_color' ); ?>"><?php _e( 'Progress bar color:', 'youtube-channel-gallery' ); ?></label>
+								<select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_color' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_color' ); ?>">
+									<option value="red"<?php selected( $instance['ytchag_color'], 'red' ); ?>><?php _e( 'Red', 'youtube-channel-gallery' ); ?></option>
+									<option value="white"<?php selected( $instance['ytchag_color'], 'white' ); ?>><?php _e( 'White', 'youtube-channel-gallery' ); ?></option>
+								</select>
+							</p>
 
-							<input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_autoplay'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_autoplay' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_autoplay' ); ?>" />
-							<label for="<?php echo $this->get_field_id( 'ytchag_autoplay' ); ?>"><?php _e( 'Autoplay', 'youtube-channel-gallery' ); ?></label>
+							<p>
+								<label for="<?php echo $this->get_field_id( 'ytchag_quality' ); ?>"><?php _e( 'Video quality:', 'youtube-channel-gallery' ); ?></label>
+								<select class="widefat wideinfo" id="<?php echo $this->get_field_id( 'ytchag_quality' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_quality' ); ?>">
+									<option value="default"<?php selected( $instance['ytchag_quality'], 'default' ); ?>><?php _e( 'default', 'youtube-channel-gallery' ); ?></option>
+									<option value="highres"<?php selected( $instance['ytchag_quality'], 'highres' ); ?>><?php _e( 'highres', 'youtube-channel-gallery' ); ?></option>
+									<option value="hd1080"<?php selected( $instance['ytchag_quality'], 'hd1080' ); ?>><?php _e( 'hd1080', 'youtube-channel-gallery' ); ?></option>
+									<option value="hd720"<?php selected( $instance['ytchag_quality'], 'hd720' ); ?>><?php _e( 'hd720', 'youtube-channel-gallery' ); ?></option>
+									<option value="large"<?php selected( $instance['ytchag_quality'], 'large' ); ?>><?php _e( 'large', 'youtube-channel-gallery' ); ?></option>
+									<option value="medium"<?php selected( $instance['ytchag_quality'], 'medium' ); ?>><?php _e( 'medium', 'youtube-channel-gallery' ); ?></option>
+									<option value="small"<?php selected( $instance['ytchag_quality'], 'small' ); ?>><?php _e( 'small', 'youtube-channel-gallery' ); ?></option>
+								</select>
+								<span class="ytchag_info" title="<?php _e( 'Default value enables YouTube to select the most appropriate playback quality. If you select a quality level that is not available for the video, then the quality will be set to the next lowest level that is available.', 'youtube-channel-gallery' ); ?>">?</span>
+							</p>
 
-						<br>
+								<input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_autoplay'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_autoplay' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_autoplay' ); ?>" />
+								<label for="<?php echo $this->get_field_id( 'ytchag_autoplay' ); ?>"><?php _e( 'Autoplay', 'youtube-channel-gallery' ); ?></label>
 
-							<input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_modestbranding'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_modestbranding' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_modestbranding' ); ?>" />
-							<label for="<?php echo $this->get_field_id( 'ytchag_modestbranding' ); ?>"><?php _e( 'Show YouTube logo', 'youtube-channel-gallery' ); ?></label>
-							<span class="ytchag_info" title="<?php _e( 'Activate this field to show the YouTube logo in the control bar. Setting the color parameter to white will show the YouTube logo in the control bar.', 'youtube-channel-gallery' ); ?>">?</span>
+							<br>
 
-						<br>
+								<input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_modestbranding'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_modestbranding' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_modestbranding' ); ?>" />
+								<label for="<?php echo $this->get_field_id( 'ytchag_modestbranding' ); ?>"><?php _e( 'Show YouTube logo', 'youtube-channel-gallery' ); ?></label>
+								<span class="ytchag_info" title="<?php _e( 'Activate this field to show the YouTube logo in the control bar. Setting the color parameter to white will show the YouTube logo in the control bar.', 'youtube-channel-gallery' ); ?>">?</span>
 
-							<input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_rel'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_rel' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_rel' ); ?>" />
-							<label for="<?php echo $this->get_field_id( 'ytchag_rel' ); ?>"><?php _e( 'Show related videos', 'youtube-channel-gallery' ); ?></label>
-							<span class="ytchag_info" title="<?php _e( 'Activate this field to show related videos when playback of the video ends.', 'youtube-channel-gallery' ); ?>">?</span>
+							<br>
 
-						<br>
+								<input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_rel'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_rel' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_rel' ); ?>" />
+								<label for="<?php echo $this->get_field_id( 'ytchag_rel' ); ?>"><?php _e( 'Show related videos', 'youtube-channel-gallery' ); ?></label>
+								<span class="ytchag_info" title="<?php _e( 'Activate this field to show related videos when playback of the video ends.', 'youtube-channel-gallery' ); ?>">?</span>
 
-							<input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_showinfo'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_showinfo' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_showinfo' ); ?>" />
-							<label for="<?php echo $this->get_field_id( 'ytchag_showinfo' ); ?>"><?php _e( 'Show info', 'youtube-channel-gallery' ); ?></label>
-							<span class="ytchag_info" title="<?php _e( 'Activate this field to display information like the video title and uploader before the video starts playing.', 'youtube-channel-gallery' ); ?>">?</span>
+							<br>
+
+								<input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_showinfo'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_showinfo' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_showinfo' ); ?>" />
+								<label for="<?php echo $this->get_field_id( 'ytchag_showinfo' ); ?>"><?php _e( 'Show info', 'youtube-channel-gallery' ); ?></label>
+								<span class="ytchag_info" title="<?php _e( 'Activate this field to display information like the video title and uploader before the video starts playing.', 'youtube-channel-gallery' ); ?>">?</span>
+						</span>
 
 					</div>
 
@@ -338,13 +349,20 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 							<label for="<?php echo $this->get_field_id( 'ytchag_nofollow' ); ?>"><?php _e( 'Add "nofollow" attribute to links', 'youtube-channel-gallery' ); ?></label>
 							<span class="ytchag_info" title="<?php _e( '"nofollow" attribute provides a way for webmasters to tell search engines "Don\'t follow this specific link."', 'youtube-channel-gallery' ); ?>">?</span>
 
+							
+							<span class="thumb_window">
+								</br>
+								<input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_thumb_window'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_thumb_window' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_window' ); ?>" />
+								<label for="<?php echo $this->get_field_id( 'ytchag_thumb_window' ); ?>"><?php _e( 'Open in a new window or tab', 'youtube-channel-gallery' ); ?></label>
+							</span>
+
 						<p>
 							<fieldset class="ytchg-field-tit-desc">
 								<legend class="ytchg-tit-desc">
 									<a href="#"><?php _e( 'Show title or description', 'youtube-channel-gallery' ); ?></a>
 								</legend>
 
-								<div class="ytchg-title-and-description">
+								<div class="ytchg-title-and-description ytchgtabs-content">
 
 									<p>
 										<input class="checkbox ytchg-tit" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_title'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_title' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_title' ); ?>" />
@@ -430,6 +448,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$ytchag_cache = apply_filters( 'ytchag_cache', $instance['ytchag_cache'] );
 
 		// Player options
+		$ytchag_player = apply_filters( 'ytchag_player', $instance['ytchag_player'] );
 		$ytchag_ratio = apply_filters( 'ytchag_ratio', $instance['ytchag_ratio'] );
 		$ytchag_theme = apply_filters( 'ytchag_theme', $instance['ytchag_theme'] );
 		$ytchag_color = apply_filters( 'ytchag_color', $instance['ytchag_color'] );
@@ -445,6 +464,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$ytchag_thumb_ratio = apply_filters( 'ytchag_thumb_ratio', $instance['ytchag_thumb_ratio'] );
 		$ytchag_thumb_columns = apply_filters( 'ytchag_thumb_columns', $instance['ytchag_thumb_columns'] );
 		$ytchag_nofollow = apply_filters( 'ytchag_nofollow', $instance['ytchag_nofollow'] );
+		$ytchag_thumb_window = apply_filters( 'ytchag_thumb_window', $instance['ytchag_thumb_window'] );
 
 		$ytchag_title = apply_filters( 'ytchag_title', $instance['ytchag_title'] );
 		$ytchag_description = apply_filters( 'ytchag_description', $instance['ytchag_description'] );
@@ -467,6 +487,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$ytchag_feed_order = ( $ytchag_feed_order ) ? $ytchag_feed_order : 'asc'; //default ascending
 
 		// Player options
+		$ytchag_player = isset( $ytchag_player ) ? $ytchag_player : '1'; //player?
 		$ytchag_theme = ( $ytchag_theme ) ? '&theme='. $ytchag_theme : ''; //default dark
 		$ytchag_color = ( $ytchag_color ) ? '&color='. $ytchag_color : ''; //default red
 		$ytchag_quality = ( $ytchag_quality ) ? $ytchag_quality : 'default'; //default default
@@ -483,6 +504,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$ytchag_thumb_width = ( $ytchag_thumb_width ) ? $ytchag_thumb_width : 85;
 		$ytchag_thumb_columns = ( ( $ytchag_thumb_columns ) || ( $ytchag_thumb_columns != 0 ) ) ? $ytchag_thumb_columns : 0;
 		$ytchag_nofollow = ( $ytchag_nofollow ) ? ' rel="nofollow"' : '';
+		$ytchag_thumb_window = ( ( $ytchag_thumb_window ) && ( $ytchag_player == 0 ) ) ? 'target="_blank"' : '';
 
 		//title and desc
 		$ytchag_title = ( $ytchag_title ) ? $ytchag_title : 0;
@@ -525,11 +547,11 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			//HTTP API
 
 			$transientId = 'ytc-' .md5( $ytchag_feed . $ytchag_user . $ytchag_maxitems );
-			
+
 			$videos_result = $this->get_rss_data ( $ytchag_cache, $transientId, $ytchag_rss_url, $ytchag_cache_time );
-			
+
 			$rss = simplexml_load_string( $videos_result['body'] );
-			
+
 			$response_code = wp_remote_retrieve_response_code( $videos_result );
 			$response_message = wp_remote_retrieve_response_message( $videos_result );
 			$entries = $rss;
@@ -549,24 +571,24 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 				}
 
 				$ytchag_rss_url = $youtube_feed_url . '/playlists/' . $ytchag_user . '?v=2&prettyprint=true&start-index=' . $startindex . '&max-results=' . $ytchag_maxitems;// . '&orderby=reversedPosition';
-								
+
 				$transientId = 'ytc-' .md5( $ytchag_feed . $ytchag_user . $ytchag_feed_order . $ytchag_maxitems );
 
 				$videos_result = $this->get_rss_data ( $ytchag_cache, $transientId, $ytchag_rss_url, $ytchag_cache_time );
 				$rss = simplexml_load_string( $videos_result['body'] );
-				
+
 				$response_code = wp_remote_retrieve_response_code( $videos_result );
 				$response_message = wp_remote_retrieve_response_message( $videos_result );
 
 				// parameter orderby=reversedPosition of Google Data API is not working, so I will use this to reverse the order
 				//get entries
-				
+
 				$new_rss = new stdClass();
-					for ($i = sizeof($rss->entry) - 1; $i >= 0; --$i) {
-						 $new_rss->entry[$i] = $rss->entry[$i];
-					}
+				for ( $i = sizeof( $rss->entry ) - 1; $i >= 0; --$i ) {
+					$new_rss->entry[$i] = $rss->entry[$i];
+				}
 				$entries = $new_rss;
-				
+
 			}
 
 		}
@@ -592,7 +614,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			array_unshift( $namespaces, "" ); // add a blank at the beginning of the array to deal with the unprefixed default
 
 
-				
+
 			foreach ( $entries->entry as $entry ) {
 				// get nodes in media: namespace for media information
 				$media = $entry->children( 'http://search.yahoo.com/mrss/' );
@@ -649,7 +671,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 				//sort array by width
 				foreach ( $thumb_attrs as $key => $row ) {
-						$new_thumb_attrs[$key]  = $row['width'];
+					$new_thumb_attrs[$key]  = $row['width'];
 				}
 				array_multisort( $new_thumb_attrs, SORT_NUMERIC, $thumb_attrs );
 				unset( $new_thumb_attrs[$key] );
@@ -711,7 +733,16 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					//count the plugin occurrences on page
 					$plugincount++;
 
-					$content = '<div class="ytcplayer-fixwidthwrapper"><div class="ytcplayer-wrapper ytc-player' . $ytchag_ratio . '"><iframe id="ytcplayer' . $plugincount . '" class="ytcplayer" allowfullscreen src="http://www.youtube.com/embed/' . $youtubeid . '?version=3' . $ytchag_theme . $ytchag_color .  $ytchag_autoplay.  $ytchag_modestbranding . $ytchag_rel . $ytchag_showinfo .'&enablejsapi=1&wmode=transparent" frameborder="0"></iframe></div></div>';
+					// Load css
+					$this->register_styles();
+
+					$content = '';
+
+					//player
+					if ( $ytchag_player == '1' ) {
+						require 'templates/player.php';
+					}
+
 					$content.= '<ul class="ytchagallery ytccf' . $tableclass . $title_and_description_alignment_class . $columnnumber . ' ytc-thumb' . $ytchag_thumb_ratio . '">';
 
 				} // if player end
@@ -756,7 +787,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 				}
 
 				$content.= '<div class="ytcthumb-cont"' . $ytchag_thumbnail_fixed_witdh . '>';
-				$content.= '<a class="ytcthumb ytclink" href="http://youtu.be/' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" title="' . $title . '" style="background-image:url(' . $thumb . ')" ' . $ytchag_nofollow . '>';
+				$content.= '<a class="ytcthumb ytclink" ' .$ytchag_thumb_window. ' href="http://youtu.be/' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" title="' . $title . '" style="background-image:url(' . $thumb . ')" ' . $ytchag_nofollow . '>';
 				$content.= '<div class="ytcplay"></div>';
 				$content.= '</a>';
 				$content.= '</div>';
@@ -777,7 +808,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 				}
 				if ( $thumb_count == $ytchag_maxitems ) {
 					break;
-				} 
+				}
 			} //foreach end
 
 			//if last row
@@ -800,10 +831,10 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 
 
-	function get_rss_data ( $ytchag_cache, $transientId, $ytchag_rss_url, $ytchag_cache_time ) {
+	function get_rss_data( $ytchag_cache, $transientId, $ytchag_rss_url, $ytchag_cache_time ) {
 		//use cache
 		if ( $ytchag_cache == '1' ) {
-			
+
 			//if cache does not exist
 			if ( false === ( $videos_result = get_transient( $transientId ) ) ) {
 				//get rss
@@ -813,12 +844,12 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 				$response_message = wp_remote_retrieve_response_message( $videos_result );
 
 				if ( $response_code == 200 ) {
-					
+
 					set_transient( $transientId, $videos_result, $ytchag_cache_time * HOUR_IN_SECONDS );
 				}
 			}
 
-		//not to use cache
+			//not to use cache
 		} else {
 			//get rss
 			$videos_result = wp_remote_get( $ytchag_rss_url );
@@ -833,7 +864,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 	function get_appropriate_thumbnail( $thumb_attrs, $ytchag_thumb_width, $ytchag_thumb_height, $type ) {
 		// get appropriate thumbnail width
-		
+
 		// to check only this type of thumbnails
 		$ytchag_thumb_size_names = array( 'default', 'mqdefault', 'hqdefault', 'sddefault' );
 
@@ -845,7 +876,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 						return $row['width'];
 					}
 				}
-			} else{
+			} else {
 				if ( !in_array( $row['name'], $ytchag_thumb_size_names ) ) {
 					if ( $row['width'] >= $ytchag_thumb_width && $row['height'] >= $ytchag_thumb_height ) {
 						return $row['width'];
@@ -869,13 +900,17 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		return $results;
 	}
 
-	// load css or js
-	private function register_scripts_and_styles() {
+	// load css
+	private function register_styles() {
+		wp_enqueue_style( 'youtube-channel-gallery', plugins_url( '/styles.css', __FILE__ ), false, false, 'all' );
+	}
+
+	// load js
+	private function register_scripts() {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'youtube_player_api', 'http://www.youtube.com/player_api', false, false, true );
 		wp_enqueue_script( 'youtube-channel-gallery', plugins_url( '/scripts.js', __FILE__ ), false, false, true );
-		wp_enqueue_style( 'youtube-channel-gallery', plugins_url( '/styles.css', __FILE__ ), false, false, 'all' );
-	}//register_scripts_and_styles
+	}
 
 
 	public function register_admin_scripts_and_styles( $hook ) {
@@ -892,9 +927,6 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 	public function YoutubeChannelGallery_Shortcode( $atts ) {
 
-		// Load JavaScript and stylesheets
-		$this->register_scripts_and_styles();
-
 		extract( shortcode_atts( array(
 					'user' => 'youtube',
 
@@ -905,6 +937,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					'cache' => '1',
 
 					// Player options
+					'player' => '1',
 					'ratio' => '4x3',
 					'theme' => 'dark',
 					'color' => 'red',
@@ -920,6 +953,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					'thumbratio' => '4x3',
 					'thumbcolumns' => '3',
 					'nofollow' => '',
+					'thumb_window' => '',
 
 					'title' => '',
 					'description' => '',
@@ -941,6 +975,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$instance['ytchag_cache'] = $cache;
 
 		// Player options
+		$instance['ytchag_player'] = $player;
 		$instance['ytchag_ratio'] = $ratio;
 		$instance['ytchag_theme'] = $theme;
 		$instance['ytchag_color'] = $color;
@@ -956,6 +991,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$instance['ytchag_thumb_ratio'] = $thumbratio;
 		$instance['ytchag_thumb_columns'] = $thumbcolumns;
 		$instance['ytchag_nofollow'] = $nofollow;
+		$instance['ytchag_thumb_window'] = $thumb_window;
 
 		$instance['ytchag_title'] = $title;
 		$instance['ytchag_description'] = $description;
