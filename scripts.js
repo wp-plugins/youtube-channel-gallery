@@ -1,10 +1,16 @@
+/*------------------------------------------------------------
+Plugin Name: Youtube Channel Gallery
+Plugin URI: http://www.poselab.com/
+Version: 1.8.6
+Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
+------------------------------------------------------------*/	
 jQuery(document).ready(function($) {
 	
 	//thumbnails
 	var ytcplayer = {};
 	$('.ytclink').click(function(){
 		var iframeid = $(this).attr('data-playerid');
-		var youtubeid = $(this).attr('href').split("youtu.be/")[1];
+		var youtubeid = $(this).attr('href').split("watch?v=")[1];
 		var quality = $(this).attr('data-quality');
 		checkIfInView($('#' + iframeid));
 		ytcplayVideo (iframeid, youtubeid, quality);

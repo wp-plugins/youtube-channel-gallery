@@ -1,7 +1,7 @@
 /*------------------------------------------------------------
 Plugin Name: Youtube Channel Gallery
 Plugin URI: http://www.poselab.com/
-Version: 1.8.5
+Version: 1.8.6
 Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 ------------------------------------------------------------*/	
 /*plugin wrapper*/
@@ -43,10 +43,10 @@ iframe.ytcplayer{
 /*Thumbnails, title and description*/
 /*---------------------------------------------------*/
 ul.ytchagallery{margin: 0!important; padding: 0!important;list-style: none!important; width: 100%!important; overflow: hidden!important;}
-ul.ytchagallery .ytc-row{width:-webkit-calc(100% + 10px)!important; width:calc(100% + 10px)!important}
-ul.ytchagallery li{float:left!important;margin: 0!important;list-style: none!important;padding: 0 10px 10px 0!important;clear: none!important;}
+ul.ytchagallery .ytc-row{width:-webkit-calc(100% + 10px)!important; width:calc(100% + 10px)!important;margin: 0!important;padding: 0!important} /*added 15px instead of 10px because IE10 is not calculating correctly*/
+ul.ytchagallery li{float:left!important;margin: 0!important;list-style: none!important;padding: 0!important;clear: none!important;}
 ul.ytchagallery li.ytccell-first{clear: left!important;}
-ul.ytchagallery li .ytcliinner {overflow: hidden!important;}
+ul.ytchagallery li .ytcliinner {overflow: hidden!important;padding: 0 10px 10px 0!important}
 
 	/*Thumbnails*/
 	/*----------------------------*/

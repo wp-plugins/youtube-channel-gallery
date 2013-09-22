@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.8.5
+	Version: 1.8.6
 	License: GPL2
 
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -530,20 +530,24 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			$content= '<p class="empty">' . __( 'There is no video to show.', 'youtube-channel-gallery' ) . '</p>';
 
 		} else {
-			$youtube_feed_url = 'http://gdata.youtube.com/feeds/api';
+			$youtube_feed_url = $this->check_ssl( 'http://gdata.youtube.com/feeds/api' );
+			$youtube_url = $this->check_ssl( 'http://www.youtube.com' );
+
 			// links
 			if ( $ytchag_feed == 'user' ) {
-				$ytchag_rss_url  = $youtube_feed_url . '/users/' . $ytchag_user . '/uploads?v=2&prettyprint=true&max-results='. $ytchag_maxitems;
-				$ytchag_link_url  = 'http://www.youtube.com/user/' . $ytchag_user;
+				$ytchag_rss_url  = $youtube_feed_url . '/users/' . $ytchag_user . '/uploads?v=2&max-results='. $ytchag_maxitems;
+				$ytchag_link_url  = $youtube_url . '/user/' . $ytchag_user;
 			}
 			if ( $ytchag_feed == 'favorites' ) {
 				$ytchag_rss_url  = $youtube_feed_url . '/users/' . $ytchag_user . '/favorites';
-				$ytchag_link_url  = 'http://www.youtube.com/user/' . $ytchag_user . '/favorites';
+				$ytchag_link_url  = $youtube_url . '/user/' . $ytchag_user . '/favorites';
 			}
 			if ( $ytchag_feed == 'playlist' ) {
-				$ytchag_rss_url  = $youtube_feed_url . '/playlists/' . $ytchag_user . '?v=2&prettyprint=true&max-results=' . $ytchag_maxitems;//&prettyprint=true
-				$ytchag_link_url  = 'http://www.youtube.com/playlist?list=' . $ytchag_user;
+				$ytchag_rss_url  = $youtube_feed_url . '/playlists/' . $ytchag_user . '?v=2&max-results=' . $ytchag_maxitems;
+				$ytchag_link_url  = $youtube_url . '/playlist?list=' . $ytchag_user;
 			}
+
+
 			//HTTP API
 
 			$transientId = 'ytc-' .md5( $ytchag_feed . $ytchag_user . $ytchag_maxitems );
@@ -570,7 +574,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					$startindex = $totalResults - $ytchag_maxitems + 1;
 				}
 
-				$ytchag_rss_url = $youtube_feed_url . '/playlists/' . $ytchag_user . '?v=2&prettyprint=true&start-index=' . $startindex . '&max-results=' . $ytchag_maxitems;// . '&orderby=reversedPosition';
+				$ytchag_rss_url = $youtube_feed_url . '/playlists/' . $ytchag_user . '?v=2&start-index=' . $startindex . '&max-results=' . $ytchag_maxitems;// . '&orderby=reversedPosition';
 
 				$transientId = 'ytc-' .md5( $ytchag_feed . $ytchag_user . $ytchag_feed_order . $ytchag_maxitems );
 
@@ -631,6 +635,11 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 				// get video description
 				$description = $media->group->description;
+				
+				//check if thumbnails exist (to avoid Accounts suspended)
+				if(!isset($media->group->thumbnail[0])){
+					continue;
+				}
 
 				//default url thumbnail
 				$thumb_attrs = $media->group->thumbnail[0]->attributes();
@@ -756,7 +765,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 					$title_and_description_content= '<div class="ytctitledesc-cont">';
 
 					if ( $ytchag_title ) {
-						$title_and_description_content.= '<h5 class="ytctitle"><a class="ytclink" href="http://youtu.be/' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" alt="' . $title . '" title="' . $title . '" ' . $ytchag_nofollow . '>' . $title . '</a></h5>';
+						$title_and_description_content.= '<h5 class="ytctitle"><a class="ytclink" href="' . $youtube_url . '/watch?v=' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" alt="' . $title . '" title="' . $title . '" ' . $ytchag_nofollow . '>' . $title . '</a></h5>';
 					}
 
 					if ( $ytchag_description ) {
@@ -787,7 +796,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 				}
 
 				$content.= '<div class="ytcthumb-cont"' . $ytchag_thumbnail_fixed_witdh . '>';
-				$content.= '<a class="ytcthumb ytclink" ' .$ytchag_thumb_window. ' href="http://youtu.be/' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" title="' . $title . '" style="background-image:url(' . $thumb . ')" ' . $ytchag_nofollow . '>';
+				$content.= '<a class="ytcthumb ytclink" ' .$ytchag_thumb_window. ' href="' . $youtube_url . '/watch?v=' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" title="' . $title . '" style="background-image:url(' . $this->check_ssl( $thumb ) . ')" ' . $ytchag_nofollow . '>';
 				$content.= '<div class="ytcplay"></div>';
 				$content.= '</a>';
 				$content.= '</div>';
@@ -908,7 +917,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 	// load js
 	private function register_scripts() {
 		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'youtube_player_api', 'http://www.youtube.com/player_api', false, false, true );
+		wp_enqueue_script( 'youtube_player_api', $this->check_ssl( 'http://www.youtube.com/player_api' ), false, false, true );
 		wp_enqueue_script( 'youtube-channel-gallery', plugins_url( '/scripts.js', __FILE__ ), false, false, true );
 	}
 
@@ -919,6 +928,15 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		wp_enqueue_style( 'youtube-channel-gallery', plugins_url( '/admin-styles.css', __FILE__ ) );
 		wp_enqueue_script( 'youtube-channel-gallery', plugins_url( '/admin-scripts.js', __FILE__ ), false, false, true );
 
+	}
+
+	// check http protocol
+	public function check_ssl ( $url ) {
+		if ( is_ssl() ) {
+			return str_replace( 'http://', 'https://', $url );
+		} else {
+			return $url;
+		}
 	}
 
 	/*--------------------------------------------------*/

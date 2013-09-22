@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos
 Requires at least: 2.8
 Tested up to: 3.5.1
-Stable tag: 1.8.5
+Stable tag: 1.8.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -121,6 +121,14 @@ This will happen if your playlist has more than 1000 videos because YouTube API 
 
 If another plugin or your theme throws a javascript error before Youtube Channel Gallery has been executed, it will prevent Youtube Channel Gallery JavaScript from functioning properly, so thumbnails links will go to the YouTube page instead of playing the video in the player.
 
+= The plugin throws the following error in the error console of Google Chrome: Blocked a frame with origin "http://www.youtube.com" from accessing a frame with origin "http://myweb.com". Protocols, domains, and ports must match.  =
+
+I think this is a browser error because this also happens to players that can be seen in https://developers.google.com/youtube/.
+
+= If the plugin is used on a page using SSL, the player will throw warnings in the browser console =
+
+See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-support-for-youtube-embeds.html):
+"The actual video bitstream, and some additional content loaded by the YouTube player may still be accessed via standard HTTP connections when you use an HTTPS URL in your embed code."
 
 
 == Screenshots ==
@@ -133,6 +141,11 @@ If another plugin or your theme throws a javascript error before Youtube Channel
 
 
 == Changelog ==
+
+= 1.8.6 =
+* Check accounts suspended.
+* SSL support (checks if HTTPS or on Port 443). Be aware that the YouTube player is not fully compatible with SSL. See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-support-for-youtube-embeds.html)
+* Changes in CSS to correct IE support. 
 
 = 1.8.5 =
 * Added option to show only thumbnails without player.
