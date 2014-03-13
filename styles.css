@@ -1,7 +1,7 @@
 /*------------------------------------------------------------
 Plugin Name: Youtube Channel Gallery
 Plugin URI: http://www.poselab.com/
-Version: 1.8.6
+Version: 1.8.7
 Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 ------------------------------------------------------------*/	
 /*plugin wrapper*/
@@ -43,7 +43,7 @@ iframe.ytcplayer{
 /*Thumbnails, title and description*/
 /*---------------------------------------------------*/
 ul.ytchagallery{margin: 0!important; padding: 0!important;list-style: none!important; width: 100%!important; overflow: hidden!important;}
-ul.ytchagallery .ytc-row{width:-webkit-calc(100% + 10px)!important; width:calc(100% + 10px)!important;margin: 0!important;padding: 0!important} /*added 15px instead of 10px because IE10 is not calculating correctly*/
+ul.ytchagallery .ytc-row{width:-webkit-calc(100% + 10px)!important; width:calc(100% + 10px)!important;margin: 0!important;padding: 0!important} 
 ul.ytchagallery li{float:left!important;margin: 0!important;list-style: none!important;padding: 0!important;clear: none!important;}
 ul.ytchagallery li.ytccell-first{clear: left!important;}
 ul.ytchagallery li .ytcliinner {overflow: hidden!important;padding: 0 10px 10px 0!important}
@@ -105,25 +105,25 @@ ul.ytchagallery li .ytcliinner {overflow: hidden!important;padding: 0 10px 10px 
 	/*columns*/
 	.ytc-row{clear: both!important;}
 
-	.ytc-columns1 li{ width: 100%!important; }
+	.ytc-columns1 li{ width: 100%!important;}
 
-	.ytc-columns2 li{ width: 50%!important; width:calc(100%/2)!important;}
+	.ytc-columns2 li{ width: 50%!important;}
 
-	.ytc-columns3 li{ width: 33.33%!important; width:calc(100%/3)!important;}
+	.ytc-columns3 li{ width: 33.33%!important;}
 
-	.ytc-columns4 li{ width: 25%!important;  width:calc(100%/4)!important;}
+	.ytc-columns4 li{ width: 25%!important;}
 
-	.ytc-columns5 li{ width: 20%!important;  width:calc(100%/5)!important;}
+	.ytc-columns5 li{ width: 20%!important;}
 
-	.ytc-columns6 li{ width: 16.66%!important; width:calc(100%/6)!important;}
+	.ytc-columns6 li{ width: 16.66%!important;}
 
-	.ytc-columns7 li{ width: 14.28%!important; width:calc(100%/7)!important;}
+	.ytc-columns7 li{ width: 14.28%!important;}
 
-	.ytc-columns8 li{ width: 12.5%!important;  width:calc(100%/8)!important;}
+	.ytc-columns8 li{ width: 12.5%!important;}
 
-	.ytc-columns9 li{ width: 11.11%!important; width:calc(100%/9)!important;}
+	.ytc-columns9 li{ width: 11.11%!important;}
 
-	.ytc-columns10 li{ width: 10%!important; width:calc(100%/10)!important;}
+	.ytc-columns10 li{ width: 10%!important;}
 
 
 /*link to YouTube*/

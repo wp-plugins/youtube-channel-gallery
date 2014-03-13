@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos
 Requires at least: 2.8
 Tested up to: 3.5.1
-Stable tag: 1.8.6
+Stable tag: 1.8.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -141,6 +141,10 @@ See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-
 
 
 == Changelog ==
+
+= 1.8.7 =
+* Fixed problem with SSL.
+* Changes in CSS to correct IE columns. 
 
 = 1.8.6 =
 * Check accounts suspended.

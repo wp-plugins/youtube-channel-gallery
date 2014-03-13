@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 1.8.6
+	Version: 1.8.7
 	License: GPL2
 
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -530,8 +530,8 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			$content= '<p class="empty">' . __( 'There is no video to show.', 'youtube-channel-gallery' ) . '</p>';
 
 		} else {
-			$youtube_feed_url = $this->check_ssl( 'http://gdata.youtube.com/feeds/api' );
-			$youtube_url = $this->check_ssl( 'http://www.youtube.com' );
+			$youtube_feed_url = 'http://gdata.youtube.com/feeds/api';
+			$youtube_url = 'https://www.youtube.com';
 
 			// links
 			if ( $ytchag_feed == 'user' ) {
@@ -546,7 +546,6 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 				$ytchag_rss_url  = $youtube_feed_url . '/playlists/' . $ytchag_user . '?v=2&max-results=' . $ytchag_maxitems;
 				$ytchag_link_url  = $youtube_url . '/playlist?list=' . $ytchag_user;
 			}
-
 
 			//HTTP API
 
@@ -796,7 +795,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 				}
 
 				$content.= '<div class="ytcthumb-cont"' . $ytchag_thumbnail_fixed_witdh . '>';
-				$content.= '<a class="ytcthumb ytclink" ' .$ytchag_thumb_window. ' href="' . $youtube_url . '/watch?v=' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" title="' . $title . '" style="background-image:url(' . $this->check_ssl( $thumb ) . ')" ' . $ytchag_nofollow . '>';
+				$content.= '<a class="ytcthumb ytclink" ' .$ytchag_thumb_window. ' href="' . $youtube_url . '/watch?v=' . $youtubeid . '" data-playerid="ytcplayer' . $plugincount . '" data-quality="' . $ytchag_quality . '" title="' . $title . '" style="background-image:url(' . $thumb . ')" ' . $ytchag_nofollow . '>';
 				$content.= '<div class="ytcplay"></div>';
 				$content.= '</a>';
 				$content.= '</div>';
@@ -917,7 +916,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 	// load js
 	private function register_scripts() {
 		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'youtube_player_api', $this->check_ssl( 'http://www.youtube.com/player_api' ), false, false, true );
+		wp_enqueue_script( 'youtube_player_api', 'https://www.youtube.com/player_api', false, false, true );
 		wp_enqueue_script( 'youtube-channel-gallery', plugins_url( '/scripts.js', __FILE__ ), false, false, true );
 	}
 
@@ -928,15 +927,6 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		wp_enqueue_style( 'youtube-channel-gallery', plugins_url( '/admin-styles.css', __FILE__ ) );
 		wp_enqueue_script( 'youtube-channel-gallery', plugins_url( '/admin-scripts.js', __FILE__ ), false, false, true );
 
-	}
-
-	// check http protocol
-	public function check_ssl ( $url ) {
-		if ( is_ssl() ) {
-			return str_replace( 'http://', 'https://', $url );
-		} else {
-			return $url;
-		}
 	}
 
 	/*--------------------------------------------------*/
