@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos, API 3
 Requires at least: 2.8
 Tested up to: 3.8.8
-Stable tag: 2.00
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -149,6 +149,9 @@ See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-
 
 
 == Changelog ==
+
+= 2.0.1 =
+* Change short_open_tag in thumbs.php for compability with php < 5.4.
 
 = 2.0.0 =
 * Update in order to make it compatible with YouTube API 3.
