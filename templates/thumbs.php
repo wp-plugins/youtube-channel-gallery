@@ -27,7 +27,7 @@
 ?>
 
 		<div class="ytc-column col-xs-<?php echo 12/$xs?> col-sm-<?php echo 12/$sm?> col-md-<?php echo 12/$md?> col-lg-<?php echo 12/$lg?>" <?php echo $padding?>>
-				<? 
+				<?php 
 					foreach ($thumb->modules as $module) {
 						if ($module === 'title' && $ytchag_title) {
 							include 'title.php';
