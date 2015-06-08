@@ -27,6 +27,7 @@ You can see a demo of the plugin in the following URLs:
 * [Demo with title and description and thumbnail on the left](http://poselab.com/en/youtube-channel-gallery-demo-with-title-description-and-thumbnail-on-the-left/) | [ES](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-descripcion-y-miniatura-a-la-izquierda)
 * [Demo with title and thumbnail at bottom](http://poselab.com/en/youtube-channel-gallery-demo-with-title-and-thumbnail-at-the-bottom/) | [ES](http://poselab.com/youtube-channel-gallery-demo-con-titulo-y-miniatura-abajo)
 * [Demo with playlist](http://poselab.com/en/youtube-channel-gallery-demo-with-playlist/) | [ES](http://poselab.com/youtube-channel-gallery-demo-con-lista-de-reproduccion/)
+* [Demo with changed order](http://poselab.com/en/youtube-channel-gallery-demo-with-changed-order/) | [ES](http://poselab.com/youtube-channel-gallery-demo-con-orden-cambiado/)
 
 
 = Features: =
