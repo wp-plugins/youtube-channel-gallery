@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 2.0.2
+	Version: 2.0.3
 	License: GPL2
 
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
