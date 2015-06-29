@@ -6,8 +6,8 @@
 <?php  if ($instance['ytchag_search_playlists']): ?>
 <?php   $campos = explode('#', $instance['ytchag_search_playlists']); ?>
 <?php endif; ?>
-<select class="search-select">
-  <option value=""><?php echo _e('None', 'youtube-channel-gallery') ?></option>
+<select class="search-select" data-cid="<?php echo $ytchag_id ?>">
+  <option value=""><?php echo _e('All', 'youtube-channel-gallery') ?></option>
 <?php   foreach ($campos as $c): ?>
 <?php    $tag = toTag($c); ?>
                     <option value="<?php echo $tag ?>"<?php selected( $instance['ytchag_search_restrict'], $tag ); ?>><?php _e( $c, 'youtube-channel-gallery' ); ?></option>
