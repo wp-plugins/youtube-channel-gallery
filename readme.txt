@@ -12,7 +12,7 @@ Show a YouTube video and a gallery of thumbnails for a YouTube channel.
 
 == Description ==
 
-`WARNING: The name of some Shortcode options has change since version 2`
+`WARNING: The name of some Shortcode options has changed since version 2`
 
 Show a YouTube video and a gallery of thumbnails for a YouTube user channel.
 
@@ -47,7 +47,7 @@ Description of the different fields of the plugin:
 
 * **Key:** You must insert your own API key. The API key inserted is an example and if you do not change the API key for yours you may receive an error message of exceeded quota. This is necessary in version 3 of the YouTube API, [Obtaining authorization credentials](https://developers.google.com/youtube/registering_an_application). Shortcode attribute: key; value: API key. (Required).
 
-* **Video feed type:** option to select the feed type to use to show videos. Yo can select Uploaded by a user, User's favorites, User's likes or Playlist. Shortcode attribute: feed; value: user (default), favorites, likes or playlist. (Optional).
+* **Video feed type:** option to select the feed type to use to show videos. You can select Uploaded by a user, User's favorites, User's likes or Playlist. Shortcode attribute: feed; value: user (default), favorites, likes or playlist. (Optional).
 
 * **Identify by:** option to select the type you want id to use to identify your channel, your user name or id channel. Shortcode attribute: identify_by; value: username (default) or channelid. (Optional).
 
@@ -148,7 +148,7 @@ Example of shortcode use:
 * Italian (it_IT) - [Marco Milesi](https://profiles.wordpress.org/milmor).
 * Spanish (es_ES) - [PoseLab](http://poselab.com/)
 
-If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:javierpose@gmail.com) your gettext PO and MO so that I can bundle it into the Youtube Channel Gallery.
+If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:javier@poselab.com) your gettext PO and MO so that I can bundle it into the Youtube Channel Gallery.
 
 
 == Installation ==
@@ -201,13 +201,17 @@ See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-
 
 == Changelog ==
 
+= 2.2.2 =
+* Error message optimization to improve users' debug.
+* Changes in Spanish translation.
+
 = 2.2.1 =
 * Added option to use channel id or username to identify your Youtube channel.
 
 = 2.2 =
 * Optimization of cache use.
 * Fixed Playlists order option and added the options allowed by YouTube api 3: Date Order, Rating Order, Relevance Order, Title Order, View Count Order.
-* Fixed thumbail link in pages with multiple instances of the plugin.
+* Fixed thumbnail link in pages with multiple instances of the plugin.
 * Added pagination of thumbnails. Take into account YouTube API does not correctly calculate the total number of videos in channels with a lot of videos.
 * Added new video feed types: user's favorites and user's likes.
 * JavaScript optimization.
@@ -226,7 +230,7 @@ See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-
 * Delete debug element.
 
 = 2.0.1 =
-* Change short_open_tag in thumbs.php for compability with php < 5.4.
+* Change short_open_tag in thumbs.php for compatibility with php < 5.4.
 
 = 2.0.0 =
 * Update in order to make it compatible with YouTube API 3.
@@ -237,7 +241,7 @@ See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-
 * Optimization of alignment behavior.
 * Options to set the order of elements of thumbnails tab.
 * Option to promotion.
-* Rewritted code.
+* Rewritten code.
 
 = 1.8.7 =
 * Fixed problem with SSL.
@@ -352,7 +356,7 @@ See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-
 
 = 1.6.1 =
 * Added options to show title and description with thumbnails.
-* Added new classes to better manage the final appearance (rows, columns, even, odd, number of row an column).
+* Added new classes to better manage the final appearance (rows, columns, even, odd, number of row and column).
 * Calculated width between thumbnails.
 
 = 1.5.4 =
@@ -366,7 +370,7 @@ See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-
 * Added Link text field to Links.
 * Added class to last thumbnail of each row to delete the margin-right in CSS.
 * Added class to first thumbnail of each row to clear float in CSS.
-* Check that the inserted user name exists.
+* Check that the inserted username exists.
 * Changes in CSS.
 
 = 1.4.8.1 =
@@ -407,3 +411,4 @@ See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-
 
 = 1.0 =
 * Initial Release.
+

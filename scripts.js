@@ -1,7 +1,7 @@
 /*------------------------------------------------------------
 Plugin Name: Youtube Channel Gallery
 Plugin URI: http://www.poselab.com/
-Version: 2.2.1
+Version: 2.2.2
 Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 ------------------------------------------------------------*/	
 jQuery(document).ready(function($) {

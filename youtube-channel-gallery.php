@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 2.2.1
+	Version: 2.2.2
 	License: GPL2
 
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -680,21 +680,29 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
             ob_start();
             if ($videos_result['response']['code'] != 200) {
+              $json = json_decode($videos_result['body']);
               if ($ytchag_feed == 'playlist') {
                 $error_link = '<a href="https://www.youtube.com/playlist?list=' . $ytchag_user . '" target="_blank">' . $ytchag_user . '</a>';
                 $error_type = $ytchag_feed;
               }else{
-                $error_link = '<a href="https://www.youtube.com/user/' . $ytchag_user . '" target="_blank">' . $ytchag_user . '</a>';
+                $id_type = $ytchag_identify_by=='channelid'?'channel':'user';
+                $error_link = '<a href="https://www.youtube.com/' . $id_type . '/' . $ytchag_user . '" target="_blank">' . $ytchag_user . '</a>';
                 $error_type = $ytchag_identify_by;
               }
 
               $content = '<div class="vmcerror">';
-              $content .= sprintf( __( 'Message from server: "%1$s". ', 'youtube-channel-gallery' ), $videos_result['response']['message'] );
+              $content .= sprintf( __( 'Error type: "%1$s". ', 'youtube-channel-gallery' ), $videos_result['response']['message'] );
+              $content .= sprintf( __( 'Error message: "%1$s" ', 'youtube-channel-gallery' ), $json->error->message );
+              $content .= sprintf( __( 'Domain: "%1$s". ', 'youtube-channel-gallery' ), $json->error->errors[0]->domain );
+              $content .= sprintf( __( 'Reason: "%1$s". ', 'youtube-channel-gallery' ), $json->error->errors[0]->reason );
+              $content .= sprintf( __( 'Location type: "%1$s". ', 'youtube-channel-gallery' ), $json->error->errors[0]->locationType );
+              $content .= sprintf( __( 'Location: "%1$s". ', 'youtube-channel-gallery' ), $json->error->errors[0]->location ) . '<br><br>';
+
               $content .= sprintf( __( 'Check in YouTube if the id %1$s belongs to a %2$s. ', 'youtube-channel-gallery' ), $error_link, $error_type );
               if ( $ytchag_feed !== 'playlist' && ($ytchag_feed === 'favorites' || $ytchag_feed === 'likes') ) {
                 $content .= sprintf( __( 'If the user id is correct, check that the channel of the user has list of "%1$s". ', 'youtube-channel-gallery' ), $ytchag_feed );
               }
-              $content .= __( 'Check the <a href="http://wordpress.org/extend/plugins/youtube-channel-gallery/faq/" target="_blank">FAQ</a> of the plugin.', 'youtube-channel-gallery' );
+              $content .= __( 'Check the <a href="http://wordpress.org/extend/plugins/youtube-channel-gallery/faq/" target="_blank">FAQ</a> of the plugin or send error messages to <a href="https://wordpress.org/support/plugin/youtube-channel-gallery" target="_blank">support</a>.', 'youtube-channel-gallery' );
               $content .= '</div>';
             }
             else {
@@ -779,14 +787,13 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
     }
 
     function getUserPlaylists($identify_by, $user, $key, $cache, $cache_time) {
-      if ($identify_by == 'username') {
-        $identify = 'forUsername';
-      }else{
+      if ($identify_by == 'channelid') {
         $identify = 'id';
+      }else{
+        $identify = 'forUsername';
       }
 
       $api = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&' . $identify . '=' . $user . '&key=' . $key;
-
       $transientId = 'ytc-' . md5($api);
 
       if ($cache == 1) {
