@@ -37,13 +37,20 @@
                     <option value="playlist"<?php selected( $instance['ytchag_feed'], 'playlist' ); ?>><?php _e( 'Playlist', 'youtube-channel-gallery' ); ?></option>
                 </select>
             </p>
-
-            <p>
-                <label class="feed_user_id_label" for="<?php echo $this->get_field_id( 'ytchag_user' ); ?>"><?php _e( 'YouTube user id:', 'youtube-channel-gallery' ); ?></label>
-                <label class="feed_playlist_id_label" for="<?php echo $this->get_field_id( 'ytchag_user' ); ?>"><?php _e( 'YouTube playlist id:', 'youtube-channel-gallery' ); ?></label>
-                <input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_user' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_user' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_user ); ?>" />
-                [<?php echo esc_attr( $ytchag_user_uploads ); ?>]
-            </p>
+            <div class="row">
+                <div class="col-md-4 identify_by">
+                    <label for="<?php echo $this->get_field_id( 'ytchag_identify_by' ); ?>"><?php _e( 'Identify by:', 'youtube-channel-gallery' ); ?></label>
+                    <select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_identify_by' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_identify_by' ); ?>">
+                        <option value="username"<?php selected( $instance['ytchag_identify_by'], 'username' ); ?>><?php _e( 'Username', 'youtube-channel-gallery' ); ?></option>
+                        <option value="channelid"<?php selected( $instance['ytchag_identify_by'], 'channelid' ); ?>><?php _e( 'Channel ID', 'youtube-channel-gallery' ); ?></option>
+                    </select>
+                </div>
+                <div class="col-md-8 user">
+                    <label class="feed_user_id_label" for="<?php echo $this->get_field_id( 'ytchag_user' ); ?>"><?php _e( 'YouTube id:', 'youtube-channel-gallery' ); ?></label>
+                    <label class="feed_playlist_id_label" for="<?php echo $this->get_field_id( 'ytchag_user' ); ?>"><?php _e( 'YouTube playlist id:', 'youtube-channel-gallery' ); ?></label>
+                    <input class="widefat" id="<?php echo $this->get_field_id( 'ytchag_user' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_user' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_user ); ?>" />
+                </div>
+            </div>
 
             <p class="<?php echo $this->get_field_id( 'ytchag_feed_order' ); ?>">
                 <label for="<?php echo $this->get_field_id( 'ytchag_feed_order' ); ?>"><?php _e( 'Playlist order:', 'youtube-channel-gallery' ); ?></label>

@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 2.2
+	Version: 2.2.1
 	License: GPL2
 
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -300,6 +300,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		// Feed options
 		$instance['ytchag_key'] = strip_tags( $new_instance['ytchag_key'] );
 		$instance['ytchag_feed'] = strip_tags( $new_instance['ytchag_feed'] );
+    $instance['ytchag_identify_by'] = strip_tags( $new_instance['ytchag_identify_by'] );
 		$instance['ytchag_user'] = strip_tags( $new_instance['ytchag_user'] );
 		//$instance['ytchag_id'] = strip_tags( $new_instance['ytchag_id'] );
 		//$instance['ytchag_user_uploads'] = strip_tags( $new_instance['ytchag_user_uploads'] );
@@ -364,7 +365,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
         if (isset($instance['ytchag_user']) && ($new_instance['ytchag_user'] !== $old_instance['ytchag_user'] || $instance['ytchag_user_uploads'] === '')) {
 
-          $item = $this->getUserPlaylists($instance['ytchag_user'], $instance['ytchag_key'], $instance['ytchag_cache'], $instance['ytchag_cache_time']);
+          $item = $this->getUserPlaylists($instance['ytchag_identify_by'], $instance['ytchag_user'], $instance['ytchag_key'], $instance['ytchag_cache'], $instance['ytchag_cache_time']);
           $playlists = $item['contentDetails']['relatedPlaylists'];
 
           $instance['ytchag_id'] = $item['id'];
@@ -396,6 +397,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			// Feed options
 			'ytchag_key' => 'AIzaSyA0IBAaDqJxfQiqeYg_i2kVKW5P9ZLheVU',
 			'ytchag_feed' => 'user',
+      'ytchag_identify_by' => 'username',
 			'ytchag_user' => 'youtube',
 			'ytchag_id' => 'UUBR8-60-B28hp2BmDPdntcQ',
 			'ytchag_user_uploads' => 'UUBR8-60-B28hp2BmDPdntcQ',
@@ -481,6 +483,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		// Feed options
 		$ytchag_key = apply_filters( 'ytchag_key', $instance['ytchag_key'] );
 		$ytchag_feed = apply_filters( 'ytchag_feed', $instance['ytchag_feed'] );
+    $ytchag_identify_by = apply_filters( 'ytchag_identify_by', $instance['ytchag_identify_by'] );
 		$ytchag_user = apply_filters( 'ytchag_user', $instance['ytchag_user'] );
 		$ytchag_id = apply_filters( 'ytchag_id', $instance['ytchag_id'] );
 		$ytchag_user_uploads = apply_filters( 'ytchag_user_uploads', $instance['ytchag_user_uploads'] );
@@ -618,7 +621,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
             if ($ytchag_feed !== 'playlist') {
 
-              $item = $this->getUserPlaylists($ytchag_user, $ytchag_key, $ytchag_cache, $ytchag_cache_time);
+              $item = $this->getUserPlaylists($ytchag_identify_by, $ytchag_user, $ytchag_key, $ytchag_cache, $ytchag_cache_time);
               $playlists = $item['contentDetails']['relatedPlaylists'];
 
               $ytchag_id = $item['id'];
@@ -676,14 +679,13 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
             $videos_result = $this->get_rss_data ( $ytchag_cache, $transientId, $ytchag_feed_url, $ytchag_cache_time );
 
             ob_start();
-
             if ($videos_result['response']['code'] != 200) {
               if ($ytchag_feed == 'playlist') {
                 $error_link = '<a href="https://www.youtube.com/playlist?list=' . $ytchag_user . '" target="_blank">' . $ytchag_user . '</a>';
                 $error_type = $ytchag_feed;
               }else{
                 $error_link = '<a href="https://www.youtube.com/user/' . $ytchag_user . '" target="_blank">' . $ytchag_user . '</a>';
-                $error_type = 'user';
+                $error_type = $ytchag_identify_by;
               }
 
               $content = '<div class="vmcerror">';
@@ -776,9 +778,14 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
         return $content;
     }
 
-    function getUserPlaylists($user, $key, $cache, $cache_time) {
+    function getUserPlaylists($identify_by, $user, $key, $cache, $cache_time) {
+      if ($identify_by == 'username') {
+        $identify = 'forUsername';
+      }else{
+        $identify = 'id';
+      }
 
-      $api = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername=' . $user . '&key=' . $key;
+      $api = 'https://www.googleapis.com/youtube/v3/channels?part=contentDetails&' . $identify . '=' . $user . '&key=' . $key;
 
       $transientId = 'ytc-' . md5($api);
 
@@ -880,6 +887,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
             // Feed options
             'key' => 'AIzaSyA0IBAaDqJxfQiqeYg_i2kVKW5P9ZLheVU',
             'feed' => 'user',
+            'identify_by' => 'username',
             'user' => 'youtube',
             //'id' => 'UUBR8-60-B28hp2BmDPdntcQ',
             //'user_uploads' => 'UUBR8-60-B28hp2BmDPdntcQ',
@@ -947,6 +955,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		// Feed options
 		$instance['ytchag_key'] = $key;
 		$instance['ytchag_feed'] = $feed;
+    $instance['ytchag_identify_by'] = $identify_by;
 		$instance['ytchag_user'] = $user;
 		//$instance['ytchag_id'] = $id;
 		//$instance['ytchag_user_uploads'] = $user_uploads;
@@ -1009,7 +1018,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 		$instance['ytchag_promotion'] = $promotion;
 
-        $item = $this->getUserPlaylists($instance['ytchag_user'], $instance['ytchag_key'], $instance['ytchag_cache'], $instance['ytchag_cache_time']);
+        $item = $this->getUserPlaylists($instance['ytchag_identify_by'], $instance['ytchag_user'], $instance['ytchag_key'], $instance['ytchag_cache'], $instance['ytchag_cache_time']);
         $playlists = $item['contentDetails']['relatedPlaylists'];
 
         $instance['ytchag_id'] = $item['id'];

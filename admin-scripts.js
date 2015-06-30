@@ -156,10 +156,14 @@ jQuery(document).ready(function($) {
 		if(['user', 'favorites', 'likes'].indexOf($(feedSelect + ' option:selected', $widget).val()) !== -1){
 			$('.feed_user_id_label', $widget).show();
 			$('.feed_playlist_id_label', $widget).hide();
+			$('.identify_by', $widget).show();
+			$('.user', $widget).removeClass('col-md-12').addClass('col-md-8');
 		}
         else if(['playlist'].indexOf($(feedSelect + ' option:selected', $widget).val()) !== -1){
 			$('.feed_playlist_id_label', $widget).show();
 			$('.feed_user_id_label', $widget).hide();
+			$('.identify_by', $widget).hide();
+			$('.user', $widget).removeClass('col-md-8').addClass('col-md-12');
 		}
 
 		// order

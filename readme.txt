@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos, API 3
 Requires at least: 2.8
 Tested up to: 3.8.8
-Stable tag: 2.2
+Stable tag: 2.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,8 @@ Description of the different fields of the plugin:
 * **Key:** You must insert your own API key. The API key inserted is an example and if you do not change the API key for yours you may receive an error message of exceeded quota. This is necessary in version 3 of the YouTube API, [Obtaining authorization credentials](https://developers.google.com/youtube/registering_an_application). Shortcode attribute: key; value: API key. (Required).
 
 * **Video feed type:** option to select the feed type to use to show videos. Yo can select Uploaded by a user, User's favorites, User's likes or Playlist. Shortcode attribute: feed; value: user (default), favorites, likes or playlist. (Optional).
+
+* **Identify by:** option to select the type you want id to use to identify your channel, your user name or id channel. Shortcode attribute: identify_by; value: username (default) or channelid. (Optional).
 
 * **YouTube user id or playlist id:** the user id of the user's Youtube videos you want to show or the id of the playlist. Shortcode attribute: user; value: String. (Required).
 * **Order:** this option appears if you select "Uploaded by a user" as Video feed type. Shortcode attribute: feed_order; value: date (default), rating, relevance, title, videoCount or viewCount. (Optional).
@@ -198,6 +200,9 @@ See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-
 
 
 == Changelog ==
+
+= 2.2.1 =
+* Added option to use channel id or username to identify your Youtube channel.
 
 = 2.2 =
 * Optimization of cache use.
