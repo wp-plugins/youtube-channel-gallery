@@ -148,7 +148,7 @@ Example of shortcode use:
 * Italian (it_IT) - [Marco Milesi](https://profiles.wordpress.org/milmor).
 * Spanish (es_ES) - [PoseLab](http://poselab.com/)
 
-If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:javier@poselab.com) your gettext PO and MO so that I can bundle it into the Youtube Channel Gallery.
+If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:javier@poselab.com) your gettext PO and MO so that I can bundle it into the Youtube Channel Gallery. You can also translate, improve or update a plugin translation in [Transifex](https://www.transifex.com/projects/p/youtube-channel-gallery). Go to [Youtube Channel Galllery project page of Transifex](https://www.transifex.com/projects/p/youtube-channel-gallery), click "Request language", Select the language you want to translate and wait until your request is accepted. When the language is translated it will be included in the plugin.
 
 
 == Installation ==
