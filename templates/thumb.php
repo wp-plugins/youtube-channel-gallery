@@ -5,5 +5,10 @@
     <?php endif; ?>
     <div class="ytcplay"></div>
   </a>
+  <?php if ($ytchag_duration): ?>
+	  <span class="video-time">
+	  		<span><?php echo $thumb->duration;?></span>
+	  </span>
+  <?php endif; ?>
 </div>
 

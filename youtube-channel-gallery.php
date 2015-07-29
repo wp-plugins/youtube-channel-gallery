@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 2.2.2
+	Version: 2.3
 	License: GPL2
 
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -49,7 +49,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 			array( 'classname'  => 'youtubechannelgallery ytccf', 'description' => __( 'Show a youtube video and a gallery of thumbnails for a youtube channel', 'youtube-channel-gallery' ), ), // Args
 
-			array( 'width' => 260 )
+			array( 'width' => 400 )
 		);
 
         add_action('wp_ajax_ytc_next', array($this, 'nextVideos'));
@@ -57,8 +57,44 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
         add_action('wp_ajax_ytc_search', array($this, 'searchVideos'));
         add_action('wp_ajax_nopriv_ytc_search', array($this, 'searchVideos'));
-	}
 
+        add_action('wp_ajax_ytc_changePlayerContent', array($this, 'changePlayerContent'));
+        add_action('wp_ajax_nopriv_ytc_changePlayerContent', array($this, 'changePlayerContent'));
+
+	}
+    function changePlayerContent($wid='', $youtubeid='') {
+      //for ajax
+      if($wid==''){
+        $wid = $_POST['wid'];
+        $youtubeid = $_POST['youtubeid'];
+        $ajax_request = 1;
+      }
+
+      $instance = get_option($wid);
+
+      extract($instance);
+      $playercontent = 'player';
+
+      $thumb = $this->getThumbsDetails($youtubeid, $ytchag_key);
+
+      echo '<div class="ytcplayercontent">';
+
+      if ($ytchag_player_title) {
+        include 'templates/title.php';
+      }
+      if ($ytchag_player_publishedAt) {
+        include 'templates/publishedAt.php';
+      }
+      if ($ytchag_player_description) {
+        include 'templates/desc.php';
+      }
+      echo '</div>';
+
+      if(isset($ajax_request)){
+
+        wp_die();
+      }
+    }
 
     function nextVideos() {
 
@@ -127,7 +163,8 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
       $modules[$ytchag_thumb_order_thumb . '1'] = 'thumb';
       $modules[$ytchag_thumb_order_title . '2'] = 'title';
-      $modules[$ytchag_thumb_order_desc . '3'] = 'desc';
+      $modules[$ytchag_thumb_order_publishedAt . '3'] = 'publishedAt';
+      $modules[$ytchag_thumb_order_desc . '4'] = 'desc';
 
       ksort($modules);
 
@@ -144,11 +181,11 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
         $ytchag_prev_token = $json->prevPageToken;
       }
 
-      $thumbs = $this->getThumbs($json->items, $modules, $ytchag_thumb_width);
+      $thumbs = $this->getThumbs($json->items, $modules, $ytchag_thumb_width, $ytchag_key);
 
       include 'templates/thumbs.php';
 
-      exit();
+      wp_die();
     }
 
     function searchVideos() {
@@ -199,7 +236,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
       if ($videos_result['response']['code'] != 200) {
         echo '';
-        exit();
+        wp_die();
       }
 
       // Thumb order
@@ -208,7 +245,8 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
       $modules[$ytchag_thumb_order_thumb . '1'] = 'thumb';
       $modules[$ytchag_thumb_order_title . '2'] = 'title';
-      $modules[$ytchag_thumb_order_desc . '3'] = 'desc';
+      $modules[$ytchag_thumb_order_publishedAt . '3'] = 'publishedAt';
+      $modules[$ytchag_thumb_order_desc . '4'] = 'desc';
 
       ksort($modules);
 
@@ -225,14 +263,14 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
         $ytchag_prev_token = $json->prevPageToken;
       }
 
-      $thumbs = $this->getThumbs($json->items, $modules, $ytchag_thumb_width);
+      $thumbs = $this->getThumbs($json->items, $modules, $ytchag_thumb_width, $ytchag_key);
 
       include 'templates/thumbs.php';
 
-      exit();
+      wp_die();
     }
 
-    function getThumbs($items, $modules, $thumb_width) {
+    function getThumbs($items, $modules, $thumb_width, $key) {
 
       $thumbs = array();
 
@@ -243,9 +281,14 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
         $thumb->id = isset($item->snippet->resourceId->videoId) ? $item->snippet->resourceId->videoId : null;
         $thumb->id = $thumb->id ? $thumb->id : $item->id->videoId;
         $thumb->title = $item->snippet->title;
+        $thumb->publishedAt = $item->snippet->publishedAt;
         $thumb->description = $item->snippet->description;
         $thumb->modules = $modules;
         $thumb->privacyStatus = isset($item->status->privacyStatus) ? $item->status->privacyStatus : null;
+
+        $details = $this->getThumbsDetails($thumb->id, $key);
+        $thumb->duration = $details->duration;
+
 
         if ($thumb->privacyStatus == 'private') {
             $thumb->img = plugins_url( '/img/private.png', __FILE__ );
@@ -269,6 +312,40 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
       }
 
       return $thumbs;
+    }
+
+    function getThumbsDetails($id, $key) {
+
+      $video_details_api = 'https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails,status&id=' . $id . '&key=' . $key;
+      $json = json_decode(file_get_contents($video_details_api));
+
+      $details = new stdClass();
+
+      $details->title = $json->items[0]->snippet->title;
+      $details->publishedAt = $json->items[0]->snippet->publishedAt;
+      $details->description = $json->items[0]->snippet->description;
+
+
+      //duration
+      //-----------
+      $d = $json->items[0]->contentDetails->duration;
+      $d_colon = str_ireplace(array('PT', 'H', 'M', 'S'), array('',':',':',''), $d);
+      //seconds
+      if(substr_count($d_colon, ':') == 0){
+        $d_zeros = '00:00:'.$d_colon;
+        $details->duration = '0:'.date("s", strtotime($d_zeros));
+      }
+      //minutes
+      elseif(substr_count($d_colon, ':') == 1){
+        $d_zeros = "00:".$d_colon;
+        $details->duration = date("i:s", strtotime($d_zeros));
+      }
+      //hours
+      else{
+        $details->duration = date("H:i:s", strtotime($d_colon));
+      }
+
+      return $details;
     }
 
 	/**
@@ -321,6 +398,11 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$instance['ytchag_modestbranding'] = strip_tags( $new_instance['ytchag_modestbranding'] );
 		$instance['ytchag_rel'] = strip_tags( $new_instance['ytchag_rel'] );
 		$instance['ytchag_showinfo'] = strip_tags( $new_instance['ytchag_showinfo'] );
+    $instance['ytchag_player_title'] = strip_tags( $new_instance['ytchag_player_title'] );
+    $instance['ytchag_player_publishedAt'] = strip_tags( $new_instance['ytchag_player_publishedAt'] );
+    $instance['ytchag_player_description'] = strip_tags( $new_instance['ytchag_player_description'] );
+    $instance['ytchag_player_title_tag'] = strip_tags( $new_instance['ytchag_player_title_tag'] );
+    $instance['ytchag_player_description_words_number'] = strip_tags( $new_instance['ytchag_player_description_words_number'] );
 		$instance['ytchag_player_order'] = strip_tags( $new_instance['ytchag_player_order'] );
 
         // Search options
@@ -344,11 +426,14 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$instance['ytchag_thumb_pagination'] = strip_tags( $new_instance['ytchag_thumb_pagination'] );
 		$instance['ytchag_thumb_order_thumb'] = strip_tags( $new_instance['ytchag_thumb_order_thumb'] );
 		$instance['ytchag_thumb_order_title'] = strip_tags( $new_instance['ytchag_thumb_order_title'] );
+    $instance['ytchag_thumb_order_publishedAt'] = strip_tags( $new_instance['ytchag_thumb_order_publishedAt'] );
 		$instance['ytchag_thumb_order_desc'] = strip_tags( $new_instance['ytchag_thumb_order_desc'] );
 		$instance['ytchag_thumb_order'] = strip_tags( $new_instance['ytchag_thumb_order'] );
 
 		$instance['ytchag_title'] = strip_tags( $new_instance['ytchag_title'] );
+    $instance['ytchag_publishedAt'] = strip_tags( $new_instance['ytchag_publishedAt'] );
 		$instance['ytchag_description'] = strip_tags( $new_instance['ytchag_description'] );
+    $instance['ytchag_duration'] = strip_tags( $new_instance['ytchag_duration'] );
 		$instance['ytchag_thumbnail_alignment'] = strip_tags( $new_instance['ytchag_thumbnail_alignment'] );
     $instance['ytchag_thumbnail_alignment_width'] = strip_tags( $new_instance['ytchag_thumbnail_alignment_width'] );
     $instance['ytchag_thumbnail_alignment_device'] = strip_tags( $new_instance['ytchag_thumbnail_alignment_device'] );
@@ -395,7 +480,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			'title' => 'Videos',
 
 			// Feed options
-			'ytchag_key' => 'AIzaSyA0IBAaDqJxfQiqeYg_i2kVKW5P9ZLheVU',
+			'ytchag_key' => '',
 			'ytchag_feed' => 'user',
       'ytchag_identify_by' => 'username',
 			'ytchag_user' => 'youtube',
@@ -418,6 +503,11 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			'ytchag_modestbranding' => '',
 			'ytchag_rel' => '',
 			'ytchag_showinfo' => '',
+      'ytchag_player_title' => '',
+      'ytchag_player_publishedAt' => '',
+      'ytchag_player_description' => '',
+      'ytchag_player_title_tag' => 'h3',
+      'ytchag_player_description_words_number' => '',
 			'ytchag_player_order' => '1',
 
             // Search options
@@ -441,11 +531,14 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			'ytchag_thumb_pagination' => '1',
 			'ytchag_thumb_order_thumb' => '1',
 			'ytchag_thumb_order_title' => '2',
-			'ytchag_thumb_order_desc' => '3',
+      'ytchag_thumb_order_publishedAt' => '3',
+			'ytchag_thumb_order_desc' => '4',
 			'ytchag_thumb_order' => '3',
 
 			'ytchag_title' => '',
+      'ytchag_publishedAt' => '',
 			'ytchag_description' => '',
+      'ytchag_duration' => '',
 			'ytchag_thumbnail_alignment' => 'none',
       'ytchag_thumbnail_alignment_width' => 'half',
       'ytchag_thumbnail_alignment_device' => 'tablet',
@@ -458,7 +551,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 			'ytchag_link_window' => '',
 			'ytchag_link_order' => '4',
 
-            'ytchag_promotion' => '1',
+      'ytchag_promotion' => '1',
 
 
 		);
@@ -504,6 +597,11 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$ytchag_modestbranding = apply_filters( 'ytchag_modestbranding', $instance['ytchag_modestbranding'] );
 		$ytchag_rel = apply_filters( 'ytchag_rel', $instance['ytchag_rel'] );
 		$ytchag_showinfo = apply_filters( 'ytchag_showinfo', $instance['ytchag_showinfo'] );
+    $ytchag_player_title = apply_filters( 'ytchag_player_title', $instance['ytchag_player_title'] );
+    $ytchag_player_publishedAt = apply_filters( 'ytchag_player_publishedAt', $instance['ytchag_player_publishedAt'] );
+    $ytchag_player_description = apply_filters( 'ytchag_player_description', $instance['ytchag_player_description'] );
+    $ytchag_player_title_tag = apply_filters( 'ytchag_player_title_tag', $instance['ytchag_player_title_tag'] );
+    $ytchag_player_description_words_number = apply_filters( 'ytchag_player_description_words_number', $instance['ytchag_player_description_words_number'] );
 		$ytchag_player_order = apply_filters( 'ytchag_player_order', $instance['ytchag_player_order'] );
 
         // Search options
@@ -527,11 +625,14 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$ytchag_thumb_pagination = apply_filters( 'ytchag_thumb_pagination', $instance['ytchag_thumb_pagination'] );
 		$ytchag_thumb_order_thumb = apply_filters( 'ytchag_thumb_order_thumb', $instance['ytchag_thumb_order_thumb'] );
 		$ytchag_thumb_order_title = apply_filters( 'ytchag_thumb_order_title', $instance['ytchag_thumb_order_title'] );
+    $ytchag_thumb_order_publishedAt = apply_filters( 'ytchag_thumb_order_publishedAt', $instance['ytchag_thumb_order_publishedAt'] );
 		$ytchag_thumb_order_desc = apply_filters( 'ytchag_thumb_order_desc', $instance['ytchag_thumb_order_desc'] );
 		$ytchag_thumb_order= apply_filters( 'ytchag_thumb_order', $instance['ytchag_thumb_order'] );
 
 		$ytchag_title = apply_filters( 'ytchag_title', $instance['ytchag_title'] );
+    $ytchag_publishedAt = apply_filters( 'ytchag_publishedAt', $instance['ytchag_publishedAt'] );
 		$ytchag_description = apply_filters( 'ytchag_description', $instance['ytchag_description'] );
+    $ytchag_duration = apply_filters( 'ytchag_duration', $instance['ytchag_duration'] );
 		$ytchag_thumbnail_alignment = apply_filters( 'ytchag_thumbnail_alignment', $instance['ytchag_thumbnail_alignment'] );
     $ytchag_thumbnail_alignment_width = apply_filters( 'ytchag_thumbnail_alignment_width', $instance['ytchag_thumbnail_alignment_width'] );
     $ytchag_thumbnail_alignment_device = apply_filters( 'ytchag_thumbnail_alignment_device', $instance['ytchag_thumbnail_alignment_device'] );
@@ -554,7 +655,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		//--------------------------------
 
 		// Feed options
-		$ytchag_key = ( $ytchag_key) ? $ytchag_key: 'AIzaSyA6oW5D-ZlSIG-OHSBOR25TMd3YDRU7HdU'; //default user
+		$ytchag_key = ( $ytchag_key) ? $ytchag_key: ''; //default user
 		$ytchag_feed = ( $ytchag_feed ) ? $ytchag_feed : 'user'; //default user
 		$ytchag_feed_order = ( $ytchag_feed_order ) ? $ytchag_feed_order : 'date'; //default date
 
@@ -569,6 +670,11 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$ytchag_modestbranding = ( $ytchag_modestbranding ) ? '' : '&modestbranding='. $ytchag_modestbranding; //default 0
 		$ytchag_rel = ( $ytchag_rel ) ? '&rel='. $ytchag_rel : '&rel=0'; //default 1
 		$ytchag_showinfo = ( $ytchag_showinfo ) ? '&showinfo='. $ytchag_showinfo : '&showinfo=0'; //default 1
+    $ytchag_player_title = ( $ytchag_player_title ) ? $ytchag_player_title : 0;
+    $ytchag_player_publishedAt = ( $ytchag_player_publishedAt ) ? $ytchag_player_publishedAt : 0;
+    $ytchag_player_description = ( $ytchag_player_description ) ? $ytchag_player_description : 0;
+    $ytchag_player_title_tag = ( $ytchag_player_title_tag ) ? $ytchag_player_title_tag : 'h3';
+    $ytchag_player_description_words_number = ( $ytchag_player_description_words_number ) ? $ytchag_player_description_words_number : 10;
 		$ytchag_player_order = isset( $ytchag_player_order ) ? $ytchag_player_order : '1'; // order
 
         // Search options
@@ -594,7 +700,9 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
 		//title and desc
 		$ytchag_title = ( $ytchag_title ) ? $ytchag_title : 0;
+    $ytchag_publishedAt = ( $ytchag_publishedAt ) ? $ytchag_publishedAt : 0;
 		$ytchag_description = ( $ytchag_description ) ? $ytchag_description : 0;
+    $ytchag_duration = ( $ytchag_duration ) ? $ytchag_duration : 0;
 		$ytchag_thumbnail_alignment = ( $ytchag_thumbnail_alignment ) ? $ytchag_thumbnail_alignment : 'none';
     $ytchag_thumbnail_alignment_width = ( $ytchag_thumbnail_alignment_width ) ? $ytchag_thumbnail_alignment_width : 'half';
     $ytchag_thumbnail_alignment_device = ( $ytchag_thumbnail_alignment_device ) ? $ytchag_thumbnail_alignment_device : 'tablet';
@@ -677,7 +785,6 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
             $transientId = 'ytc-' . md5($ytchag_feed_url);
             $videos_result = $this->get_rss_data ( $ytchag_cache, $transientId, $ytchag_feed_url, $ytchag_cache_time );
-
             ob_start();
             if ($videos_result['response']['code'] != 200) {
               $json = json_decode($videos_result['body']);
@@ -691,12 +798,13 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
               }
 
               $content = '<div class="vmcerror">';
-              $content .= sprintf( __( 'Error type: "%1$s". ', 'youtube-channel-gallery' ), $videos_result['response']['message'] );
-              $content .= sprintf( __( 'Error message: "%1$s" ', 'youtube-channel-gallery' ), $json->error->message );
-              $content .= sprintf( __( 'Domain: "%1$s". ', 'youtube-channel-gallery' ), $json->error->errors[0]->domain );
-              $content .= sprintf( __( 'Reason: "%1$s". ', 'youtube-channel-gallery' ), $json->error->errors[0]->reason );
-              $content .= sprintf( __( 'Location type: "%1$s". ', 'youtube-channel-gallery' ), $json->error->errors[0]->locationType );
-              $content .= sprintf( __( 'Location: "%1$s". ', 'youtube-channel-gallery' ), $json->error->errors[0]->location ) . '<br><br>';
+              $content .= isset($videos_result['response']['message']) ? sprintf( __( 'Error type: "%1$s". ', 'youtube-channel-gallery' ), $videos_result['response']['message'] ) : '';
+              $content .= isset($json->error->message) ? sprintf( __( 'Error message: "%1$s" ', 'youtube-channel-gallery' ), $json->error->message ) : '';
+              $content .= isset($json->error->errors[0]->domain) ? sprintf( __( 'Domain: "%1$s". ', 'youtube-channel-gallery' ), $json->error->errors[0]->domain ) : '';
+              $content .= isset($json->error->errors[0]->reason) ? sprintf( __( 'Reason: "%1$s". ', 'youtube-channel-gallery' ), $json->error->errors[0]->reason ) : '';
+              $content .= isset($json->error->errors[0]->locationType) ? sprintf( __( 'Location type: "%1$s". ', 'youtube-channel-gallery' ), $json->error->errors[0]->locationType ) : '';
+              $content .= isset($json->error->errors[0]->location) ? sprintf( __( 'Location: "%1$s". ', 'youtube-channel-gallery' ), $json->error->errors[0]->location ) : '';
+              $content .= '<br><br>';
 
               $content .= sprintf( __( 'Check in YouTube if the id %1$s belongs to a %2$s. ', 'youtube-channel-gallery' ), $error_link, $error_type );
               if ( $ytchag_feed !== 'playlist' && ($ytchag_feed === 'favorites' || $ytchag_feed === 'likes') ) {
@@ -729,11 +837,12 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
                 $modules[$ytchag_thumb_order_thumb . '1'] = 'thumb';
                 $modules[$ytchag_thumb_order_title . '2'] = 'title';
-                $modules[$ytchag_thumb_order_desc . '3'] = 'desc';
+                $modules[$ytchag_thumb_order_publishedAt . '3'] = 'publishedAt';
+                $modules[$ytchag_thumb_order_desc . '4'] = 'desc';
 
                 ksort($modules);
 
-                $thumbs = $this->getThumbs($json->items, $modules, $ytchag_thumb_width);
+                $thumbs = $this->getThumbs($json->items, $modules, $ytchag_thumb_width, $ytchag_key);
 
                 $content = '';
 
@@ -756,12 +865,16 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
                 ksort($modules);
 
                 $plugincount += 1;
+
+                update_option('ytc-' . $plugincount, $instance);
+
                 echo '<div class="youtubechannelgallery">';
                 echo '<div id="ytc-'. $plugincount .'">';
                 echo '<div id="ytc-wrapper">';
                 foreach ($modules as $module) {
                   if ($module === 'player' && $ytchag_player == 1) {
                     include 'templates/player.php';
+                    $this->changePlayerContent('ytc-'. $plugincount, $thumbs[0]->id);
                   }
                   elseif ($module !== 'player') {
                     include 'templates/' . $module . '.php';
@@ -771,7 +884,6 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
                 echo '</div>';
                 echo '</div>';
 
-                update_option('ytc-' . $plugincount, $instance);
 
               }
               else {
@@ -878,7 +990,10 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 	public function register_admin_scripts_and_styles( $hook ) {
 		if ( 'widgets.php' != $hook )
 			return;
-		wp_enqueue_style( 'youtube-channel-gallery', plugins_url( '/admin-styles.css', __FILE__ ) );
+		wp_enqueue_style( 'jquery_ui_styles' );
+    wp_enqueue_style( 'youtube-channel-gallery', plugins_url( '/admin-styles.css', __FILE__ ) );
+    wp_enqueue_script( 'jquery-ui-core' );
+    wp_enqueue_script( 'jquery-ui-tooltip' );
 		wp_enqueue_script( 'youtube-channel-gallery', plugins_url( '/admin-scripts.js', __FILE__ ), false, false, true );
 
 	}
@@ -892,7 +1007,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		extract( shortcode_atts( array(
 
             // Feed options
-            'key' => 'AIzaSyA0IBAaDqJxfQiqeYg_i2kVKW5P9ZLheVU',
+            'key' => '',
             'feed' => 'user',
             'identify_by' => 'username',
             'user' => 'youtube',
@@ -915,6 +1030,11 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
             'modestbranding' => '',
             'rel' => '',
             'showinfo' => '',
+            'player_title' => '',
+            'player_published_date' => '',
+            'player_description' => '',
+            'player_title_tag' => 'h3',
+            'player_description_words_number' => '',
             'player_order' => '1',
 
             // Search options
@@ -938,11 +1058,14 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
             'thumb_pagination' => '1',
             'thumb_order_thumb' => '1',
             'thumb_order_title' => '2',
-            'thumb_order_desc' => '3',
+            'thumb_order_publishedAt' => '3',
+            'thumb_order_desc' => '4',
             'thumb_order' => '3',
 
             'title' => '',
+            'published_date' => '',
             'description' => '',
+            'duration' => '',
             'thumbnail_alignment' => 'none',
             'thumbnail_alignment_width' => 'half',
             'thumbnail_alignment_device' => 'tablet',
@@ -983,6 +1106,11 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$instance['ytchag_modestbranding'] = $modestbranding;
 		$instance['ytchag_rel'] = $rel;
 		$instance['ytchag_showinfo'] = $showinfo;
+    $instance['ytchag_player_title'] = $player_title;
+    $instance['ytchag_player_publishedAt'] = $player_published_date;
+    $instance['ytchag_player_description'] = $player_description;
+    $instance['ytchag_player_title_tag'] = $player_title_tag;
+    $instance['ytchag_player_description_words_number'] = $player_description_words_number;
 		$instance['ytchag_player_order'] = $player_order;
 
         // Search options
@@ -1006,11 +1134,14 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 		$instance['ytchag_thumb_pagination'] = $thumb_pagination;
 		$instance['ytchag_thumb_order_thumb'] = $thumb_order_thumb;
 		$instance['ytchag_thumb_order_title'] = $thumb_order_title;
+    $instance['ytchag_thumb_order_publishedAt'] = $thumb_order_publishedAt;
 		$instance['ytchag_thumb_order_desc'] = $thumb_order_desc;
 		$instance['ytchag_thumb_order'] = $thumb_order;
 
 		$instance['ytchag_title'] = $title;
+    $instance['ytchag_publishedAt'] = $published_date;
 		$instance['ytchag_description'] = $description;
+    $instance['ytchag_duration'] = $duration;
 		$instance['ytchag_thumbnail_alignment'] = $thumbnail_alignment;
     $instance['ytchag_thumbnail_alignment_width'] = $thumbnail_alignment_width;
     $instance['ytchag_thumbnail_alignment_device'] = $thumbnail_alignment_device;
@@ -1032,7 +1163,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
         $instance['ytchag_user_uploads'] = $playlists['uploads'];
         $instance['ytchag_user_favorites'] = isset($playlists['favorites']) ? $playlists['favorites'] : null;
 
-        if (!$instance['ytchag_thumb_columns_phones'] && 
+        if (!$instance['ytchag_thumb_columns_phones'] &&
             !$instance['ytchag_thumb_columns_tablets'] &&
             !$instance['ytchag_thumb_columns_md'] &&
             !$instance['ytchag_thumb_columns_ld']) {

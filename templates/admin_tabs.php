@@ -21,12 +21,14 @@
         */
 ?>
         <div id="tabs-<?php echo $this->id; ?>-1" class="ytchgtabs-content tabs-1">
-
-            <p class="<?php echo $this->get_field_id( 'ytchag_key' ); ?>">
-                <label for="<?php echo $this->get_field_id( 'ytchag_key' ); ?>"><?php _e( 'YouTube API Key:', 'youtube-channel-gallery' ); ?></label>
-                <input class="widefat wideinfo" id="<?php echo $this->get_field_id( 'ytchag_key' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_key' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_key); ?>" />
-                <span class="ytchag_info" title="<?php _e( 'Get your own YouTube API Key and put here.', 'youtube-channel-gallery' ); ?>">?</span>
-            </p>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="<?php echo $this->get_field_id( 'ytchag_key' ); ?>"><?php _e( 'YouTube API Key:', 'youtube-channel-gallery' ); ?></label>
+                    <input class="widefat wideinfo" id="<?php echo $this->get_field_id( 'ytchag_key' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_key' ); ?>" type="text" value="<?php echo esc_attr( $ytchag_key); ?>" />
+                    <span class="ytchag_info" title="<?php _e( 'Get your own YouTube API Key and put here.', 'youtube-channel-gallery' ); ?>">?</span>
+                    <div class="info"><?php _e( 'Get <a href="https://console.developers.google.com/" target="_blank">your Google API key</a>. See <a href="http://poselab.com/en/youtube-channel-gallery-help/" target="_blank">help</a>', 'youtube-channel-gallery' ); ?></div>
+                </div>
+            </div>
 
             <p>
                 <label for="<?php echo $this->get_field_id( 'ytchag_feed' ); ?>"><?php _e( 'Video feed type:', 'youtube-channel-gallery' ); ?></label>
@@ -178,8 +180,58 @@
                 </div>
 
 
+                <fieldset class="ytchg-field-tit-desc">
+                    <legend class="ytchg-tit-desc">
+                        <a href="#"><?php _e( 'Show additional content', 'youtube-channel-gallery' ); ?></a>
+                    </legend>
+
+                    <div class="ytchg-title-and-description ytchgtabs-content">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input class="checkbox ytchg-tit" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_player_title'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_player_title' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_player_title' ); ?>" />
+                                <label for="<?php echo $this->get_field_id( 'ytchag_player_title' ); ?>"><?php _e( 'Show title', 'youtube-channel-gallery' ); ?></label>
+                            </div>
+                            <div class="col-md-6">
+                                <input class="checkbox ytchg-desc" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_player_publishedAt'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_player_publishedAt' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_player_publishedAt' ); ?>" />
+                                <label for="<?php echo $this->get_field_id( 'ytchag_player_publishedAt' ); ?>"><?php _e( 'Show published date', 'youtube-channel-gallery' ); ?></label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input class="checkbox ytchg-desc" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_player_description'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_player_description' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_player_description' ); ?>" />
+                                <label for="<?php echo $this->get_field_id( 'ytchag_player_description' ); ?>"><?php _e( 'Show description', 'youtube-channel-gallery' ); ?></label>
+                            </div>
+                            <div class="col-md-6">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="<?php echo $this->get_field_id( 'ytchag_player_title_tag' ); ?>"><?php _e( 'Title tag:', 'youtube-channel-gallery' ); ?></label>
+                                <select class="widefat" id="<?php echo $this->get_field_id( 'ytchag_player_title_tag' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_player_title_tag' ); ?>">
+                                    <option value="h1"<?php selected( $instance['ytchag_player_title_tag'], 'h1' ); ?>><?php _e( 'h1', 'youtube-channel-gallery' ); ?></option>
+                                    <option value="h2"<?php selected( $instance['ytchag_player_title_tag'], 'h2' ); ?>><?php _e( 'h2', 'youtube-channel-gallery' ); ?></option>
+                                    <option value="h3"<?php selected( $instance['ytchag_player_title_tag'], 'h3' ); ?>><?php _e( 'h3', 'youtube-channel-gallery' ); ?></option>
+                                    <option value="h4"<?php selected( $instance['ytchag_player_title_tag'], 'h4' ); ?>><?php _e( 'h4', 'youtube-channel-gallery' ); ?></option>
+                                    <option value="h5"<?php selected( $instance['ytchag_player_title_tag'], 'h5' ); ?>><?php _e( 'h5', 'youtube-channel-gallery' ); ?></option>
+                                    <option value="h6"<?php selected( $instance['ytchag_player_title_tag'], 'h6' ); ?>><?php _e( 'h6', 'youtube-channel-gallery' ); ?></option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="<?php echo $this->get_field_id( 'ytchag_player_description_words_number' ); ?>"><?php _e( 'Description words:', 'youtube-channel-gallery' ); ?></label><br>
+                                <input class="widefat wideinfo" id="<?php echo $this->get_field_id( 'ytchag_player_description_words_number' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_player_description_words_number' ); ?>" type="number" min="1" max="99" size="1" value="<?php echo esc_attr( $ytchag_player_description_words_number ); ?>" />
+                                <span class="ytchag_info" title="<?php _e( 'Set the maximum number of words that will be displayed of the description. This field is useful when the descriptions of videos in the gallery have different sizes.', 'youtube-channel-gallery' ); ?>">?</span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+
+
                 <p class="<?php echo $this->get_field_id( 'ytchag_player_order' ); ?>">
-                    <label for="<?php echo $this->get_field_id( 'ytchag_player_order' ); ?>"><?php _e( 'Order:', 'youtube-channel-gallery' ); ?></label>
+                    <label for="<?php echo $this->get_field_id( 'ytchag_player_order' ); ?>"><?php _e( 'Tab order:', 'youtube-channel-gallery' ); ?></label>
                     <input class="" id="<?php echo $this->get_field_id( 'ytchag_player_order' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_player_order' ); ?>" type="number" min="1" max="10" size="1" value="<?php echo esc_attr( $ytchag_player_order); ?>" />
                 </p>
             </span>
@@ -231,7 +283,7 @@
 
             <br>
             <p class="<?php echo $this->get_field_id( 'ytchag_search_order' ); ?>">
-                <label for="<?php echo $this->get_field_id( 'ytchag_search_order' ); ?>"><?php _e( 'Order:', 'youtube-channel-gallery' ); ?></label>
+                <label for="<?php echo $this->get_field_id( 'ytchag_search_order' ); ?>"><?php _e( 'Tab order:', 'youtube-channel-gallery' ); ?></label>
                 <input class="" id="<?php echo $this->get_field_id( 'ytchag_search_order' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_search_order' ); ?>" type="number" min="1" max="10" size="1" value="<?php echo esc_attr( $ytchag_search_order); ?>" />
             </p>
         </div>
@@ -269,11 +321,11 @@
             </p>
 
 
-                <div class="row thumbs-cols">
+                <div class="row">
                     <div class="col-md-12">
                         <label for="<?php echo $this->get_field_id( 'ytchag_thumb_columns' ); ?>"><?php _e( 'Thumbnail columns:', 'youtube-channel-gallery' ); ?></label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="table">
                             <div class="table-row">
                                 <div>
@@ -293,7 +345,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <div class="table">
                             <div class="table-row">
                                 <div>
@@ -316,11 +368,23 @@
                 </div>
 
 
+            <div class="row">
+                <div class="col-md-5">
+                    <input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_duration'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_duration' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_duration' ); ?>" />
+                    <label for="<?php echo $this->get_field_id( 'ytchag_duration' ); ?>"><?php _e( 'Show duration', 'youtube-channel-gallery' ); ?></label>
+                </div>
+                <div class="col-md-7">
+                    <input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_nofollow'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_nofollow' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_nofollow' ); ?>" />
+                    <label for="<?php echo $this->get_field_id( 'ytchag_nofollow' ); ?>"><?php _e( 'Add "nofollow" to links', 'youtube-channel-gallery' ); ?></label>
+                    <span class="ytchag_info" title="<?php _e( str_replace('"','&quot;','"nofollow" attribute provides a way for webmasters to tell search engines "Don\'t follow this specific link."'), 'youtube-channel-gallery' ); ?>">?</span>
+                </div>
+            </div>
 
-            <p>
+
+
                 <fieldset class="ytchg-field-tit-desc">
                     <legend class="ytchg-tit-desc">
-                        <a href="#"><?php _e( 'Show title or description', 'youtube-channel-gallery' ); ?></a>
+                        <a href="#"><?php _e( 'Show additional content', 'youtube-channel-gallery' ); ?></a>
                     </legend>
 
                     <div class="ytchg-title-and-description ytchgtabs-content">
@@ -331,8 +395,17 @@
                                 <label for="<?php echo $this->get_field_id( 'ytchag_title' ); ?>"><?php _e( 'Show title', 'youtube-channel-gallery' ); ?></label>
                             </div>
                             <div class="col-md-6">
+                                <input class="checkbox ytchg-desc" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_publishedAt'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_publishedAt' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_publishedAt' ); ?>" />
+                                <label for="<?php echo $this->get_field_id( 'ytchag_publishedAt' ); ?>"><?php _e( 'Show published date', 'youtube-channel-gallery' ); ?></label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
                                 <input class="checkbox ytchg-desc" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_description'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_description' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_description' ); ?>" />
                                 <label for="<?php echo $this->get_field_id( 'ytchag_description' ); ?>"><?php _e( 'Show description', 'youtube-channel-gallery' ); ?></label>
+                            </div>
+                            <div class="col-md-6">
                             </div>
                         </div>
 
@@ -391,33 +464,43 @@
                     </div>
                 </fieldset>
 
-                <input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_nofollow'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_nofollow' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_nofollow' ); ?>" />
-                <label for="<?php echo $this->get_field_id( 'ytchag_nofollow' ); ?>"><?php _e( 'Add "nofollow" attribute to links', 'youtube-channel-gallery' ); ?></label>
-                <span class="ytchag_info" title="<?php _e( '"nofollow" attribute provides a way for webmasters to tell search engines "Don\'t follow this specific link."', 'youtube-channel-gallery' ); ?>">?</span>
+
+                <div class="row">
+                    <div class="col-md-6 thumb_window">
+                        <input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_thumb_window'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_thumb_window' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_window' ); ?>" />
+                        <label for="<?php echo $this->get_field_id( 'ytchag_thumb_window' ); ?>"><?php _e( 'Open in a new window', 'youtube-channel-gallery' ); ?></label>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_thumb_pagination'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_thumb_pagination' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_pagination' ); ?>" />
+                        <label for="<?php echo $this->get_field_id( 'ytchag_thumb_pagination' ); ?>"><?php _e( 'Show pagination', 'youtube-channel-gallery' ); ?></label>
+                    </div>
+                </div>
 
 
-                <span class="thumb_window">
-                    </br>
-                    <input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_thumb_window'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_thumb_window' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_window' ); ?>" />
-                    <label for="<?php echo $this->get_field_id( 'ytchag_thumb_window' ); ?>"><?php _e( 'Open in a new window or tab', 'youtube-channel-gallery' ); ?></label>
-                </span>
-                <br>
-                <br>
-                <input class="checkbox" type="checkbox" value="1" <?php checked( (bool) $instance['ytchag_thumb_pagination'], true ); ?> id="<?php echo $this->get_field_id( 'ytchag_thumb_pagination' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_pagination' ); ?>" />
-                <label for="<?php echo $this->get_field_id( 'ytchag_thumb_pagination' ); ?>"><?php _e( 'Show pagination', 'youtube-channel-gallery' ); ?></label>
-                <p>
-                    <label><?php _e( 'Order:', 'youtube-channel-gallery' ); ?></label>
-                    <br>
-                    <label for="<?php echo $this->get_field_id( 'ytchag_thumb_order_thumb' ); ?>"><?php _e( 'Thumbnail:', 'youtube-channel-gallery' ); ?></label>
-                    <input size="1" class="" id="<?php echo $this->get_field_id( 'ytchag_thumb_order_thumb' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_order_thumb' ); ?>" type="number" min="1" max="3" value="<?php echo esc_attr( $ytchag_thumb_order_thumb); ?>" />
-                    <label for="<?php echo $this->get_field_id( 'ytchag_thumb_order_title' ); ?>"><?php _e( 'Title:', 'youtube-channel-gallery' ); ?></label>
-                    <input size="1"class="" id="<?php echo $this->get_field_id( 'ytchag_thumb_order_title' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_order_title' ); ?>" type="number" min="1" max="3" value="<?php echo esc_attr( $ytchag_thumb_order_title); ?>" />
-                    <label for="<?php echo $this->get_field_id( 'ytchag_thumb_order_desc' ); ?>"><?php _e( 'Description:', 'youtube-channel-gallery' ); ?></label>
-                    <input size="1" class="" id="<?php echo $this->get_field_id( 'ytchag_thumb_order_desc' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_order_desc' ); ?>" type="number" min="1" max="3" value="<?php echo esc_attr( $ytchag_thumb_order_desc); ?>" />
-                </p>
-            </p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label><?php _e( 'Thumbnail content tab order:', 'youtube-channel-gallery' ); ?></label>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="<?php echo $this->get_field_id( 'ytchag_thumb_order_thumb' ); ?>"><?php _e( 'Thumbnail:', 'youtube-channel-gallery' ); ?></label>
+                        <input size="1" class="" id="<?php echo $this->get_field_id( 'ytchag_thumb_order_thumb' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_order_thumb' ); ?>" type="number" min="1" max="3" value="<?php echo esc_attr( $ytchag_thumb_order_thumb); ?>" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="<?php echo $this->get_field_id( 'ytchag_thumb_order_title' ); ?>"><?php _e( 'Title:', 'youtube-channel-gallery' ); ?></label>
+                        <input size="1" class="" id="<?php echo $this->get_field_id( 'ytchag_thumb_order_title' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_order_title' ); ?>" type="number" min="1" max="3" value="<?php echo esc_attr( $ytchag_thumb_order_title); ?>" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="<?php echo $this->get_field_id( 'ytchag_thumb_order_publishedAt' ); ?>"><?php _e( 'Published date:', 'youtube-channel-gallery' ); ?></label>
+                        <input size="1" class="" id="<?php echo $this->get_field_id( 'ytchag_thumb_order_publishedAt' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_order_publishedAt' ); ?>" type="number" min="1" max="3" value="<?php echo esc_attr( $ytchag_thumb_order_publishedAt); ?>" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="<?php echo $this->get_field_id( 'ytchag_thumb_order_desc' ); ?>"><?php _e( 'Description:', 'youtube-channel-gallery' ); ?></label>
+                        <input size="1" class="" id="<?php echo $this->get_field_id( 'ytchag_thumb_order_desc' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_order_desc' ); ?>" type="number" min="1" max="3" value="<?php echo esc_attr( $ytchag_thumb_order_desc); ?>" />
+                    </div>
+                </div>
+
             <p class="<?php echo $this->get_field_id( 'ytchag_thumb_order' ); ?>">
-                <label for="<?php echo $this->get_field_id( 'ytchag_thumb_order' ); ?>"><?php _e( 'Order:', 'youtube-channel-gallery' ); ?></label>
+                <label for="<?php echo $this->get_field_id( 'ytchag_thumb_order' ); ?>"><?php _e( 'Tab order:', 'youtube-channel-gallery' ); ?></label>
                 <input class="" id="<?php echo $this->get_field_id( 'ytchag_thumb_order' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_thumb_order' ); ?>" type="number" min="1" max="10" size="1" value="<?php echo esc_attr( $ytchag_thumb_order); ?>" />
             </p>
 
@@ -454,7 +537,7 @@
             </p>
 
             <p class="<?php echo $this->get_field_id( 'ytchag_link_order' ); ?>">
-                <label for="<?php echo $this->get_field_id( 'ytchag_link_order' ); ?>"><?php _e( 'Order:', 'youtube-channel-gallery' ); ?></label>
+                <label for="<?php echo $this->get_field_id( 'ytchag_link_order' ); ?>"><?php _e( 'Tab order:', 'youtube-channel-gallery' ); ?></label>
                 <input class="" id="<?php echo $this->get_field_id( 'ytchag_link_order' ); ?>" name="<?php echo $this->get_field_name( 'ytchag_link_order' ); ?>" type="number" min="1" max="3" size="1" value="<?php echo esc_attr( $ytchag_link_order); ?>" />
             </p>
 
