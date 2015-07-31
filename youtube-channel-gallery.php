@@ -817,6 +817,9 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
               $content .= isset($json->error->errors[0]->location) ? sprintf( __( 'Location: "%1$s". ', 'youtube-channel-gallery' ), $json->error->errors[0]->location ) : '';
               $content .= '<br><br>';
 
+              $content .= sprintf( __( 'Did you added your own Google API key? Look at the <a href="http://poselab.com/en/youtube-channel-gallery-help" target="_blank">help</a>.', 'youtube-channel-gallery' ), $error_link, $error_type );
+              $content .= '<br><br>';
+
               $content .= sprintf( __( 'Check in YouTube if the id %1$s belongs to a %2$s. ', 'youtube-channel-gallery' ), $error_link, $error_type );
               if ( $ytchag_feed !== 'playlist' && ($ytchag_feed === 'favorites' || $ytchag_feed === 'likes') ) {
                 $content .= sprintf( __( 'If the user id is correct, check that the channel of the user has list of "%1$s". ', 'youtube-channel-gallery' ), $ytchag_feed );

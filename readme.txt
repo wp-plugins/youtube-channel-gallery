@@ -156,9 +156,9 @@ Description of the different fields of the plugin:
 
 
 = Shortcode syntax: =
-Example of shortcode use:
+Example of shortcode use, remember to change your_Google_API_key for your own. Look at the [help](http://poselab.com/en/youtube-channel-gallery-help):
 
-`[Youtube_Channel_Gallery user="apple" maxitems="16" thumb_columns_phones="2" thumb_columns_tablets="4" ]`
+`[Youtube_Channel_Gallery user="googledevelopers" key="your_Google_API_key" maxitems="16" thumb_columns_tablets="4" title="1"]`
 
 
 = Languages: =
