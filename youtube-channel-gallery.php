@@ -5,7 +5,7 @@
 	Description: Show a youtube video and a gallery of thumbnails for a youtube channel.
 	Author: Javier Gómez Pose
 	Author URI: http://www.poselab.com/
-	Version: 2.3
+	Version: 2.3.2
 	License: GPL2
 
 		Copyright 2013 Javier Gómez Pose  (email : javierpose@gmail.com)
@@ -75,7 +75,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
       extract($instance);
       $playercontent = 'player';
 
-      $thumb = $this->getThumbsDetails($youtubeid, $ytchag_key);
+      $thumb = $this->getThumbsDetails($youtubeid, $ytchag_key, $wid);
 
       echo '<div class="ytcplayercontent">';
 
@@ -181,7 +181,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
         $ytchag_prev_token = $json->prevPageToken;
       }
 
-      $thumbs = $this->getThumbs($json->items, $modules, $ytchag_thumb_width, $ytchag_key);
+      $thumbs = $this->getThumbs($json->items, $modules, $ytchag_thumb_width, $ytchag_key, $wid);
 
       include 'templates/thumbs.php';
 
@@ -263,14 +263,14 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
         $ytchag_prev_token = $json->prevPageToken;
       }
 
-      $thumbs = $this->getThumbs($json->items, $modules, $ytchag_thumb_width, $ytchag_key);
+      $thumbs = $this->getThumbs($json->items, $modules, $ytchag_thumb_width, $ytchag_key, $wid);
 
       include 'templates/thumbs.php';
 
       wp_die();
     }
 
-    function getThumbs($items, $modules, $thumb_width, $key) {
+    function getThumbs($items, $modules, $thumb_width, $key, $wid) {
 
       $thumbs = array();
 
@@ -286,7 +286,7 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
         $thumb->modules = $modules;
         $thumb->privacyStatus = isset($item->status->privacyStatus) ? $item->status->privacyStatus : null;
 
-        $details = $this->getThumbsDetails($thumb->id, $key);
+        $details = $this->getThumbsDetails($thumb->id, $key, $wid);
         $thumb->duration = $details->duration;
 
 
@@ -314,10 +314,21 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
       return $thumbs;
     }
 
-    function getThumbsDetails($id, $key) {
+    function getThumbsDetails($id, $key, $wid) {
 
-      $video_details_api = 'https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails,status&id=' . $id . '&key=' . $key;
-      $json = json_decode(file_get_contents($video_details_api));
+
+      $instance = get_option($wid);
+
+      extract($instance);
+
+      $ytchag_feed_url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails,status&id=' . $id . '&key=' . $key;
+
+      $transientId = 'ytc-' .md5($ytchag_feed_url);
+
+      $videos_result = $this->get_rss_data ( $ytchag_cache, $transientId, $ytchag_feed_url, $ytchag_cache_time);
+
+
+      $json = json_decode($videos_result['body']);
 
       $details = new stdClass();
 
@@ -815,7 +826,6 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
             }
             else {
               static $plugincount = 0;
-
               $json = json_decode($videos_result['body']);
 
               if ($json->pageInfo->totalResults > 0) {
@@ -842,7 +852,12 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
 
                 ksort($modules);
 
-                $thumbs = $this->getThumbs($json->items, $modules, $ytchag_thumb_width, $ytchag_key);
+                $plugincount += 1;
+                $wid = 'ytc-' . $plugincount;
+
+                update_option($wid, $instance);
+
+                $thumbs = $this->getThumbs($json->items, $modules, $ytchag_thumb_width, $ytchag_key, $wid);
 
                 $content = '';
 
@@ -863,10 +878,6 @@ class YoutubeChannelGallery_Widget extends WP_Widget {
                 $modules[$ytchag_link_order . '4'] = 'link';
 
                 ksort($modules);
-
-                $plugincount += 1;
-
-                update_option('ytc-' . $plugincount, $instance);
 
                 echo '<div class="youtubechannelgallery">';
                 echo '<div id="ytc-'. $plugincount .'">';

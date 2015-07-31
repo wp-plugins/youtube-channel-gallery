@@ -4,7 +4,7 @@ Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos, API 3
 Requires at least: 2.8
 Tested up to: 3.8.8
-Stable tag: 2.3
+Stable tag: 2.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -164,6 +164,7 @@ Example of shortcode use:
 = Languages: =
 * Brazilian portuguese (pt_BR) - [lojainterativa.com](http://www.lojainterativa.com).
 * Italian (it_IT) - [Marco Milesi](https://profiles.wordpress.org/milmor).
+* Norwegian bokmål (nb_NO) - Harald Fjogstad
 * Spanish (es_ES) - [PoseLab](http://poselab.com/)
 
 If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:javier@poselab.com) your gettext PO and MO so that I can bundle it into the Youtube Channel Gallery.
@@ -217,7 +218,11 @@ See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-
 
 == Changelog ==
 
-= 2.3 =
+= 2.3.2 =
+* Deleted file_get_contents function for avoid error in some hostings.
+* Added Norwegian bokmål (nb_NO).
+
+= 2.3.2 =
 * Stop other videos if there is more than one instance of the plugin in the same page.
 * Corrected problem with pagination when there are multiple instances in the same page.
 * Added option to show video duration in thumbnails.
