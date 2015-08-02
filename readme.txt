@@ -191,8 +191,6 @@ To find your channel's user ID and channel ID, sign in to YouTube and check your
 
 You can find how to get your Google API key and use it in the plugin in the [video tutorials](http://poselab.com/en/youtube-channel-gallery-help).
 
-If you go to a playlist you will get the following url format: https://www.youtube.com/playlist?list=PL33942589618ABDE3. The playlist id is what you have after list=. In this example, the playlist id is PL33942589618ABDE3.
-
 = How do I find a YouTube playlist id? =
 
 If you go to a playlist you will get the following url format: https://www.youtube.com/playlist?list=PL33942589618ABDE3. The playlist id is what you have after list=. In this example, the playlist id is PL33942589618ABDE3.
@@ -201,10 +199,9 @@ If you go to a playlist you will get the following url format: https://www.youtu
 
 If another plugin or your theme throws a javascript error before Youtube Channel Gallery has been executed, it will prevent Youtube Channel Gallery JavaScript from functioning properly, so thumbnails links will go to the YouTube page instead of playing the video in the player.
 
-= If the plugin is used on a page using SSL, the player will throw warnings in the browser console =
+= Are you using a CDN, such as Cloudflare, MaxCDN,..., a cache plugin, sucha as WP Super Cache, W3 Total Cache,... or minification plugin, and the plugin is not working correctly?  =
 
-See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-support-for-youtube-embeds.html):
-"The actual video bitstream, and some additional content loaded by the YouTube player may still be accessed via standard HTTP connections when you use an HTTPS URL in your embed code."
+You have to purge or delete de cache of the CDN, plugin chache or minification plugin. Maybe, your website is using an old version of CSS or JS.
 
 
 == Screenshots ==
